@@ -39,7 +39,81 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     
     // Warna tema cinta (Warna Cinta)
-    colors: ['#ffffff', '#ff2a85', '#f43f5e', '#fb7185', '#be185d', '#a855f7', '#00f0ff']
+    colors: ['#ffffff', '#ff2a85', '#f43f5e', '#fb7185', '#be185d', '#a855f7', '#00f0ff'],
+
+    // Koleksi Foto Kenangan (Folder asset / move)
+    photos: [
+      {
+        id: 1,
+        url: 'asset/photo-1.jpeg',
+        fallback: 'move/photo-1.jpeg',
+        tag: 'ORIGIN POINT // 23 SEP 2026',
+        title: 'Detik Pertama Orbit Kita',
+        date: '23 September 2026',
+        desc: 'Mata kita saling bertemu untuk pertama kalinya, dan seluruh duniaku seketika berporos padamu, Halisa. Hari di mana semesta mempertemukan dua insan yang ditakdirkan bersama.',
+        likes: 188
+      },
+      {
+        id: 2,
+        url: 'asset/photo-2.jpeg',
+        fallback: 'move/photo-2.jpeg',
+        tag: 'SWEET SMILE // PESONA HALISA',
+        title: 'Senyum Terindah di Jagat Raya',
+        date: 'Kenangan Manis',
+        desc: 'Cahaya paling hangat bukanlah triliunan bintang kejora, melainkan lengkungan senyuman tulus di wajahmu yang selalu sanggup meredakan segala gundah di hatiku.',
+        likes: 312
+      },
+      {
+        id: 3,
+        url: 'asset/photo-3.jpeg',
+        fallback: 'move/photo-3.jpeg',
+        tag: 'COSMIC HARMONY // BERDUA',
+        title: 'Genggaman Dua Hati',
+        date: 'Bersamamu Selamanya',
+        desc: 'Di antara triliunan kemungkinan di galaksi ini, gravitasi cinta menuntun tanganku untuk menggenggam tanganmu. Genggaman yang takkan pernah ingin kulepaskan.',
+        likes: 456
+      },
+      {
+        id: 4,
+        url: 'asset/photo-4.jpeg',
+        fallback: 'move/photo-4.jpeg',
+        tag: 'TIMELESS MOMENT // TAWA KITA',
+        title: 'Tawa yang Menghangatkan Jiwa',
+        date: 'Momen Bahagia',
+        desc: 'Setiap tawa kecil dan cerita manis yang kita bagi bersama adalah melodi termanis yang selalu terngiang di benakku, menjadi alasan terbesarku untuk bahagia setiap hari.',
+        likes: 279
+      },
+      {
+        id: 5,
+        url: 'asset/photo-5.jpeg',
+        fallback: 'move/photo-5.jpeg',
+        tag: 'STARRY NIGHT // HARAPAN',
+        title: 'Menatap Masa Depan Berdua',
+        date: 'Cinta Tanpa Batas',
+        desc: 'Tak peduli seberapa jauh jarak atau tantangan waktu, hatiku selalu menemukan jalan pulang kepadamu. Bersamamu, masa depan terasa begitu indah dan penuh keyakinan.',
+        likes: 541
+      },
+      {
+        id: 6,
+        url: 'asset/photo-6.jpeg',
+        fallback: 'move/photo-6.jpeg',
+        tag: 'PRECIOUS MEMORY // WARNA CINTA',
+        title: 'Kisah Terindah yang Ditulis Takdir',
+        date: 'Fajar & Halisa',
+        desc: 'Terima kasih telah hadir dan melukis warna-warna cinta yang begitu mempesona dalam hidupku. Kehadiranmu adalah anugerah terindah yang selalu kusyukuri.',
+        likes: 673
+      },
+      {
+        id: 7,
+        url: 'asset/photo-7.jpeg',
+        fallback: 'move/photo-7.jpeg',
+        tag: 'TO INFINITY // SELAMANYA',
+        title: 'Hingga ke Ujung Alam Semesta',
+        date: 'Abadi di Hatiku',
+        desc: 'Cinta ini melampaui dimensi ruang dan waktu. Melewati batas singularitas, perasaanku padamu akan tetap utuh selamanya. I wanna be yours, selamanya. 💍✨',
+        likes: 999
+      }
+    ]
   };
 
   const startDateTextElem = document.getElementById('start-date-text');
@@ -1464,11 +1538,13 @@ document.addEventListener('DOMContentLoaded', () => {
   if (scrollToStoryBtn) scrollToStoryBtn.addEventListener('click', () => enterStoryMode('counter'));
 
   // Quick Dock Handlers
+  const dockGalleryBtn = document.getElementById('dock-gallery-btn');
   const dockLetterBtn = document.getElementById('dock-letter-btn');
   const dockCounterBtn = document.getElementById('dock-counter-btn');
   const dockWishBtn = document.getElementById('dock-wish-btn');
   const dockScannerBtn = document.getElementById('dock-scanner-btn');
 
+  if (dockGalleryBtn) dockGalleryBtn.addEventListener('click', () => enterStoryMode('gallery'));
   if (dockLetterBtn) dockLetterBtn.addEventListener('click', openLetter);
   if (dockCounterBtn) dockCounterBtn.addEventListener('click', () => enterStoryMode('counter'));
   if (dockWishBtn) dockWishBtn.addEventListener('click', () => enterStoryMode('transmitter'));
@@ -1827,6 +1903,343 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     btnNo.addEventListener('click', dodgeButton);
   }
+
+  // ==========================================
+  // 13. AESTHETIC MOVING PHOTO GALLERY & LIGHTBOX ("COSMIC MEMORIES")
+  // ==========================================
+  const galleryMoveViewport = document.getElementById('gallery-move-viewport');
+  const galleryMoveTrack = document.getElementById('gallery-move-track');
+  const galleryGridView = document.getElementById('gallery-grid-view');
+  const modeStripBtn = document.getElementById('mode-strip-btn');
+  const modeGridBtn = document.getElementById('mode-grid-btn');
+  const galleryPlayPauseBtn = document.getElementById('gallery-play-pause-btn');
+  const galleryPlayPauseIcon = document.getElementById('gallery-play-pause-icon');
+  const galleryPlayPauseLabel = document.getElementById('gallery-play-pause-label');
+  const galleryPrevBtn = document.getElementById('gallery-prev-btn');
+  const galleryNextBtn = document.getElementById('gallery-next-btn');
+
+  // Lightbox Modal Elements
+  const photoLightboxModal = document.getElementById('photo-lightbox-modal');
+  const lightboxBackdrop = document.getElementById('lightbox-backdrop');
+  const lightboxCloseBtn = document.getElementById('lightbox-close-btn');
+  const lightboxPrevBtn = document.getElementById('lightbox-prev-btn');
+  const lightboxNextBtn = document.getElementById('lightbox-next-btn');
+  const lightboxImg = document.getElementById('lightbox-img');
+  const lightboxCounter = document.getElementById('lightbox-counter');
+  const lightboxTag = document.getElementById('lightbox-tag');
+  const lightboxDate = document.getElementById('lightbox-date');
+  const lightboxTitle = document.getElementById('lightbox-title');
+  const lightboxDesc = document.getElementById('lightbox-desc');
+  const lightboxLoveBtn = document.getElementById('lightbox-love-btn');
+  const lightboxHeartIcon = document.getElementById('lightbox-heart-icon');
+  const lightboxLikeCount = document.getElementById('lightbox-like-count');
+  const lightboxDownloadBtn = document.getElementById('lightbox-download-btn');
+
+  let activePhotoIndex = 0;
+  let isGalleryPaused = false;
+  let isDraggingGallery = false;
+  let startX = 0;
+  let scrollLeft = 0;
+
+  // Retrieve stored likes
+  function getPhotoLikes(photoId, defaultLikes) {
+    const stored = localStorage.getItem(`cosmic_photo_likes_${photoId}`);
+    return stored ? parseInt(stored, 10) : defaultLikes;
+  }
+
+  function setPhotoLikes(photoId, count) {
+    localStorage.setItem(`cosmic_photo_likes_${photoId}`, count);
+  }
+
+  function isPhotoLiked(photoId) {
+    return localStorage.getItem(`cosmic_photo_has_liked_${photoId}`) === 'true';
+  }
+
+  function markPhotoLiked(photoId) {
+    localStorage.setItem(`cosmic_photo_has_liked_${photoId}`, 'true');
+  }
+
+  // Create Card Element
+  function createPhotoCard(photo, index, isClone = false) {
+    const card = document.createElement('div');
+    card.className = 'photo-card glass-panel';
+    card.setAttribute('data-photo-index', index);
+
+    const currentLikes = getPhotoLikes(photo.id, photo.likes);
+    const hasLiked = isPhotoLiked(photo.id);
+
+    card.innerHTML = `
+      <div class="photo-img-wrapper">
+        <img class="photo-img" 
+             src="${photo.url}" 
+             alt="${photo.title}" 
+             loading="lazy" 
+             decoding="async" 
+             onerror="if(!this.dataset.triedFallback){this.dataset.triedFallback=1;this.src='${photo.fallback}';}">
+        <div class="photo-img-overlay"></div>
+        <span class="photo-num-badge">0${index + 1}</span>
+        <button class="photo-heart-badge ${hasLiked ? 'liked' : ''}" 
+                data-photo-id="${photo.id}" 
+                title="Beri Cinta" 
+                aria-label="Suka foto ini">
+          ${hasLiked ? '💖' : '🤍'}
+        </button>
+        <span class="photo-hover-hint">Lihat Kenangan ✨</span>
+      </div>
+      <div class="photo-caption">
+        <span class="photo-tag">${photo.tag}</span>
+        <h4 class="photo-title">${photo.title}</h4>
+        <p class="photo-snippet">${photo.desc}</p>
+        <div class="photo-footer">
+          <span class="photo-date">📅 ${photo.date}</span>
+          <span class="photo-likes-pill">💖 <span class="likes-num-${photo.id}">${currentLikes}</span></span>
+        </div>
+      </div>
+    `;
+
+    // Click on heart badge
+    const heartBadge = card.querySelector('.photo-heart-badge');
+    if (heartBadge) {
+      heartBadge.addEventListener('click', (e) => {
+        e.stopPropagation();
+        handleLikePhoto(photo.id, heartBadge, card);
+      });
+    }
+
+    // Click on card to open Lightbox
+    card.addEventListener('click', () => {
+      openPhotoLightbox(index);
+    });
+
+    return card;
+  }
+
+  // Handle Like Action
+  function handleLikePhoto(photoId, badgeElem, cardElem) {
+    const photoObj = CONFIG.photos.find(p => p.id === photoId);
+    const defaultLikes = photoObj ? photoObj.likes : 100;
+    const currentLikes = getPhotoLikes(photoId, defaultLikes);
+    const newLikes = currentLikes + 1;
+    setPhotoLikes(photoId, newLikes);
+    markPhotoLiked(photoId);
+
+    // Update all matching badges & numbers in DOM
+    document.querySelectorAll(`.photo-heart-badge[data-photo-id="${photoId}"]`).forEach(b => {
+      b.classList.add('liked');
+      b.innerHTML = '💖';
+    });
+    document.querySelectorAll(`.likes-num-${photoId}`).forEach(numEl => {
+      numEl.textContent = newLikes;
+    });
+
+    if (badgeElem) {
+      badgeElem.classList.add('liked');
+      badgeElem.innerHTML = '💖';
+      const rect = badgeElem.getBoundingClientRect();
+      spawnBurstHearts(rect.left + rect.width / 2, rect.top + rect.height / 2, 8);
+    }
+
+    if (photoLightboxModal && !photoLightboxModal.classList.contains('hidden') && CONFIG.photos[activePhotoIndex].id === photoId) {
+      if (lightboxLikeCount) lightboxLikeCount.textContent = `${newLikes}+`;
+      if (lightboxHeartIcon) lightboxHeartIcon.textContent = '💖';
+    }
+
+    playCelestialChime();
+  }
+
+  // Floating Hearts Burst Effect
+  function spawnBurstHearts(startX, startY, count = 10) {
+    const emojis = ['💖', '💕', '✨', '🪐', '💫', '🌸', '🤍'];
+    for (let i = 0; i < count; i++) {
+      const heart = document.createElement('span');
+      heart.className = 'floating-love-burst';
+      heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+
+      const tx = (Math.random() - 0.5) * 160;
+      const rot = (Math.random() - 0.5) * 60;
+      heart.style.left = `${startX}px`;
+      heart.style.top = `${startY}px`;
+      heart.style.setProperty('--tx', `${tx}px`);
+      heart.style.setProperty('--rot', `${rot}deg`);
+
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 1900);
+    }
+  }
+
+  // Render Galleries
+  function initGallery() {
+    if (!CONFIG.photos || !CONFIG.photos.length) return;
+
+    // Populate Moving Track (render twice for seamless infinite marquee)
+    if (galleryMoveTrack) {
+      galleryMoveTrack.innerHTML = '';
+      // Set 1
+      CONFIG.photos.forEach((photo, idx) => {
+        galleryMoveTrack.appendChild(createPhotoCard(photo, idx, false));
+      });
+      // Set 2 (for seamless loop)
+      CONFIG.photos.forEach((photo, idx) => {
+        galleryMoveTrack.appendChild(createPhotoCard(photo, idx, true));
+      });
+    }
+
+    // Populate Grid View
+    if (galleryGridView) {
+      galleryGridView.innerHTML = '';
+      CONFIG.photos.forEach((photo, idx) => {
+        galleryGridView.appendChild(createPhotoCard(photo, idx, false));
+      });
+    }
+  }
+
+  initGallery();
+
+  // Mode Switcher (Strip vs Grid)
+  if (modeStripBtn && modeGridBtn) {
+    modeStripBtn.addEventListener('click', () => {
+      modeStripBtn.classList.add('active');
+      modeGridBtn.classList.remove('active');
+      if (galleryMoveViewport) galleryMoveViewport.classList.remove('hidden');
+      if (galleryGridView) galleryGridView.classList.add('hidden');
+    });
+
+    modeGridBtn.addEventListener('click', () => {
+      modeGridBtn.classList.add('active');
+      modeStripBtn.classList.remove('active');
+      if (galleryMoveViewport) galleryMoveViewport.classList.add('hidden');
+      if (galleryGridView) galleryGridView.classList.remove('hidden');
+    });
+  }
+
+  // Play / Pause Marquee
+  if (galleryPlayPauseBtn) {
+    galleryPlayPauseBtn.addEventListener('click', () => {
+      isGalleryPaused = !isGalleryPaused;
+      if (galleryMoveViewport) {
+        galleryMoveViewport.classList.toggle('is-paused', isGalleryPaused);
+      }
+      if (galleryPlayPauseIcon) {
+        galleryPlayPauseIcon.textContent = isGalleryPaused ? '▶️' : '⏸️';
+      }
+      if (galleryPlayPauseLabel) {
+        galleryPlayPauseLabel.textContent = isGalleryPaused ? 'Jalankan' : 'Pause';
+      }
+    });
+  }
+
+  // Navigation Arrows (Smooth horizontal scroll)
+  if (galleryPrevBtn && galleryMoveViewport) {
+    galleryPrevBtn.addEventListener('click', () => {
+      galleryMoveViewport.scrollBy({ left: -340, behavior: 'smooth' });
+    });
+  }
+
+  if (galleryNextBtn && galleryMoveViewport) {
+    galleryNextBtn.addEventListener('click', () => {
+      galleryMoveViewport.scrollBy({ left: 340, behavior: 'smooth' });
+    });
+  }
+
+  // Drag to scroll on viewport
+  if (galleryMoveViewport) {
+    galleryMoveViewport.addEventListener('mousedown', (e) => {
+      isDraggingGallery = true;
+      galleryMoveViewport.classList.add('is-dragging');
+      startX = e.pageX - galleryMoveViewport.offsetLeft;
+      scrollLeft = galleryMoveViewport.scrollLeft;
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (!isDraggingGallery) return;
+      isDraggingGallery = false;
+      if (galleryMoveViewport) galleryMoveViewport.classList.remove('is-dragging');
+    });
+
+    galleryMoveViewport.addEventListener('mousemove', (e) => {
+      if (!isDraggingGallery) return;
+      e.preventDefault();
+      const x = e.pageX - galleryMoveViewport.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      galleryMoveViewport.scrollLeft = scrollLeft - walk;
+    });
+  }
+
+  // Lightbox Modal Functions
+  function openPhotoLightbox(index) {
+    if (!CONFIG.photos || !CONFIG.photos[index]) return;
+    activePhotoIndex = index;
+    const photo = CONFIG.photos[index];
+
+    if (lightboxImg) {
+      lightboxImg.src = photo.url;
+      lightboxImg.onerror = () => {
+        lightboxImg.src = photo.fallback;
+      };
+    }
+
+    if (lightboxCounter) lightboxCounter.textContent = `0${index + 1} / 0${CONFIG.photos.length}`;
+    if (lightboxTag) lightboxTag.textContent = photo.tag;
+    if (lightboxDate) lightboxDate.textContent = `📅 ${photo.date}`;
+    if (lightboxTitle) lightboxTitle.textContent = photo.title;
+    if (lightboxDesc) lightboxDesc.textContent = photo.desc;
+
+    const currentLikes = getPhotoLikes(photo.id, photo.likes);
+    if (lightboxLikeCount) lightboxLikeCount.textContent = `${currentLikes}+`;
+    if (lightboxDownloadBtn) {
+      lightboxDownloadBtn.href = photo.url;
+      lightboxDownloadBtn.setAttribute('download', `Halisa-Fajar-Memory-${index + 1}.jpeg`);
+    }
+
+    if (photoLightboxModal) {
+      photoLightboxModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    playCelestialChime();
+  }
+
+  function closePhotoLightbox() {
+    if (photoLightboxModal) {
+      photoLightboxModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+  }
+
+  function nextPhoto() {
+    activePhotoIndex = (activePhotoIndex + 1) % CONFIG.photos.length;
+    openPhotoLightbox(activePhotoIndex);
+  }
+
+  function prevPhoto() {
+    activePhotoIndex = (activePhotoIndex - 1 + CONFIG.photos.length) % CONFIG.photos.length;
+    openPhotoLightbox(activePhotoIndex);
+  }
+
+  if (lightboxCloseBtn) lightboxCloseBtn.addEventListener('click', closePhotoLightbox);
+  if (lightboxBackdrop) lightboxBackdrop.addEventListener('click', closePhotoLightbox);
+  if (lightboxNextBtn) lightboxNextBtn.addEventListener('click', nextPhoto);
+  if (lightboxPrevBtn) lightboxPrevBtn.addEventListener('click', prevPhoto);
+
+  if (lightboxLoveBtn) {
+    lightboxLoveBtn.addEventListener('click', () => {
+      const photo = CONFIG.photos[activePhotoIndex];
+      if (photo) {
+        handleLikePhoto(photo.id, null, null);
+        const rect = lightboxLoveBtn.getBoundingClientRect();
+        spawnBurstHearts(rect.left + rect.width / 2, rect.top, 14);
+      }
+    });
+  }
+
+  // Keyboard Shortcuts for Lightbox
+  window.addEventListener('keydown', (e) => {
+    if (photoLightboxModal && !photoLightboxModal.classList.contains('hidden')) {
+      if (e.key === 'Escape') closePhotoLightbox();
+      if (e.key === 'ArrowRight') nextPhoto();
+      if (e.key === 'ArrowLeft') prevPhoto();
+    }
+  });
 
   console.log(
     '%c✨ GARGANTUA OF LOVE // BLACK HOLE ✨\n%cDedicated specially for Halisa Nurul Zakia by Fajar Syahruddin.\nGravitasi terkuat di semesta ini adalah cintamu!',

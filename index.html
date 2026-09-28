@@ -100,6 +100,10 @@
       <div class="hero-content hero-content-minimal">
         <!-- Sleek Floating Bottom Dock -->
         <div class="galaxy-quick-dock">
+          <button class="quick-dock-btn" id="dock-gallery-btn">
+            <span class="dock-icon">📸</span>
+            <span class="dock-label">Galeri Foto</span>
+          </button>
           <button class="quick-dock-btn" id="dock-letter-btn">
             <span class="dock-icon">💌</span>
             <span class="dock-label">Surat Cinta</span>
@@ -234,56 +238,55 @@
         </div>
       </section>
 
-      <!-- Section 3: Cosmic Gallery (Our Timeline) -->
+      <!-- Section 3: Cosmic Gallery (Our Timeline & Photos) -->
       <section class="section-container reveal-on-scroll" id="gallery">
         <div class="section-header">
-          <span class="section-tag neon-border">LUMINOUS MOMENTS</span>
+          <span class="section-tag neon-border">✦ LUMINOUS MOMENTS // 7 MEMORI TERINDAH ✦</span>
           <h2 class="section-title">Galeri Memori Kita</h2>
-          <p class="section-subtitle">Serpihan momen berharga yang terpatri abadi dalam semesta cinta kita.</p>
+          <p class="section-subtitle">Serpihan momen berharga bersama Halisa yang bergerak abadi di semesta cinta kita.</p>
         </div>
 
-        <div class="gallery-grid">
-          <div class="gallery-item glass-panel" data-tilt>
-            <div class="gallery-media-placeholder">
-              <div class="placeholder-art art-first-meet">
-                <span class="art-icon">☕</span>
-                <span class="art-glow"></span>
-              </div>
-              <div class="gallery-overlay">
-                <span class="gallery-tag">ORIGIN POINT</span>
-                <h4 class="gallery-item-title">Pertama Kali Ketemu</h4>
-                <p class="gallery-item-desc">Mata kita saling bertemu untuk pertama kalinya, dan semestaku seketika berhenti berputar.</p>
-              </div>
-            </div>
+        <!-- Aesthetic Gallery Toolbar -->
+        <div class="gallery-toolbar glass-panel">
+          <div class="toolbar-modes">
+            <button class="gallery-mode-btn active" id="mode-strip-btn" title="Mode Strip Bergerak">
+              <span class="btn-icon">🎞️</span> Strip Bergerak
+            </button>
+            <button class="gallery-mode-btn" id="mode-grid-btn" title="Mode Grid Estetik">
+              <span class="btn-icon">🖼️</span> Grid Estetik
+            </button>
           </div>
 
-          <div class="gallery-item glass-panel" data-tilt>
-            <div class="gallery-media-placeholder">
-              <div class="placeholder-art art-special-date">
-                <span class="art-icon">🎡</span>
-                <span class="art-glow"></span>
-              </div>
-              <div class="gallery-overlay">
-                <span class="gallery-tag">SWEET MEMORY</span>
-                <h4 class="gallery-item-title">Kencan & Tawa Bersama</h4>
-                <p class="gallery-item-desc">Menikmati malam berdua di bawah taburan lampu kota, ditemani canda tawa yang nggak pernah habis.</p>
-              </div>
-            </div>
+          <div class="toolbar-center">
+            <button class="gallery-ctrl-btn" id="gallery-play-pause-btn" title="Jeda / Putar Gerakan">
+              <span id="gallery-play-pause-icon">⏸️</span>
+              <span id="gallery-play-pause-label">Pause</span>
+            </button>
+            <span class="gallery-badge-info">7 Foto Terpilih ✨</span>
           </div>
 
-          <div class="gallery-item glass-panel" data-tilt>
-            <div class="gallery-media-placeholder">
-              <div class="placeholder-art art-future">
-                <span class="art-icon">🪐</span>
-                <span class="art-glow"></span>
-              </div>
-              <div class="gallery-overlay">
-                <span class="gallery-tag">TO INFINITY</span>
-                <h4 class="gallery-item-title">Masa Depan Bersamamu</h4>
-                <p class="gallery-item-desc">Melangkah berdua mengarungi waktu, saling menggenggam tangan sampai hari tua nanti.</p>
-              </div>
-            </div>
+          <div class="toolbar-nav">
+            <button class="gallery-arrow-btn" id="gallery-prev-btn" aria-label="Geser ke kiri">‹</button>
+            <button class="gallery-arrow-btn" id="gallery-next-btn" aria-label="Geser ke kanan">›</button>
           </div>
+        </div>
+
+        <!-- Moving Viewport (Strip Bergerak) -->
+        <div class="gallery-move-viewport" id="gallery-move-viewport">
+          <div class="gallery-move-track" id="gallery-move-track">
+            <!-- Populated dynamically by script.js -->
+          </div>
+        </div>
+
+        <!-- Grid View (Grid Estetik) -->
+        <div class="gallery-grid-view hidden" id="gallery-grid-view">
+          <!-- Populated dynamically by script.js -->
+        </div>
+
+        <!-- Gallery Tip / Interaction Note -->
+        <div class="gallery-footer-note">
+          <span class="note-icon">💡</span>
+          <span>Arahkan kursor atau sentuh foto untuk menjeda gerakan. Klik foto mana saja untuk melihat kenangan dalam ukuran penuh & kirim cinta 💖</span>
         </div>
       </section>
 
@@ -570,6 +573,73 @@
           <rect x="14" y="4" width="4" height="16"></rect>
         </svg>
       </button>
+    </div>
+  </div>
+
+  <!-- Aesthetic Photo Lightbox Modal ("Cosmic Memories Viewer") -->
+  <div id="photo-lightbox-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="lightbox-title">
+    <div class="modal-backdrop" id="lightbox-backdrop"></div>
+    <div class="lightbox-modal-card glass-panel">
+      <button class="modal-close-btn" id="lightbox-close-btn" aria-label="Tutup Galeri">✕</button>
+
+      <!-- Navigation Arrows -->
+      <button class="lightbox-nav-btn nav-prev" id="lightbox-prev-btn" aria-label="Foto Sebelumnya">‹</button>
+      <button class="lightbox-nav-btn nav-next" id="lightbox-next-btn" aria-label="Foto Berikutnya">›</button>
+
+      <!-- Modal Content Body -->
+      <div class="lightbox-content-grid">
+        <!-- Photo Preview Area -->
+        <div class="lightbox-photo-area">
+          <div class="lightbox-img-frame">
+            <img id="lightbox-img" src="" alt="Kenangan Halisa & Fajar" class="lightbox-img">
+            <div class="lightbox-img-glow"></div>
+          </div>
+          <div class="lightbox-badge-row">
+            <span class="lightbox-counter-pill" id="lightbox-counter">01 / 07</span>
+            <span class="lightbox-tag-pill" id="lightbox-tag">MEMORI ABADI</span>
+          </div>
+        </div>
+
+        <!-- Photo Details & Romantic Words -->
+        <div class="lightbox-info-area">
+          <div class="lightbox-header">
+            <span class="lightbox-date" id="lightbox-date">23 September 2026</span>
+            <h3 class="lightbox-title neon-text-pink" id="lightbox-title">Judul Kenangan</h3>
+          </div>
+
+          <div class="lightbox-quote-box">
+            <svg class="quote-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+            </svg>
+            <p class="lightbox-desc" id="lightbox-desc">Deskripsi kenangan...</p>
+          </div>
+
+          <div class="lightbox-author-note">
+            <span class="note-avatar">🪐</span>
+            <div class="note-text">
+              <strong>Fajar Syahruddin</strong>
+              <span>Untuk Halisa Nurul Zakia — Semestaku 🤍</span>
+            </div>
+          </div>
+
+          <!-- Interactive Actions: Like Button & Download -->
+          <div class="lightbox-actions">
+            <button class="lightbox-action-btn like-btn" id="lightbox-love-btn">
+              <span class="btn-heart-anim" id="lightbox-heart-icon">💖</span>
+              <span id="lightbox-love-text">Kirim Cinta</span>
+              <span class="like-badge" id="lightbox-like-count">999+</span>
+            </button>
+            <a class="lightbox-action-btn download-btn" id="lightbox-download-btn" href="" download target="_blank">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span>Simpan Foto</span>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
