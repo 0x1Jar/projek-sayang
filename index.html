@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Universe of Love — Halisa Nurul Zakia ✨</title>
-  <meta name="description" content="A special cosmic love tribute dedicated to Halisa Nurul Zakia. You are my entire universe.">
+  <meta name="description" content="A 3D cosmic love tribute dedicated to Halisa Nurul Zakia by Fajar Syahruddin. You are my entire universe.">
   <meta name="author" content="Fajar Syahruddin">
   
   <!-- Favicon -->
@@ -15,12 +15,20 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   
+  <!-- Local Three.js with CDN Fallback -->
+  <script src="three.min.js"></script>
+  <script>
+    if (typeof THREE === 'undefined') {
+      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>');
+    }
+  </script>
+  
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="universe-body">
 
-  <!-- Background Interactive Galaxy Canvas -->
-  <canvas id="galaxy-canvas"></canvas>
+  <!-- Fullscreen 3D Three.js Galaxy Canvas Container -->
+  <div id="webgl-galaxy-container"></div>
 
   <!-- Ambient Neon Light Accents (Aura Glows) -->
   <div class="ambient-glow glow-cyan"></div>
@@ -32,6 +40,22 @@
     <source src="music.mp3" type="audio/mp3">
   </audio>
 
+  <!-- 3D Interactive Toast Popup for Clicked Stars/Hearts -->
+  <div id="galaxy-toast" class="galaxy-toast hidden">
+    <div class="toast-backdrop"></div>
+    <div class="toast-card glass-panel">
+      <button class="toast-close" id="toast-close-btn" aria-label="Tutup">✕</button>
+      <div class="toast-badge" id="toast-badge">✦ BISIKAN BINTANG // FAJAR & HALISA ✦</div>
+      <h3 class="toast-title neon-text-pink" id="toast-title">Cinta Sejati</h3>
+      <p class="toast-text" id="toast-message">Di setiap orbit galaksi ini, namamu selalu jadi bintang paling terang di hatiku.</p>
+      <div class="toast-action">
+        <button class="neon-btn neon-btn-primary btn-sm" id="toast-action-btn">
+          <span>Buka Surat Rahasia 💌</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Main Wrapper -->
   <div class="site-container">
     
@@ -39,9 +63,20 @@
     <header class="navbar">
       <div class="nav-brand">
         <span class="pulse-dot"></span>
-        <span class="brand-text">FAJAR & HALISA // ORBIT</span>
+        <span class="brand-text">FAJAR & HALISA // 3D COSMOS</span>
       </div>
+
+      <!-- Mode Switcher & Audio Button -->
       <div class="nav-actions">
+        <div class="view-switch-pill">
+          <button id="btn-mode-galaxy" class="mode-pill-btn active" title="3D Galaxy Exploration">
+            <span>🪐 3D Cosmos</span>
+          </button>
+          <button id="btn-mode-story" class="mode-pill-btn" title="Story & Timeline View">
+            <span>📜 Cerita Kita</span>
+          </button>
+        </div>
+
         <button id="toggle-audio-btn" class="nav-pill-btn" aria-label="Toggle Romantic Music">
           <span class="icon-music">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -50,7 +85,7 @@
               <circle cx="18" cy="16" r="3"></circle>
             </svg>
           </span>
-          <span class="audio-btn-label">Play Atmosphere</span>
+          <span class="audio-btn-label">I Wanna Be Yours</span>
           <div class="equalizer-bars" id="audio-eq">
             <span></span><span></span><span></span><span></span>
           </div>
@@ -58,12 +93,12 @@
       </div>
     </header>
 
-    <!-- Hero Section: The Universe of Halisa -->
+    <!-- Hero Section: The 3D Galaxy Centerpiece -->
     <section class="hero-section" id="hero">
       <div class="hero-content">
         <div class="neon-badge-wrapper">
           <span class="neon-badge">
-            <span class="sparkle">✦</span> COSMIC DEDICATION <span class="sparkle">✦</span>
+            <span class="sparkle">✦</span> 3D INTERACTIVE COSMIC ORBIT <span class="sparkle">✦</span>
           </span>
         </div>
         
@@ -80,40 +115,36 @@
           my world found its center the moment you stepped into my life.
         </p>
 
-        <!-- Interactive Constellation Heart Centerpiece -->
-        <div class="interactive-heart-container">
-          <div class="pulsing-heart" id="pulsing-heart" title="Sentuh untuk meletupkan rasa cinta!">
-            <div class="heart-core">
-              <svg viewBox="0 0 32 32" class="heart-svg">
-                <defs>
-                  <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#ff2a85" />
-                    <stop offset="50%" stop-color="#a855f7" />
-                    <stop offset="100%" stop-color="#00f0ff" />
-                  </linearGradient>
-                  <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
-                    <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur1" />
-                    <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur2" />
-                    <feMerge>
-                      <feMergeNode in="blur2" />
-                      <feMergeNode in="blur1" />
-                      <feMergeNode in="SourceGraphic" />
-                    </feMerge>
-                  </filter>
-                </defs>
-                <path filter="url(#neonGlow)" fill="url(#heartGrad)" d="M16 28.5l-2.3-2.1C5.6 19.1 0 14 0 7.8 0 2.8 3.8 0 8.8 0c2.8 0 5.5 1.3 7.2 3.4C17.7 1.3 20.4 0 23.2 0 28.2 0 32 2.8 32 7.8c0 6.2-5.6 11.3-13.7 18.6L16 28.5z"/>
-              </svg>
-            </div>
-            <div class="orbit-ring orbit-ring-1"></div>
-            <div class="orbit-ring orbit-ring-2"></div>
-            <div class="orbit-ring orbit-ring-3"></div>
-          </div>
-          <span class="tap-hint">✦ Tap the heart to release stardust ✦</span>
+        <!-- 3D Exploration Interactive Instruction Pill -->
+        <div class="galaxy-instruction-pill">
+          <span class="pill-sparkle">✨</span>
+          <span class="pill-text">Geser layar / mouse untuk memutar 3D Galaxy • Klik hati & tulisan yang mengorbit!</span>
+          <span class="pill-sparkle">🪐</span>
+        </div>
+
+        <!-- Quick 3D Quick-Action Dock -->
+        <div class="galaxy-quick-dock">
+          <button class="quick-dock-btn" id="dock-letter-btn">
+            <span class="dock-icon">💌</span>
+            <span class="dock-label">Surat Cinta</span>
+          </button>
+          <button class="quick-dock-btn" id="dock-counter-btn">
+            <span class="dock-icon">⏳</span>
+            <span class="dock-label">Waktu Orbit</span>
+          </button>
+          <button class="quick-dock-btn" id="dock-wish-btn">
+            <span class="dock-icon">🚀</span>
+            <span class="dock-label">Kirim Pesan</span>
+          </button>
+          <button class="quick-dock-btn" id="dock-scanner-btn">
+            <span class="dock-icon">💖</span>
+            <span class="dock-label">Scan Hati</span>
+          </button>
         </div>
 
         <!-- Quick Scroll Indicator -->
-        <a href="#counter" class="scroll-indicator" aria-label="Scroll to our orbit counter">
-          <span class="scroll-text">EXPLORE OUR ORBIT</span>
+        <a href="#counter" class="scroll-indicator" id="scroll-to-story-btn" aria-label="Scroll to our orbit counter">
+          <span class="scroll-text">EXPLORE OUR STORY & VAULT</span>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <polyline points="19 12 12 19 5 12"></polyline>
@@ -408,7 +439,7 @@
             <button id="clear-vault-btn" class="clear-vault-btn" title="Hapus riwayat pesan lokal">Reset</button>
           </div>
           <div class="vault-stream" id="vault-stream">
-            <!-- Messages will be injected here dynamically -->
+            <!-- Messages injected dynamically -->
           </div>
         </div>
       </div>
@@ -540,7 +571,7 @@
         Crafted with infinite love by <strong>Fajar Syahruddin</strong> for <strong>Halisa Nurul Zakia</strong> ✨
       </p>
       <p class="footer-sub">
-        Developed by Fajar Syahruddin // Universe Of Love Edition
+        Developed by Fajar Syahruddin // 3D Universe Of Love Edition
       </p>
     </footer>
 
@@ -577,7 +608,7 @@
         </p>
 
         <p>
-          Aku membuat website kecil bernuansa semesta ini khusus untukmu, sebagai pengingat abadi bahwa di sudut kosmos manapun kita berada, rasa sayang dan kagumku padamu akan selalu ada dan terus bertambah setiap harinya.
+          Aku membuat website 3D semesta galaksi ini khusus untukmu, sebagai pengingat abadi bahwa di sudut kosmos manapun kita berada, rasa sayang dan kagumku padamu akan selalu ada dan terus bertambah setiap harinya.
         </p>
 
         <p class="letter-quote">
