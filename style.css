@@ -2075,15 +2075,31 @@ body.universe-body {
 }
 
 .letter-stamp {
-  width: 52px;
-  height: 52px;
-  border-radius: var(--radius-sm);
-  border: 1.5px dashed var(--neon-pink);
-  display: flex;
-  flex-direction: column;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
+  width: fit-content;
+  min-width: 0;
+  max-width: 100%;
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  border: 1.5px dashed var(--neon-pink);
+  background: rgba(255, 42, 133, 0.08);
+  box-shadow: 0 0 14px rgba(255, 42, 133, 0.2);
+  margin-bottom: 18px;
+  white-space: nowrap;
+}
+
+.stamp-text {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
   color: var(--neon-pink);
+  white-space: nowrap;
+  line-height: 1;
 }
 
 .stamp-code {
@@ -2095,6 +2111,16 @@ body.universe-body {
 
 .stamp-star {
   font-size: 0.8rem;
+}
+
+.letter-heading {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.4;
+  margin-top: 0;
+  margin-bottom: 20px;
 }
 
 .letter-meta {

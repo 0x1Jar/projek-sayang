@@ -1417,23 +1417,19 @@ document.addEventListener('DOMContentLoaded', () => {
       stopProceduralChords();
       setPlaybackState(false);
     } else {
-      if (audioElem) {
-        if (!audioElem.src || audioElem.src.endsWith('/')) {
-          audioElem.src = 'music.mp3';
-        }
-        audioElem.loop = true;
+      if (audioElem && audioElem.src && !audioElem.error) {
         const playPromise = audioElem.play();
         if (playPromise !== undefined) {
           playPromise
             .then(() => {
               setPlaybackState(true);
             })
-            .catch((err) => {
-              console.log('Audio file playback fallback to synth:', err);
+            .catch(() => {
               playProceduralRomanticChords();
               setPlaybackState(true);
             });
         } else {
+          playProceduralRomanticChords();
           setPlaybackState(true);
         }
       } else {
