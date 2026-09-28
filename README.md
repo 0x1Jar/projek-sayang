@@ -2,7 +2,8 @@
 
 Sebuah website hadiah / tribute romantis dengan estetika **Modern Neon Minimalism** (berdasarkan referensi konsep *"Universe Of Love"* dari TikTok @frontiend).
 
-Didesain khusus untuk sang kekasih tercinta: **Halisa Nurul Zakia**.
+* **Developer & Creator**: **Fajar Syahruddin** 👨‍💻❤️
+* **Dedicated to**: **Halisa Nurul Zakia** 🪐✨
 
 ---
 

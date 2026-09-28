@@ -15,7 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
     startDate: new Date(2024, 1, 14, 0, 0, 0),
     startDateFormatted: '14 Februari 2024',
     
-    // Nama Panggilan Pacar
+    // Data Pasangan & Developer
+    developerName: 'Fajar Syahruddin',
+    boyfriendName: 'Fajar Syahruddin',
     girlfriendName: 'Halisa Nurul Zakia',
     nickname: 'Halisa',
 
@@ -552,24 +554,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const romanticResponses = {
     kangen: [
-      "Sinyal rindumu langsung tembus ke orbit hatiku, Halisa sayang! Setiap detik tanpamu rasanya sepi, tapi yakinlah hatiku selalu memelukmu erat dari sini. I miss you more! 🥺💖",
-      "Rasa kangenmu adalah gravitasi terkuat yang selalu menarikku kembali kepadamu. Jangan sedih yaa cantik, sebentar lagi kita ketemu! 💕🪐"
+      "Sinyal rindumu langsung tembus ke orbit hati Fajar, Halisa sayang! Setiap detik tanpamu rasanya sepi, tapi yakinlah Fajar selalu memelukmu erat dari sini. I miss you more! 🥺💖",
+      "Rasa kangen Halisa adalah gravitasi terkuat yang selalu menarik Fajar kembali kepadamu. Jangan sedih yaa cantik, sebentar lagi kita ketemu! 💕🪐"
     ],
     bahagia: [
-      "Melihatmu bahagia adalah pemandangan terindah di seluruh galaksi ini! Semoga senyum manismu selalu bersinar seperti bintang paling terang yaa cintaku! 🥰✨",
-      "Kebahagiaanmu adalah tujuan utamaku. Tetaplah tertawa ceria seperti ini, karena tawamu adalah duniaku! 💖🌸"
+      "Melihat Halisa bahagia adalah kebahagiaan terbesar untuk Fajar! Semoga senyum manismu selalu bersinar seperti bintang paling terang yaa cintaku! 🥰✨",
+      "Kebahagiaanmu adalah tujuan utama Fajar. Tetaplah tertawa ceria seperti ini, karena tawamu adalah duniaku! 💖🌸"
     ],
     peluk: [
-      "Mengirimkan pelukan kosmik paling hangat ke pelukan Halisa sekarang juga! Tarik napas dalam-dalam, pejamkan mata sejenak, dan rasakan kehadiranku di sampingmu 🤍🪐",
-      "Kamu nggak pernah sendirian, sayang. Dalam suka maupun lelahmu, dekapanku selalu jadi tempat pulang ternyamanmu 🤍✨"
+      "Fajar mengirimkan pelukan kosmik paling hangat ke pelukan Halisa sekarang juga! Tarik napas dalam-dalam, pejamkan mata sejenak, dan rasakan kehadiranku di sampingmu 🤍🪐",
+      "Halisa nggak pernah sendirian, sayang. Dalam suka maupun lelahmu, dekapan Fajar selalu jadi tempat pulang ternyamanmu 🤍✨"
     ],
     jajan: [
-      "Permintaan jajan disetujui semesta 100%! Siap-siap yaa sayang, es krim, boba, dan semua makanan kesukaanmu bakal segera meluncur ke hadapanmu! 🍦😋",
-      "Mau jajan apa pun hari ini, katakan saja ratuku! Semua kelezatan di bumi ini siap kupesankan untukmu! 🍔🍰✨"
+      "Permintaan jajan disetujui Fajar 100%! Siap-siap yaa sayang, es krim, boba, dan semua makanan kesukaan Halisa bakal segera Fajar belikan! 🍦😋",
+      "Mau jajan apa pun hari ini, katakan saja ke Fajar! Semua kelezatan di bumi ini siap Fajar pesankan untuk ratuku! 🍔🍰✨"
     ],
     curhat: [
-      "Telinga dan hatiku selalu terbuka 24/7 khusus untuk Halisa. Ceritakan apa saja, aku akan selalu jadi pendengar setiamu dan rumah ternyamanmu 🌙💫",
-      "Terima kasih sudah mau berbagi isi hatimu denganku. Setiap katamu sangat berarti bagiku, sayang 💖🪐"
+      "Telinga dan hati Fajar selalu terbuka 24/7 khusus untuk Halisa. Ceritakan apa saja ke Fajar, aku akan selalu jadi pendengar setiamu dan rumah ternyamanmu 🌙💫",
+      "Terima kasih sudah mau berbagi isi hatimu dengan Fajar. Setiap katamu sangat berarti bagiku, sayang 💖🪐"
     ]
   };
 
@@ -857,7 +859,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   console.log(
-    '%c✨ UNIVERSE OF LOVE ✨\n%cDedicated specially for Halisa Nurul Zakia.\nMay your days be as bright and boundless as the stars!',
+    '%c✨ UNIVERSE OF LOVE ✨\n%cCrafted with infinite love by Fajar Syahruddin for Halisa Nurul Zakia.\nMay your days be as bright and boundless as the stars!',
     'color: #ff2a85; font-size: 16px; font-weight: bold;',
     'color: #00f0ff; font-size: 12px;'
   );
