@@ -28,7 +28,6 @@
 
   <!-- Audio Element (User can replace src with their own audio/mp3 file) -->
   <audio id="romantic-audio" preload="auto" loop>
-    <!-- Fallback or custom mp3 file can be linked here -->
     <source src="music.mp3" type="audio/mp3">
   </audio>
 
@@ -123,7 +122,7 @@
     </section>
 
     <!-- Section 1: Live Orbit Time Counter -->
-    <section class="section-container" id="counter">
+    <section class="section-container reveal-on-scroll" id="counter">
       <div class="section-header">
         <span class="section-tag neon-border">ORBIT DURATION</span>
         <h2 class="section-title">Time In Your Universe</h2>
@@ -162,7 +161,7 @@
     </section>
 
     <!-- Section 2: Constellation of Reasons -->
-    <section class="section-container" id="reasons">
+    <section class="section-container reveal-on-scroll" id="reasons">
       <div class="section-header">
         <span class="section-tag neon-border">CELESTIAL REASONS</span>
         <h2 class="section-title">Why You Are My Universe</h2>
@@ -171,7 +170,7 @@
 
       <div class="reasons-grid">
         <!-- Card 1 -->
-        <div class="reason-card glass-panel">
+        <div class="reason-card glass-panel" data-tilt>
           <div class="card-corner top-left"></div>
           <div class="reason-icon neon-icon-cyan">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
@@ -184,7 +183,7 @@
         </div>
 
         <!-- Card 2 -->
-        <div class="reason-card glass-panel">
+        <div class="reason-card glass-panel" data-tilt>
           <div class="card-corner top-left"></div>
           <div class="reason-icon neon-icon-pink">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
@@ -197,7 +196,7 @@
         </div>
 
         <!-- Card 3 -->
-        <div class="reason-card glass-panel">
+        <div class="reason-card glass-panel" data-tilt>
           <div class="card-corner top-left"></div>
           <div class="reason-icon neon-icon-purple">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
@@ -210,7 +209,7 @@
         </div>
 
         <!-- Card 4 -->
-        <div class="reason-card glass-panel">
+        <div class="reason-card glass-panel" data-tilt>
           <div class="card-corner top-left"></div>
           <div class="reason-icon neon-icon-cyan">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
@@ -223,7 +222,7 @@
         </div>
 
         <!-- Card 5 -->
-        <div class="reason-card glass-panel">
+        <div class="reason-card glass-panel" data-tilt>
           <div class="card-corner top-left"></div>
           <div class="reason-icon neon-icon-pink">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
@@ -236,7 +235,7 @@
         </div>
 
         <!-- Card 6 -->
-        <div class="reason-card glass-panel">
+        <div class="reason-card glass-panel" data-tilt>
           <div class="card-corner top-left"></div>
           <div class="reason-icon neon-icon-purple">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M16.2 7.8l-2 6.3-6.4 2 2-6.3z"></path></svg>
@@ -251,7 +250,7 @@
     </section>
 
     <!-- Section 3: Interactive Visual Memory Gallery -->
-    <section class="section-container" id="gallery">
+    <section class="section-container reveal-on-scroll" id="gallery">
       <div class="section-header">
         <span class="section-tag neon-border">COSMIC MEMORIES</span>
         <h2 class="section-title">Constellation Gallery</h2>
@@ -260,9 +259,8 @@
 
       <div class="gallery-grid">
         <!-- Memory Card 1 -->
-        <div class="gallery-card glass-panel">
+        <div class="gallery-card glass-panel" data-tilt>
           <div class="gallery-img-wrapper">
-            <!-- Aesthetic Neon Cosmic Placeholder with Halisa Avatar -->
             <div class="aesthetic-photo-art photo-art-1">
               <div class="art-overlay"></div>
               <div class="art-planet"></div>
@@ -281,7 +279,7 @@
         </div>
 
         <!-- Memory Card 2 -->
-        <div class="gallery-card glass-panel">
+        <div class="gallery-card glass-panel" data-tilt>
           <div class="gallery-img-wrapper">
             <div class="aesthetic-photo-art photo-art-2">
               <div class="art-overlay"></div>
@@ -301,7 +299,7 @@
         </div>
 
         <!-- Memory Card 3 -->
-        <div class="gallery-card glass-panel">
+        <div class="gallery-card glass-panel" data-tilt>
           <div class="gallery-img-wrapper">
             <div class="aesthetic-photo-art photo-art-3">
               <div class="art-overlay"></div>
@@ -322,8 +320,101 @@
       </div>
     </section>
 
-    <!-- Section 4: Interactive Holographic Love Capsule (Letter) -->
-    <section class="section-container" id="letter">
+    <!-- Section 4: Interactive Starlight Transmitter (Input-Output Console) -->
+    <section class="section-container reveal-on-scroll" id="transmitter">
+      <div class="section-header">
+        <span class="section-tag neon-border">INTERACTIVE TRANSMISSION</span>
+        <h2 class="section-title">Starlight Wish Transmitter</h2>
+        <p class="section-subtitle">Kirimkan pesan, perasaan, atau harapanmu langsung ke orbit semesta kita.</p>
+      </div>
+
+      <div class="transmitter-card glass-panel" data-tilt>
+        <div class="card-glow"></div>
+        
+        <!-- Mood Selector (Input) -->
+        <div class="transmitter-field">
+          <label class="field-label">
+            <span class="label-dot"></span> 1. Pilih Sinyal Suasana Hatimu (Mood):
+          </label>
+          <div class="mood-chips" id="mood-selector">
+            <button type="button" class="mood-chip active" data-mood="kangen" data-emoji="🥺">
+              <span>🥺</span> Kangen Berat
+            </button>
+            <button type="button" class="mood-chip" data-mood="bahagia" data-emoji="🥰">
+              <span>🥰</span> Lagi Bahagia
+            </button>
+            <button type="button" class="mood-chip" data-mood="peluk" data-emoji="🤍">
+              <span>🤍</span> Butuh Pelukan
+            </button>
+            <button type="button" class="mood-chip" data-mood="jajan" data-emoji="🍦">
+              <span>🍦</span> Pengen Jajan
+            </button>
+            <button type="button" class="mood-chip" data-mood="curhat" data-emoji="🌙">
+              <span>🌙</span> Bisikan Rahasia
+            </button>
+          </div>
+        </div>
+
+        <!-- Message Textarea (Input) -->
+        <div class="transmitter-field">
+          <label class="field-label" for="wish-input">
+            <span class="label-dot"></span> 2. Tulis Pesan untuk Duniaku (Halisa):
+          </label>
+          <div class="input-wrapper">
+            <textarea 
+              id="wish-input" 
+              class="neon-textarea" 
+              rows="3" 
+              maxlength="280"
+              placeholder="Contoh: Sayang, temenin aku beli es krim yuk besok... / Jangan lupa istirahat yaa..."></textarea>
+            <span class="char-count" id="char-count">0 / 280</span>
+          </div>
+        </div>
+
+        <!-- Action Submit -->
+        <div class="transmitter-actions">
+          <button id="send-wish-btn" class="neon-btn neon-btn-primary">
+            <span class="btn-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </span>
+            <span class="btn-text">TRANSMIT TO ORBIT 🚀</span>
+          </button>
+        </div>
+
+        <!-- Live Output: Cosmic Response Box -->
+        <div id="transmitter-output" class="transmitter-output hidden">
+          <div class="output-header">
+            <span class="status-indicator">
+              <span class="radar-ping"></span> SINYAL TERHUBUNG DENGAN HALISA
+            </span>
+            <span class="timestamp-tag" id="response-timestamp">JUST NOW</span>
+          </div>
+          <div class="output-body">
+            <div class="output-avatar">🪐</div>
+            <div class="output-speech">
+              <p id="output-response-text" class="typing-text">Menghubungkan ke frekuensi hatimu...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pinned Constellation Messages Stream -->
+        <div class="vault-section">
+          <div class="vault-header">
+            <span class="vault-title">✦ Papan Transmisi Bintang Tersimpan</span>
+            <button id="clear-vault-btn" class="clear-vault-btn" title="Hapus riwayat pesan lokal">Reset</button>
+          </div>
+          <div class="vault-stream" id="vault-stream">
+            <!-- Messages will be injected here dynamically -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Interactive Holographic Love Capsule (Letter) -->
+    <section class="section-container reveal-on-scroll" id="letter">
       <div class="section-header">
         <span class="section-tag neon-border">SECRET TRANSMISSION</span>
         <h2 class="section-title">A Message From My Orbit</h2>
@@ -331,7 +422,7 @@
       </div>
 
       <div class="capsule-container">
-        <div class="capsule-trigger glass-panel" id="open-letter-btn">
+        <div class="capsule-trigger glass-panel" id="open-letter-btn" data-tilt>
           <div class="capsule-glow"></div>
           <div class="capsule-icon-wrap">
             <div class="envelope-neon">
@@ -351,8 +442,64 @@
       </div>
     </section>
 
-    <!-- Section 5: The Celestial Question (Playful Interactive) -->
-    <section class="section-container interactive-question-section" id="question">
+    <!-- Section 6: Interactive Love Resonance Scanner (Hold to Scan Input-Output) -->
+    <section class="section-container reveal-on-scroll" id="scanner">
+      <div class="section-header">
+        <span class="section-tag neon-border">BIOMETRIC SYNC</span>
+        <h2 class="section-title">Cosmic Love Frequency Scanner</h2>
+        <p class="section-subtitle">Sentuh dan tahan pemindai untuk mengukur sinkronisasi hati kita.</p>
+      </div>
+
+      <div class="scanner-card glass-panel" data-tilt>
+        <div class="scanner-core-wrapper">
+          <div class="scanner-ring" id="scanner-ring">
+            <svg class="progress-ring" width="160" height="160">
+              <circle class="progress-ring-bg" stroke="rgba(255, 255, 255, 0.08)" stroke-width="6" fill="transparent" r="70" cx="80" cy="80"/>
+              <circle class="progress-ring-circle" id="scanner-progress-bar" stroke="url(#scannerGradient)" stroke-width="6" stroke-linecap="round" fill="transparent" r="70" cx="80" cy="80"/>
+              <defs>
+                <linearGradient id="scannerGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#00f0ff" />
+                  <stop offset="50%" stop-color="#a855f7" />
+                  <stop offset="100%" stop-color="#ff2a85" />
+                </linearGradient>
+              </defs>
+            </svg>
+            <button id="scanner-btn" class="scanner-button" aria-label="Hold to scan love resonance">
+              <div class="fingerprint-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4"></path>
+                  <path d="M14 13.12c0 2.38 0 6.38-1 8.88"></path>
+                  <path d="M17.29 21.02c.12-.6.43-2.3.5-3.02"></path>
+                  <path d="M2 12a10 10 0 0 1 18-6"></path>
+                  <path d="M2 16h.01"></path>
+                  <path d="M21.8 16c.2-2 .131-5.354 0-6"></path>
+                  <path d="M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2"></path>
+                  <path d="M8.65 22c.21-.66.45-1.32.57-2"></path>
+                  <path d="M9 6.8a6 6 0 0 1 9 5.2v2"></path>
+                </svg>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <div class="scanner-status">
+          <span class="scanner-percentage" id="scanner-percentage">0%</span>
+          <p class="scanner-instruction" id="scanner-instruction">Sentuh & tahan pemindai (Hold for 2s)</p>
+        </div>
+
+        <div class="scanner-result hidden" id="scanner-result">
+          <div class="result-badge">✨ SINKRONISASI SEMPURNA ✨</div>
+          <h3 class="result-freq neon-text-pink">1000% INFINITE LOVE MATCH</h3>
+          <p class="result-desc">
+            Gelombang hati <strong>Halisa Nurul Zakia</strong> dan pasangan beresonansi pada frekuensi abadi. 
+            Tidak ada gaya di alam semesta ini yang bisa memisahkan ikatan kosmik kita! 💖🪐
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 7: The Celestial Question (Playful Interactive) -->
+    <section class="section-container interactive-question-section reveal-on-scroll" id="question">
       <div class="interactive-box glass-panel">
         <div class="interactive-glow"></div>
         <span class="question-tag">FINAL TRANSMISSION</span>
@@ -475,7 +622,7 @@
     </div>
   </div>
 
-  <!-- Cursor Particle Trail (JavaScript Generated) -->
+  <!-- Cursor Particle Trail -->
   <div id="cursor-glow"></div>
 
   <!-- Scripts -->
