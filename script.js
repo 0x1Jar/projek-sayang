@@ -1401,25 +1401,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  if (audioElem) {
+    audioElem.loop = true;
+    audioElem.addEventListener('ended', () => {
+      if (isPlaying) {
+        audioElem.currentTime = 0;
+        audioElem.play().catch(() => {});
+      }
+    });
+  }
+
   function toggleAudio() {
     if (isPlaying) {
       if (audioElem) audioElem.pause();
       stopProceduralChords();
       setPlaybackState(false);
     } else {
-      if (audioElem && audioElem.src && !audioElem.error) {
+      if (audioElem) {
+        if (!audioElem.src || audioElem.src.endsWith('/')) {
+          audioElem.src = 'music.mp3';
+        }
+        audioElem.loop = true;
         const playPromise = audioElem.play();
         if (playPromise !== undefined) {
           playPromise
             .then(() => {
               setPlaybackState(true);
             })
-            .catch(() => {
+            .catch((err) => {
+              console.log('Audio file playback fallback to synth:', err);
               playProceduralRomanticChords();
               setPlaybackState(true);
             });
         } else {
-          playProceduralRomanticChords();
           setPlaybackState(true);
         }
       } else {
