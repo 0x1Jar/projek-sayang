@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Universe of Love — Halisa Nurul Zakia ✨</title>
+  <meta name="description" content="A special cosmic love tribute dedicated to Halisa Nurul Zakia. You are my entire universe.">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🪐</text></svg>">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="universe-body">
+
+  <!-- Background Interactive Galaxy Canvas -->
+  <canvas id="galaxy-canvas"></canvas>
+
+  <!-- Ambient Neon Light Accents (Aura Glows) -->
+  <div class="ambient-glow glow-cyan"></div>
+  <div class="ambient-glow glow-pink"></div>
+  <div class="ambient-glow glow-purple"></div>
+
+  <!-- Audio Element (User can replace src with their own audio/mp3 file) -->
+  <audio id="romantic-audio" preload="auto" loop>
+    <!-- Fallback or custom mp3 file can be linked here -->
+    <source src="music.mp3" type="audio/mp3">
+  </audio>
+
+  <!-- Main Wrapper -->
+  <div class="site-container">
+    
+    <!-- Navigation Bar / Status Pill -->
+    <header class="navbar">
+      <div class="nav-brand">
+        <span class="pulse-dot"></span>
+        <span class="brand-text">HALISA.ORBIT // 01</span>
+      </div>
+      <div class="nav-actions">
+        <button id="toggle-audio-btn" class="nav-pill-btn" aria-label="Toggle Romantic Music">
+          <span class="icon-music">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18V5l12-2v13"></path>
+              <circle cx="6" cy="18" r="3"></circle>
+              <circle cx="18" cy="16" r="3"></circle>
+            </svg>
+          </span>
+          <span class="audio-btn-label">Play Atmosphere</span>
+          <div class="equalizer-bars" id="audio-eq">
+            <span></span><span></span><span></span><span></span>
+          </div>
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero Section: The Universe of Halisa -->
+    <section class="hero-section" id="hero">
+      <div class="hero-content">
+        <div class="neon-badge-wrapper">
+          <span class="neon-badge">
+            <span class="sparkle">✦</span> COSMIC DEDICATION <span class="sparkle">✦</span>
+          </span>
+        </div>
+        
+        <h2 class="hero-subtitle">To the one who holds my cosmos,</h2>
+        
+        <h1 class="hero-title">
+          <span class="name-highlight neon-text-pink">HALISA</span>
+          <span class="name-highlight neon-text-cyan">NURUL</span>
+          <span class="name-highlight neon-text-purple">ZAKIA</span>
+        </h1>
+        
+        <p class="hero-description">
+          In an infinite universe of billions of stars and endless galaxies, 
+          my world found its center the moment you stepped into my life.
+        </p>
+
+        <!-- Interactive Constellation Heart Centerpiece -->
+        <div class="interactive-heart-container">
+          <div class="pulsing-heart" id="pulsing-heart" title="Sentuh untuk meletupkan rasa cinta!">
+            <div class="heart-core">
+              <svg viewBox="0 0 32 32" class="heart-svg">
+                <defs>
+                  <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ff2a85" />
+                    <stop offset="50%" stop-color="#a855f7" />
+                    <stop offset="100%" stop-color="#00f0ff" />
+                  </linearGradient>
+                  <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur1" />
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur2" />
+                    <feMerge>
+                      <feMergeNode in="blur2" />
+                      <feMergeNode in="blur1" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                </defs>
+                <path filter="url(#neonGlow)" fill="url(#heartGrad)" d="M16 28.5l-2.3-2.1C5.6 19.1 0 14 0 7.8 0 2.8 3.8 0 8.8 0c2.8 0 5.5 1.3 7.2 3.4C17.7 1.3 20.4 0 23.2 0 28.2 0 32 2.8 32 7.8c0 6.2-5.6 11.3-13.7 18.6L16 28.5z"/>
+              </svg>
+            </div>
+            <div class="orbit-ring orbit-ring-1"></div>
+            <div class="orbit-ring orbit-ring-2"></div>
+            <div class="orbit-ring orbit-ring-3"></div>
+          </div>
+          <span class="tap-hint">✦ Tap the heart to release stardust ✦</span>
+        </div>
+
+        <!-- Quick Scroll Indicator -->
+        <a href="#counter" class="scroll-indicator" aria-label="Scroll to our orbit counter">
+          <span class="scroll-text">EXPLORE OUR ORBIT</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <polyline points="19 12 12 19 5 12"></polyline>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <!-- Section 1: Live Orbit Time Counter -->
+    <section class="section-container" id="counter">
+      <div class="section-header">
+        <span class="section-tag neon-border">ORBIT DURATION</span>
+        <h2 class="section-title">Time In Your Universe</h2>
+        <p class="section-subtitle">Every millisecond spent loving you is written in the stars.</p>
+      </div>
+
+      <div class="counter-grid">
+        <div class="counter-card glass-panel" data-tilt>
+          <div class="card-glow"></div>
+          <span class="counter-number neon-text-pink" id="count-days">000</span>
+          <span class="counter-label">Days</span>
+        </div>
+        <div class="counter-card glass-panel" data-tilt>
+          <div class="card-glow"></div>
+          <span class="counter-number neon-text-cyan" id="count-hours">00</span>
+          <span class="counter-label">Hours</span>
+        </div>
+        <div class="counter-card glass-panel" data-tilt>
+          <div class="card-glow"></div>
+          <span class="counter-number neon-text-purple" id="count-minutes">00</span>
+          <span class="counter-label">Minutes</span>
+        </div>
+        <div class="counter-card glass-panel" data-tilt>
+          <div class="card-glow"></div>
+          <span class="counter-number neon-text-pink" id="count-seconds">00</span>
+          <span class="counter-label">Seconds</span>
+        </div>
+      </div>
+
+      <div class="counter-footer">
+        <p class="counter-date-note">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          Orbiting together since <strong id="start-date-text">14 Februari 2024</strong>
+        </p>
+      </div>
+    </section>
+
+    <!-- Section 2: Constellation of Reasons -->
+    <section class="section-container" id="reasons">
+      <div class="section-header">
+        <span class="section-tag neon-border">CELESTIAL REASONS</span>
+        <h2 class="section-title">Why You Are My Universe</h2>
+        <p class="section-subtitle">Just a few reasons among the billions of stars in the sky.</p>
+      </div>
+
+      <div class="reasons-grid">
+        <!-- Card 1 -->
+        <div class="reason-card glass-panel">
+          <div class="card-corner top-left"></div>
+          <div class="reason-icon neon-icon-cyan">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>
+          </div>
+          <span class="reason-badge">01 // RADIANCE</span>
+          <h3 class="reason-title">Senyuman Terangmu</h3>
+          <p class="reason-text">
+            Senyuman Halisa punya gravitasi tersendiri. Di hari yang paling rumit dan melelahkan sekalipun, senyummu selalu berhasil membuat duniaku tenang kembali.
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="reason-card glass-panel">
+          <div class="card-corner top-left"></div>
+          <div class="reason-icon neon-icon-pink">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          </div>
+          <span class="reason-badge">02 // SERENITY</span>
+          <h3 class="reason-title">Ketulusan Hatimu</h3>
+          <p class="reason-text">
+            Caramu peduli, caramu mendengar, dan caramu menyayangi dengan tulus tanpa syarat. Kamu adalah anugerah terindah yang Tuhan titipkan ke duniaku.
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="reason-card glass-panel">
+          <div class="card-corner top-left"></div>
+          <div class="reason-icon neon-icon-purple">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          </div>
+          <span class="reason-badge">03 // HARMONY</span>
+          <h3 class="reason-title">Tawamu yang Mengalun</h3>
+          <p class="reason-text">
+            Tawamu adalah melodi terbaik di kosmos ini. Selalu menular, selalu menyenangkan, dan selalu jadi hal yang paling aku tunggu setiap kali kita bicara.
+          </p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="reason-card glass-panel">
+          <div class="card-corner top-left"></div>
+          <div class="reason-icon neon-icon-cyan">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </div>
+          <span class="reason-badge">04 // SAFE HAVEN</span>
+          <h3 class="reason-title">Tempat Pulangku</h3>
+          <p class="reason-text">
+            Di antara riuhnya dunia dan cepatnya waktu berputar, bersamamu adalah satu-satunya tempat di mana aku selalu merasa aman, cukup, dan dimengerti.
+          </p>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="reason-card glass-panel">
+          <div class="card-corner top-left"></div>
+          <div class="reason-icon neon-icon-pink">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+          </div>
+          <span class="reason-badge">05 // DETAIL</span>
+          <h3 class="reason-title">Hal-Hal Kecil Tentangmu</h3>
+          <p class="reason-text">
+            Dari ekspresi gemasmu saat bercerita, cara matamu berbinar ketika membicarakan hal yang kamu sukai, hingga kebiasaan manismu yang selalu kurindukan.
+          </p>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="reason-card glass-panel">
+          <div class="card-corner top-left"></div>
+          <div class="reason-icon neon-icon-purple">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M16.2 7.8l-2 6.3-6.4 2 2-6.3z"></path></svg>
+          </div>
+          <span class="reason-badge">06 // INFINITY</span>
+          <h3 class="reason-title">Masa Depan Bersamamu</h3>
+          <p class="reason-text">
+            Bukan hanya tentang hari ini atau esok hari. Aku ingin melangkah melewati ribuan orbit, musim, dan cerita hidup, selalu bergandengan tangan denganmu.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Interactive Visual Memory Gallery -->
+    <section class="section-container" id="gallery">
+      <div class="section-header">
+        <span class="section-tag neon-border">COSMIC MEMORIES</span>
+        <h2 class="section-title">Constellation Gallery</h2>
+        <p class="section-subtitle">Frames of memories that shine brightest across my sky.</p>
+      </div>
+
+      <div class="gallery-grid">
+        <!-- Memory Card 1 -->
+        <div class="gallery-card glass-panel">
+          <div class="gallery-img-wrapper">
+            <!-- Aesthetic Neon Cosmic Placeholder with Halisa Avatar -->
+            <div class="aesthetic-photo-art photo-art-1">
+              <div class="art-overlay"></div>
+              <div class="art-planet"></div>
+              <div class="art-glow"></div>
+              <div class="art-content">
+                <span class="art-tag">MEMORY // 01</span>
+                <h4>The Day We First Connected</h4>
+                <p>When two wandering stars found the same orbit.</p>
+              </div>
+            </div>
+          </div>
+          <div class="gallery-caption">
+            <span class="caption-date">Chapter I</span>
+            <p class="caption-title">A spark that changed everything ✨</p>
+          </div>
+        </div>
+
+        <!-- Memory Card 2 -->
+        <div class="gallery-card glass-panel">
+          <div class="gallery-img-wrapper">
+            <div class="aesthetic-photo-art photo-art-2">
+              <div class="art-overlay"></div>
+              <div class="art-planet art-planet-cyan"></div>
+              <div class="art-glow"></div>
+              <div class="art-content">
+                <span class="art-tag">MEMORY // 02</span>
+                <h4>Late Night Conversations</h4>
+                <p>Sharing dreams under the quiet moonlight.</p>
+              </div>
+            </div>
+          </div>
+          <div class="gallery-caption">
+            <span class="caption-date">Chapter II</span>
+            <p class="caption-title">Lost in words and soft laughter 🌙</p>
+          </div>
+        </div>
+
+        <!-- Memory Card 3 -->
+        <div class="gallery-card glass-panel">
+          <div class="gallery-img-wrapper">
+            <div class="aesthetic-photo-art photo-art-3">
+              <div class="art-overlay"></div>
+              <div class="art-planet art-planet-purple"></div>
+              <div class="art-glow"></div>
+              <div class="art-content">
+                <span class="art-tag">MEMORY // 03</span>
+                <h4>Every Simple Moment</h4>
+                <p>Even ordinary seconds feel extraordinary with you.</p>
+              </div>
+            </div>
+          </div>
+          <div class="gallery-caption">
+            <span class="caption-date">Chapter III</span>
+            <p class="caption-title">Pure peace in your presence 🪐</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Interactive Holographic Love Capsule (Letter) -->
+    <section class="section-container" id="letter">
+      <div class="section-header">
+        <span class="section-tag neon-border">SECRET TRANSMISSION</span>
+        <h2 class="section-title">A Message From My Orbit</h2>
+        <p class="section-subtitle">An encrypted transmission written specially for Halisa Nurul Zakia.</p>
+      </div>
+
+      <div class="capsule-container">
+        <div class="capsule-trigger glass-panel" id="open-letter-btn">
+          <div class="capsule-glow"></div>
+          <div class="capsule-icon-wrap">
+            <div class="envelope-neon">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+              </svg>
+            </div>
+          </div>
+          <h3 class="capsule-prompt">Surat Khusus untuk Halisa Nurul Zakia</h3>
+          <p class="capsule-subtext">Sentuh kapsul ini untuk membuka transmisi cinta rahasia...</p>
+          <button class="open-capsule-btn">
+            <span>UNSEAL TRANSMISSION</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: The Celestial Question (Playful Interactive) -->
+    <section class="section-container interactive-question-section" id="question">
+      <div class="interactive-box glass-panel">
+        <div class="interactive-glow"></div>
+        <span class="question-tag">FINAL TRANSMISSION</span>
+        <h2 class="question-title">Will You Always Stay In My Universe, Halisa?</h2>
+        <p class="question-desc">
+          Tidak peduli seberapa luas galaksi ini, hatiku sudah menetapkan pilihannya hanya padamu.
+        </p>
+
+        <div class="question-btn-group">
+          <button id="btn-yes" class="neon-btn neon-btn-primary">
+            <span class="btn-text">I Wanna Be Yours, Forever! ✨</span>
+            <div class="btn-glow-layer"></div>
+          </button>
+          
+          <button id="btn-no" class="neon-btn neon-btn-secondary">
+            <span class="btn-text">Hmm, mikir dulu... 😜</span>
+          </button>
+        </div>
+
+        <div id="answer-response" class="answer-response hidden">
+          <div class="response-celebration">
+            <span class="celebration-badge">✦ COSMIC MATCH CONFIRMED ✦</span>
+            <h3 class="response-title neon-text-pink">You are my today and all of my tomorrows!</h3>
+            <p class="response-text">
+              Terima kasih sudah jadi bagian terindah dalam hidupku, <strong>Halisa Nurul Zakia</strong>. 
+              Mari kita buat ribuan kenangan manis lainnya bersama-sama. Aku sayang kamu selalu! ❤️
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-divider"></div>
+      <p class="footer-copy">
+        Crafted with infinite love for <strong>Halisa Nurul Zakia</strong> ✨
+      </p>
+      <p class="footer-sub">
+        Universe Of Love // Modern Neon Minimalism Edition
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- Holographic Letter Modal -->
+  <div class="modal-overlay hidden" id="letter-modal">
+    <div class="modal-backdrop"></div>
+    <div class="modal-card glass-panel">
+      <button class="modal-close-btn" id="close-modal-btn" aria-label="Close letter">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+
+      <div class="letter-header">
+        <div class="letter-stamp">
+          <span class="stamp-code">H.N.Z</span>
+          <span class="stamp-star">✦</span>
+        </div>
+        <div class="letter-meta">
+          <span class="letter-to">Transmission for: <strong>Halisa Nurul Zakia</strong></span>
+          <span class="letter-date" id="letter-current-date">Today & Always</span>
+        </div>
+      </div>
+
+      <div class="letter-body-content">
+        <h3 class="letter-salutation">Hai, Sayangku Halisa...</h3>
+        
+        <p>
+          Mungkin di luar sana ada miliaran bintang, triliunan planet, dan keindahan alam semesta yang luas tanpa batas. Tapi bagiku, semua itu terasa redup bila dibandingkan dengan hangatnya kehadiranmu di hidupku.
+        </p>
+
+        <p>
+          Terima kasih sudah selalu jadi alasan di balik senyumku. Terima kasih untuk setiap kebaikan, kesabaran, dan tawa manis yang selalu kamu bagikan. Bersamamu, hal yang paling sederhana pun terasa begitu istimewa dan bermakna.
+        </p>
+
+        <p>
+          Aku membuat website kecil bernuansa semesta ini khusus untukmu, sebagai pengingat abadi bahwa di sudut kosmos manapun kita berada, rasa sayang dan kagumku padamu akan selalu ada dan terus bertambah setiap harinya.
+        </p>
+
+        <p class="letter-quote">
+          <em>"Secrets I have held in my heart, are harder to hide than I thought... I just wanna be yours."</em>
+        </p>
+
+        <p class="letter-closing">
+          Selamanya menyayangimu,<br>
+          <strong class="neon-text-pink">Seseorang yang Selalu Berada di Orbitmu</strong>
+        </p>
+      </div>
+
+      <div class="letter-footer-action">
+        <button class="neon-btn neon-btn-primary btn-sm" id="kiss-btn">
+          <span>Kirim Peluk & Cium Virtual 💫</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sleek Floating Bottom Mini-Player -->
+  <div class="floating-music-bar" id="floating-player">
+    <div class="music-info">
+      <div class="music-disc" id="music-disc">
+        <div class="disc-inner"></div>
+      </div>
+      <div class="music-text">
+        <span class="music-title">I Wanna Be Yours</span>
+        <span class="music-artist">Arctic Monkeys // Favsoundds</span>
+      </div>
+    </div>
+    
+    <div class="music-controls">
+      <button class="music-toggle-btn" id="play-pause-btn" aria-label="Play/Pause">
+        <svg id="play-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+        <svg id="pause-icon" class="hidden" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <rect x="6" y="4" width="4" height="16"></rect>
+          <rect x="14" y="4" width="4" height="16"></rect>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Cursor Particle Trail (JavaScript Generated) -->
+  <div id="cursor-glow"></div>
+
+  <!-- Scripts -->
+  <script src="script.js"></script>
+</body>
+</html>
