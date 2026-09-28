@@ -181,6 +181,12 @@ body.universe-body {
   position: relative;
 }
 
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
 .nav-brand {
   display: flex;
   align-items: center;
@@ -1460,10 +1466,12 @@ body.universe-body {
   to { transform: scale(1); opacity: 1; }
 }
 
+.modal-close,
 .modal-close-btn {
   position: absolute;
   top: 20px;
   right: 20px;
+  z-index: 10;
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -1477,6 +1485,7 @@ body.universe-body {
   transition: all 0.2s ease;
 }
 
+.modal-close:hover,
 .modal-close-btn:hover {
   background: rgba(255, 255, 255, 0.1);
   color: #fff;
@@ -2086,15 +2095,52 @@ body.universe-body {
 
 /* --- Minimalist Fullscreen Black Hole Hero Section --- */
 .hero-section {
-  min-height: calc(100vh - 120px) !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: flex-end !important;
   align-items: center !important;
   text-align: center !important;
-  padding: 0 0 35px !important;
   position: relative;
   pointer-events: none;
+}
+
+body.mode-galaxy-active {
+  overflow: hidden !important;
+  height: 100vh !important;
+}
+
+body.mode-galaxy-active .site-container {
+  height: 100vh !important;
+  padding: 0 24px 20px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+}
+
+body.mode-galaxy-active .navbar {
+  padding: 16px 0 !important;
+}
+
+body.mode-galaxy-active .hero-section {
+  min-height: auto !important;
+  flex: 1 !important;
+  padding: 0 0 10px !important;
+}
+
+body.mode-story-active {
+  overflow-y: auto !important;
+  min-height: 100vh !important;
+}
+
+body.mode-story-active .site-container {
+  height: auto !important;
+  padding: 0 24px 140px !important;
+  display: block !important;
+}
+
+body.mode-story-active .hero-section {
+  min-height: 85vh !important;
+  padding: 0 0 35px !important;
 }
 
 .hero-content-minimal {
@@ -2106,35 +2152,96 @@ body.universe-body {
   pointer-events: none;
 }
 
-.blackhole-brand-badge {
+/* --- Story Wrapper & Seamless Mode Separation --- */
+.story-wrapper {
+  margin-top: 50px;
+  transition: opacity 0.5s var(--ease-spring), transform 0.5s var(--ease-spring);
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.story-wrapper.hidden {
+  display: none !important;
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+/* Unified Romantic Action Row */
+.hero-action-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  pointer-events: auto;
+}
+
+.hero-touch-hint {
+  font-family: var(--font-body);
+  font-size: 0.74rem;
+  letter-spacing: 0.5px;
+  color: rgba(226, 232, 240, 0.75);
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+}
+
+/* Scroll indicator button */
+.scroll-indicator-btn {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 8px 22px;
-  background: rgba(10, 15, 30, 0.72);
-  border: 1px solid rgba(255, 42, 133, 0.45);
-  box-shadow: 0 0 25px rgba(255, 42, 133, 0.25), inset 0 0 10px rgba(0, 240, 255, 0.15);
+  gap: 8px;
+  margin-top: 0;
+  padding: 10px 22px;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: var(--radius-full);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  font-family: var(--font-heading);
-  font-size: 0.76rem;
-  letter-spacing: 2.5px;
-  color: #ffffff;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-  pointer-events: auto;
-  animation: floatInstruction 4s ease-in-out infinite;
-}
-
-.blackhole-brand-badge .pulse-dot {
-  width: 8px;
-  height: 8px;
-  background: var(--neon-pink);
-  box-shadow: 0 0 10px var(--neon-pink);
-}
-
-.blackhole-brand-badge .badge-text {
-  font-weight: 600;
   color: #f8fafc;
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s var(--ease-spring);
+  pointer-events: auto;
+}
+
+.scroll-indicator-btn:hover {
+  border-color: var(--neon-cyan);
+  color: #ffffff;
+  box-shadow: 0 0 20px var(--neon-cyan-glow);
+  transform: translateY(-2px);
+}
+
+/* Ensure navbar view-switch-pill is always accessible */
+.navbar {
+  z-index: 100;
+}
+
+
+/* --- Fix Letter Modal Fixed Position & Backdrop --- */
+.letter-modal {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 20px !important;
+  transition: opacity 0.35s var(--ease-spring), visibility 0.35s;
+}
+
+.letter-modal.hidden {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+.letter-modal .modal-card {
+  max-width: 580px;
+  width: 100%;
 }

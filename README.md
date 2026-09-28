@@ -1,73 +1,110 @@
-# 🪐 Universe of Love — Gargantua Black Hole Edition ✨
+# 🪐 Universe of Love — Halisa Nurul Zakia ✨
 
-Sebuah website hadiah / tribute romantis dengan estetika **Interstellar Black Hole (Gargantua) dengan Warna Cinta (Colors of Love)** & **Modern Neon Minimalism** (terinspirasi dari konsep *"Universe Of Love"*).
+Sebuah website hadiah / tribute romantis dengan estetika **Modern Neon Minimalism** (berdasarkan referensi konsep *"Universe Of Love"* dari TikTok @frontiend).
 
-- **Didedikasikan Khusus Untuk**: **Halisa Nurul Zakia** 💖
-- **Developer / Creator**: **Fajar Syahruddin** 🪐
-
----
-
-## 🌟 Fitur Utama: 3D Interstellar Gargantua Black Hole
-
-1. **Full-Screen Cinema View (Bebas Teks Penghalang)**:
-   - Tampilan depan dibuat 100% bersih dan luas (*unobstructed view*), membiarkan kemegahan Black Hole menjadi pusat perhatian utama tanpa tertutup teks-teks besar di tengah layar.
-   - Dilengkapi *floating minimalist cyber-romantic HUD* di bagian bawah yang tidak menutupi lubang hitam.
-
-2. **Geometri Relativitas Gargantua (Sesuai Referensi Interstellar)**:
-   - **Inti Bayangan Lubang Hitam (Event Horizon)**: Bola hitam pekat di pusat gravitasi yang menyerap seluruh cahaya.
-   - **Cincin Foton Ultra-Tipis (Einstein Ring)**: Cincin cahaya putih-pink berpendar sangat tajam tepat di tepian bayangan lubang hitam.
-   - **Lengkungan Gravitasi Vertikal (Gravitational Lensing Halo)**: Lengkungan piringan akresi bagian belakang yang dibelokkan oleh gravitasi ekstrem melintasi bagian atas dan bawah bola hitam, membentuk siluet khas Gargantua.
-   - **Piringan Akresi Ekuatorial (Equatorial Accretion Disk)**: Piringan gas bercahaya berputar melintasi bagian depan dan samping lubang hitam dengan kemiringan sinematik diagonal ~14°.
-
-3. **Sentuhan "Warna Cinta" (Colors of Love Palette)**:
-   - **Inti Paling Panas**: Putih pijar starlight berkilau (*Incandescent Pure White* `#ffffff` & *Pale Rose* `#fff1f2`).
-   - **Arus Akresi Utama**: Neon Pink membara (*Electric Hot Pink* `#ff2a85`, *Bright Fuchsia* `#f43f5e`, dan *Glowing Rose Gold* `#fb7185`).
-   - **Tepian Kosmik**: Violet lembut (*Deep Cosmic Violet* `#a855f7` & *Crimson Velvet* `#be185d`).
-   - **Efek Relativistik Doppler**: Sisi kiri yang bergerak mendekat (*approaching observer*) tampak lebih terang dan berenergi tinggi.
-
-4. **Aliran Partikel Keplerian (34.000+ Love Stardust Particles)**:
-   - Puluhan ribu debu bintang berputar dengan kecepatan Keplerian: partikel di dekat *event horizon* berputar sangat kencang, sedangkan partikel di luar melayang anggun.
-
-5. **Hati 3D Mengorbit (Orbiting Love Hearts)**:
-   - 30 hati 3D metalik neon berputar di dalam piringan akresi, bergerak dan menari mengikuti pusaran gravitasi.
-   - **Interaksi Sentuh / Klik**: Sentuh hati atau piringan akresi untuk memicu denting kosmik (*celestial chime*), suara detak jantung ganda (*heartbeat sound*), letupan bintang, dan membuka pesan bisikan cinta dari Fajar di jendela *Galaxy Toast Popup*.
-
-6. **Kontrol Interaktif 360° Drag & Zoom**:
-   - Geser layar / mouse untuk memutar sudut pandang 3D secara bebas ke segala arah dengan inersia mulus (*smooth damping*).
-   - *Scroll* mouse atau cubit layar (*pinch*) untuk zoom in mendekati cincin foton atau zoom out melihat seluruh semesta.
-
-7. **Fitur Romantis Lengkap Tersimpan di Bawah**:
-   - ⏳ **Live Orbit Counter**: Penghitung waktu hubungan detik demi detik sejak **14 Februari 2024**.
-   - 💌 **Holographic Love Capsule**: Kapsul surat cinta rahasia terenkripsi dari Fajar dengan tombol *Kirim Peluk & Cium Virtual*.
-   - 🚀 **Starlight Wish Transmitter**: Halisa bisa mengirimkan pesan & memilih mood, dibalas otomatis oleh semesta, dan tersimpan di *Local Vault*.
-   - 💖 **Biometric Love Scanner**: Sentuh & tahan selama 2 detik untuk menyinkronkan gelombang frekuensi cinta 1000% Infinite Match.
-   - 🎵 **Dual-Mode Music Player**: Memutar file `music.mp3` (*I Wanna Be Yours*) atau alunan synthesizer lofi ambient romantis otomatis.
-   - 😜 **Playful Question**: Pertanyaan cinta dengan tombol "No" yang otomatis menghindar dan kabur saat disentuh!
+Didesain khusus untuk sang kekasih tercinta: **Halisa Nurul Zakia**.
 
 ---
 
-## 🚀 Cara Menjalankan Website di Laptop / HP
+## 🌟 Fitur Utama & Interaksi
 
-Jalankan lokal server:
+1. **Interactive Cosmic Galaxy Canvas**:
+   - Ratusan partikel bintang bercahaya neon (*Electric Cyan*, *Hot Neon Pink*, *Holographic Violet*, dan *Starlight White*).
+   - Efek garis konstelasi dinamis saat bintang berdekatan.
+   - Bintang jatuh (*meteor streaks*) yang melintas melintasi angkasa.
+   - Gravitasi kursor mouse & sentuhan jari layar sentuh.
+
+2. **Smooth Animations & Micro-Interactions**:
+   - **Smooth Scroll Reveal**: Setiap seksi dan kartu meluncur halus ke layar dengan transisi *blur-to-focus* saat di-scroll.
+   - **Interactive 3D Tilt**: Kartu-kartu kaca merespons pergerakan kursor mouse secara 3D (*perspective tilt*).
+   - **Stardust Trail**: Taburan debu bintang neon berkilau saat mouse digerakkan atau layar disentuh.
+
+3. **Hero Centerpiece & Constellation Heart**:
+   - Tipografi modern neon glow dengan nama **HALISA NURUL ZAKIA**.
+   - Jantung kosmik berdenyut dengan cincin orbit neon 3D.
+   - Klik atau sentuh jantung untuk meletupkan taburan bintang cinta (*stardust burst*) dan memainkan melodi.
+
+4. **Interaksi Input-Output: Starlight Wish Transmitter**:
+   - **Input**: Halisa dapat memilih sinyal suasana hati (*Mood*: Kangen, Bahagia, Butuh Peluk, Pengen Jajan, Bisikan Rahasia) dan mengetikkan pesan atau harapan ke dalam *neon textarea*.
+   - **Output Realtime**: 
+     - Sistem membalas otomatis dengan pesan cinta romantis khusus yang diketik secara langsung (*smooth typewriter animation*).
+     - Menembakkan bintang jatuh (*meteor streak*) melintasi langit galaksi!
+     - Menyimpan pesan ke dalam **Papan Transmisi Bintang (Local Vault)** yang tersimpan secara lokal di browser dan bisa dibaca kapan saja oleh kalian berdua.
+
+5. **Interaksi Input-Output: Cosmic Love Frequency Scanner**:
+   - **Input**: Halisa menyentuh dan menahan tombol pemindai biometrik selama 2 detik (*Hold to scan*).
+   - **Output Realtime**:
+     - Animasi lingkaran neon SVG berputar dan persentase sinkronisasi menghitung naik dari `0%` hingga `1000%`.
+     - Denting lonceng kosmik (*celestial chime*), getaran haptic, dan ledakan stardust.
+     - Membuka pengumuman rahasia: *"1000% INFINITE LOVE MATCH — Ditakdirkan bersama selamanya!"*.
+
+6. **Live Orbit Counter (Penghitung Waktu Hubungan)**:
+   - Menghitung secara otomatis dan *real-time* jumlah hari, jam, menit, dan detik sejak kalian pertama bersama.
+
+7. **Constellation of Reasons ("Why You Are My Universe")**:
+   - Kartu-kartu kaca minimalis beraksen neon yang berisi alasan-alasan manis mengapa Halisa adalah duniamu yang paling berharga.
+
+8. **Aesthetic Memory Gallery**:
+   - Galeri memori dengan bingkai kosmik modern bergradasi neon.
+   - Siap diganti dengan foto-foto kenangan asli kalian.
+
+9. **Interactive Holographic Love Capsule (Surat Rahasia)**:
+   - Kapsul digital terenkripsi yang bisa diklik untuk membuka surat cinta bernuansa holografik khusus untuk Halisa.
+   - Tombol interaktif *"Kirim Peluk & Cium Virtual"* yang memunculkan hujan hati neon.
+
+10. **The Celestial Question ("Will You Always Stay In My Universe?")**:
+    - Pertanyaan interaktif:
+      - Tombol **"I Wanna Be Yours, Forever! ✨"**: Memunculkan perayaan kembang api stardust cinta dan memutar musik.
+      - Tombol **"Hmm, mikir dulu... 😜"**: Tombol jahil yang otomatis menghindar atau lari saat kursor diarahkan atau disentuh!
+
+11. **Dual-Mode Ambient Music Player**:
+    - **Mode File Asli**: Cukup masukkan file lagu favorit (seperti lagu *"I Wanna Be Yours"*) dengan nama `music.mp3` ke dalam folder ini.
+    - **Mode Fallback Otomatis (Web Audio API)**: Jika belum ada file MP3, website secara otomatis memainkan alunan synthesizer lofi ambient romantis (*chord progression Fmaj7 - Dm7*) yang menenangkan tanpa perlu koneksi internet.
+
+---
+
+## 🚀 Cara Menjalankan Website di Laptop / Komputer
+
+Kamu bisa langsung melihat hasilnya:
+1. Buka folder ini di Finder / File Explorer.
+2. Klik ganda file **`index.html`** untuk membukanya langsung di browser (Chrome, Safari, Edge, Firefox).
+
+Atau menggunakan lokal server Python:
 ```bash
-cd "/Volumes/DATA/projek sayang"
 python3 -m http.server 3000
 ```
-- Di Laptop: Buka browser di **`http://localhost:3000`**
-- Di HP (WiFi yang sama): Buka **`http://192.168.1.122:3000`**
+Lalu buka browser di `http://localhost:3000`.
 
 ---
 
-## 🌐 Cara Push ke GitHub & Deploy ke Vercel
+## 🌐 Cara Deploy ke Vercel via GitHub
 
+Website ini sudah 100% siap di-deploy ke Vercel dengan konfigurasi file `vercel.json` bawaan:
+
+### Langkah 1: Buat Repository Baru di GitHub
+1. Buka [github.com/new](https://github.com/new).
+2. Beri nama repository (misal: `universe-halisa` atau `projek-sayang`).
+3. Pilih **Public** (atau Private), lalu klik **Create repository**.
+
+### Langkah 2: Hubungkan & Push Repository Lokal
+Buka Terminal di Mac dan jalankan perintah berikut:
 ```bash
 cd "/Volumes/DATA/projek sayang"
 git remote add origin https://github.com/USERNAME_GITHUBMU/universe-halisa.git
 git branch -M main
 git push -u origin main
 ```
-Lalu import ke [vercel.com](https://vercel.com) untuk online secara instan!
+*(Ganti `USERNAME_GITHUBMU` dengan username GitHub milikmu).*
+
+### Langkah 3: Import ke Vercel
+1. Buka [vercel.com](https://vercel.com) dan login menggunakan akun GitHub-mu.
+2. Klik tombol **"Add New..."** > **"Project"**.
+3. Pilih repository `universe-halisa` yang baru saja kamu push.
+4. Pada bagian *Framework Preset*, pilih **Other** (karena website ini adalah Pure Static HTML/CSS/JS).
+5. Klik **"Deploy"**.
+
+Dalam waktu kurang dari 30 detik, website kamu sudah aktif secara global dengan domain gratis dari Vercel (contoh: `https://universe-halisa.vercel.app`) dan siap kamu kirimkan ke Halisa! ✨
 
 ---
 
-*Dibuat dengan segenap cinta oleh **Fajar Syahruddin** untuk **Halisa Nurul Zakia** 💖🪐*
+*Selamat merayakan cinta di galaksi yang indah bersama Halisa Nurul Zakia! 💖🪐*

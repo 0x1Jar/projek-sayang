@@ -15,17 +15,19 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   
-  <!-- Local Three.js with CDN Fallback -->
+  <!-- Three.js (Local with clean fallback) -->
   <script src="three.min.js"></script>
   <script>
     if (typeof THREE === 'undefined') {
-      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>');
+      const s = document.createElement('script');
+      s.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+      document.head.appendChild(s);
     }
   </script>
   
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="universe-body">
+<body class="universe-body mode-galaxy-active">
 
   <!-- Fullscreen 3D Three.js Gargantua Black Hole Canvas Container -->
   <div id="webgl-galaxy-container"></div>
@@ -35,8 +37,8 @@
   <div class="ambient-glow glow-pink"></div>
   <div class="ambient-glow glow-purple"></div>
 
-  <!-- Audio Element -->
-  <audio id="romantic-audio" preload="auto" loop>
+  <!-- Audio Element with preload none to avoid file not found errors -->
+  <audio id="romantic-audio" preload="none">
     <source src="music.mp3" type="audio/mp3">
   </audio>
 
@@ -96,13 +98,6 @@
     <!-- Hero Section: Pure Fullscreen Gargantua Black Hole (Clean, No Clutter) -->
     <section class="hero-section" id="hero">
       <div class="hero-content hero-content-minimal">
-        <!-- Floating Romantic Badge -->
-        <div class="blackhole-brand-badge">
-          <span class="pulse-dot"></span>
-          <span class="badge-text">GARGANTUA OF LOVE // HALISA NURUL ZAKIA</span>
-          <span class="sparkle">✨</span>
-        </div>
-
         <!-- Sleek Floating Bottom Dock -->
         <div class="galaxy-quick-dock">
           <button class="quick-dock-btn" id="dock-letter-btn">
@@ -123,387 +118,391 @@
           </button>
         </div>
 
-        <!-- Interactive Hint Pill -->
-        <div class="galaxy-instruction-pill">
-          <span class="pill-sparkle">✨</span>
-          <span class="pill-text">Putar Black Hole 360° • Zoom • Klik hati & piringan akresi untuk dengar bisikan cinta Fajar</span>
-          <span class="pill-sparkle">🪐</span>
-        </div>
-
-        <!-- Quick Scroll Indicator to Story -->
-        <a href="#counter" class="scroll-indicator" id="scroll-to-story-btn" aria-label="Buka cerita kita">
-          <span class="scroll-text">BUKA KISAH CINTA KITA</span>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="12" y1="5" x2="12" y2="19"></line>
-            <polyline points="19 12 12 19 5 12"></polyline>
-          </svg>
-        </a>
-      </div>
-    </section>
-
-    <!-- Section 1: Live Orbit Time Counter -->
-    <section class="section-container reveal-on-scroll" id="counter">
-      <div class="section-header">
-        <span class="section-tag neon-border">ORBIT DURATION</span>
-        <h2 class="section-title">Time In Your Universe</h2>
-        <p class="section-subtitle">Every millisecond spent loving you is written in the stars.</p>
-      </div>
-
-      <div class="counter-grid">
-        <div class="counter-card glass-panel" data-tilt>
-          <div class="card-glow"></div>
-          <span class="counter-number neon-text-pink" id="count-days">000</span>
-          <span class="counter-label">Days</span>
-        </div>
-        <div class="counter-card glass-panel" data-tilt>
-          <div class="card-glow"></div>
-          <span class="counter-number neon-text-cyan" id="count-hours">00</span>
-          <span class="counter-label">Hours</span>
-        </div>
-        <div class="counter-card glass-panel" data-tilt>
-          <div class="card-glow"></div>
-          <span class="counter-number neon-text-purple" id="count-minutes">00</span>
-          <span class="counter-label">Minutes</span>
-        </div>
-        <div class="counter-card glass-panel" data-tilt>
-          <div class="card-glow"></div>
-          <span class="counter-number neon-text-pink" id="count-seconds">00</span>
-          <span class="counter-label">Seconds</span>
-        </div>
-      </div>
-
-      <div class="counter-footer">
-        <p class="counter-date-note">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-          Orbiting together since <strong id="start-date-text">14 Februari 2024</strong>
-        </p>
-      </div>
-    </section>
-
-    <!-- Section 2: Constellation of Reasons -->
-    <section class="section-container reveal-on-scroll" id="reasons">
-      <div class="section-header">
-        <span class="section-tag neon-border">CONSTELLATION OF REASONS</span>
-        <h2 class="section-title">Why You Are My Universe</h2>
-        <p class="section-subtitle">Out of 8 billion souls on Earth, my heart gravity pulled straight to you.</p>
-      </div>
-
-      <div class="reasons-grid">
-        <div class="reason-card glass-panel" data-tilt>
-          <div class="reason-icon-wrapper">
-            <span class="reason-icon">✨</span>
-          </div>
-          <h3 class="reason-title">Senyuman Paling Terang</h3>
-          <p class="reason-text">Senyummu punya kekuatan aneh yang bisa meredakan badai terhebat di hari-hariku yang melelahkan. It is my favorite star.</p>
-        </div>
-
-        <div class="reason-card glass-panel" data-tilt>
-          <div class="reason-icon-wrapper">
-            <span class="reason-icon">🪐</span>
-          </div>
-          <h3 class="reason-title">Rumah Terhangatku</h3>
-          <p class="reason-text">Bersamamu, aku merasa pulang. Nggak ada pura-pura, hanya ketenangan tanpa batas di sampingmu, Halisa.</p>
-        </div>
-
-        <div class="reason-card glass-panel" data-tilt>
-          <div class="reason-icon-wrapper">
-            <span class="reason-icon">🌙</span>
-          </div>
-          <h3 class="reason-title">Ketulusan Hatimu</h3>
-          <p class="reason-text">Caramu peduli, perhatian-perhatian kecilmu, dan bagaimana caramu memandang dunia dengan kelembutan yang luar biasa.</p>
-        </div>
-
-        <div class="reason-card glass-panel" data-tilt>
-          <div class="reason-icon-wrapper">
-            <span class="reason-icon">💫</span>
-          </div>
-          <h3 class="reason-title">Tawamu yang Menular</h3>
-          <p class="reason-text">Mendengarmu tertawa lepas adalah melodi paling merdu di seluruh galaksi ini. Jangan pernah berhenti bahagia yaa.</p>
-        </div>
-
-        <div class="reason-card glass-panel" data-tilt>
-          <div class="reason-icon-wrapper">
-            <span class="reason-icon">🌸</span>
-          </div>
-          <h3 class="reason-title">Teman Terbaikku</h3>
-          <p class="reason-text">Bukan cuma pacar, kamu adalah sahabat terbaik tempat aku berbagi lelucon receh, rahasia terdalam, dan mimpi-mimpi besar.</p>
-        </div>
-
-        <div class="reason-card glass-panel" data-tilt>
-          <div class="reason-icon-wrapper">
-            <span class="reason-icon">♾️</span>
-          </div>
-          <h3 class="reason-title">Karena Kamu Halisa</h3>
-          <p class="reason-text">Sederhana saja: aku menyayangimu karena kamu adalah dirimu sendiri, seutuhnya, tanpa perlu menjadi siapa pun selain Halisa.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 3: Cosmic Gallery (Our Timeline) -->
-    <section class="section-container reveal-on-scroll" id="gallery">
-      <div class="section-header">
-        <span class="section-tag neon-border">LUMINOUS MOMENTS</span>
-        <h2 class="section-title">Galeri Memori Kita</h2>
-        <p class="section-subtitle">Serpihan momen berharga yang terpatri abadi dalam semesta cinta kita.</p>
-      </div>
-
-      <div class="gallery-grid">
-        <div class="gallery-item glass-panel" data-tilt>
-          <div class="gallery-media-placeholder">
-            <div class="placeholder-art art-first-meet">
-              <span class="art-icon">☕</span>
-              <span class="art-glow"></span>
-            </div>
-            <div class="gallery-overlay">
-              <span class="gallery-tag">ORIGIN POINT</span>
-              <h4 class="gallery-item-title">Pertama Kali Ketemu</h4>
-              <p class="gallery-item-desc">Mata kita saling bertemu untuk pertama kalinya, dan semestaku seketika berhenti berputar.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="gallery-item glass-panel" data-tilt>
-          <div class="gallery-media-placeholder">
-            <div class="placeholder-art art-special-date">
-              <span class="art-icon">🎡</span>
-              <span class="art-glow"></span>
-            </div>
-            <div class="gallery-overlay">
-              <span class="gallery-tag">SWEET MEMORY</span>
-              <h4 class="gallery-item-title">Kencan & Tawa Bersama</h4>
-              <p class="gallery-item-desc">Menikmati malam berdua di bawah taburan lampu kota, ditemani canda tawa yang nggak pernah habis.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="gallery-item glass-panel" data-tilt>
-          <div class="gallery-media-placeholder">
-            <div class="placeholder-art art-future">
-              <span class="art-icon">🪐</span>
-              <span class="art-glow"></span>
-            </div>
-            <div class="gallery-overlay">
-              <span class="gallery-tag">TO INFINITY</span>
-              <h4 class="gallery-item-title">Masa Depan Bersamamu</h4>
-              <p class="gallery-item-desc">Melangkah berdua mengarungi waktu, saling menggenggam tangan sampai hari tua nanti.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 4: Interactive Input-Output: Starlight Wish Transmitter -->
-    <section class="section-container reveal-on-scroll" id="transmitter">
-      <div class="section-header">
-        <span class="section-tag neon-border">INPUT // TRANSMISSION</span>
-        <h2 class="section-title">Starlight Wish Transmitter</h2>
-        <p class="section-subtitle">Kirimkan getaran rasa atau harapanmu ke orbit cinta kita. Semesta akan langsung membalasmu.</p>
-      </div>
-
-      <div class="transmitter-card glass-panel">
-        <!-- Mood Selector (Input) -->
-        <div class="transmitter-field">
-          <label class="field-label">
-            <span class="label-dot"></span> 1. Pilih Frekuensi Suasana Hatimu Sekarang:
-          </label>
-          <div class="mood-chips" id="mood-chips">
-            <button class="mood-chip active" data-mood="kangen" data-emoji="🥺">
-              <span>🥺 Kangen Berat</span>
-            </button>
-            <button class="mood-chip" data-mood="bahagia" data-emoji="🥰">
-              <span>🥰 Lagi Senang / Bahagia</span>
-            </button>
-            <button class="mood-chip" data-mood="peluk" data-emoji="🤍">
-              <span>🤍 Butuh Peluk Virtual</span>
-            </button>
-            <button class="mood-chip" data-mood="jajan" data-emoji="😋">
-              <span>😋 Pengen Jajan Bareng</span>
-            </button>
-            <button class="mood-chip" data-mood="curhat" data-emoji="🌙">
-              <span>🌙 Pengen Curhat / Ngobrol</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Message Textarea (Input) -->
-        <div class="transmitter-field">
-          <label class="field-label" for="wish-input">
-            <span class="label-dot"></span> 2. Tulis Pesan untuk Fajar (Duniaku):
-          </label>
-          <div class="input-wrapper">
-            <textarea 
-              id="wish-input" 
-              class="neon-textarea" 
-              rows="3" 
-              maxlength="280"
-              placeholder="Contoh: Fajar sayang, temenin aku beli es krim yuk besok... / Jangan lupa istirahat yaa..."></textarea>
-            <span class="char-count" id="char-count">0 / 280</span>
-          </div>
-        </div>
-
-        <!-- Submit Button (Interactive Action) -->
-        <div class="transmitter-action">
-          <button class="neon-btn neon-btn-primary" id="send-wish-btn">
-            <span class="btn-text">Transmisikan Pesan ke Orbit 🚀</span>
-            <span class="btn-glow"></span>
-          </button>
-        </div>
-
-        <!-- Real-Time Output Display -->
-        <div class="transmitter-output hidden" id="transmitter-output">
-          <div class="output-header">
-            <span class="status-indicator live"></span>
-            <span class="output-title">TRANSMISI DITERIMA DI ORBIT FAJAR // RESPONSE READY:</span>
-            <span class="output-time" id="response-timestamp">Just now</span>
-          </div>
-          <div class="output-body">
-            <p class="output-response" id="output-response-text"></p>
-          </div>
-        </div>
-
-        <!-- Local Starlight Vault (History Stream) -->
-        <div class="vault-container">
-          <div class="vault-header">
-            <span class="vault-title">✦ PAPAN TRANSMISI BINTANG KITA (TERSIMPAN DI PERANGKAT INI) ✦</span>
-            <button class="vault-clear-btn" id="clear-vault-btn" title="Hapus Riwayat">Bersihkan</button>
-          </div>
-          <div class="vault-stream" id="vault-stream">
-            <!-- Dynamic saved items will be rendered here -->
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 5: Interactive Input-Output: Cosmic Love Frequency Scanner -->
-    <section class="section-container reveal-on-scroll" id="scanner">
-      <div class="section-header">
-        <span class="section-tag neon-border">BIOMETRIC // RESONANCE</span>
-        <h2 class="section-title">Cosmic Love Frequency Scanner</h2>
-        <p class="section-subtitle">Sentuh dan tahan pemindai biometrik untuk menyinkronkan frekuensi gelombang cintamu dengan Fajar.</p>
-      </div>
-
-      <div class="scanner-card glass-panel">
-        <div class="scanner-interactive-zone">
-          
-          <!-- Radial Progress SVG -->
-          <div class="scanner-ring-container">
-            <svg class="scanner-ring-svg" viewBox="0 0 160 160">
-              <circle class="ring-bg" cx="80" cy="80" r="70"></circle>
-              <circle class="ring-progress" id="scanner-progress-bar" cx="80" cy="80" r="70"></circle>
+        <!-- Unified Romantic Action Button & Hint -->
+        <div class="hero-action-row">
+          <button class="scroll-indicator-btn" id="scroll-to-story-btn" aria-label="Buka kisah cinta kita">
+            <span class="pill-sparkle">📜</span>
+            <span class="scroll-text">Buka Kisah Cinta Kita</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <polyline points="19 12 12 19 5 12"></polyline>
             </svg>
+          </button>
+          <span class="hero-touch-hint">✨ Geser layar untuk putar 360° • Zoom • Sentuh hati di orbit</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Collapsible Story Sections Wrapper (Cleanly separated from 3D Black Hole) -->
+    <div id="story-sections-wrapper" class="story-wrapper hidden">
+      
+      <!-- Section 1: Live Orbit Time Counter -->
+      <section class="section-container reveal-on-scroll" id="counter">
+        <div class="section-header">
+          <span class="section-tag neon-border">ORBIT DURATION</span>
+          <h2 class="section-title">Time In Your Universe</h2>
+          <p class="section-subtitle">Every millisecond spent loving you is written in the stars.</p>
+        </div>
+
+        <div class="counter-grid">
+          <div class="counter-card glass-panel" data-tilt>
+            <div class="card-glow"></div>
+            <span class="counter-number neon-text-pink" id="count-days">000</span>
+            <span class="counter-label">Days</span>
+          </div>
+          <div class="counter-card glass-panel" data-tilt>
+            <div class="card-glow"></div>
+            <span class="counter-number neon-text-cyan" id="count-hours">00</span>
+            <span class="counter-label">Hours</span>
+          </div>
+          <div class="counter-card glass-panel" data-tilt>
+            <div class="card-glow"></div>
+            <span class="counter-number neon-text-purple" id="count-minutes">00</span>
+            <span class="counter-label">Minutes</span>
+          </div>
+          <div class="counter-card glass-panel" data-tilt>
+            <div class="card-glow"></div>
+            <span class="counter-number neon-text-pink" id="count-seconds">00</span>
+            <span class="counter-label">Seconds</span>
+          </div>
+        </div>
+
+        <div class="counter-footer">
+          <p class="counter-date-note">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            Orbiting together since <strong id="start-date-text">14 Februari 2024</strong>
+          </p>
+        </div>
+      </section>
+
+      <!-- Section 2: Constellation of Reasons -->
+      <section class="section-container reveal-on-scroll" id="reasons">
+        <div class="section-header">
+          <span class="section-tag neon-border">CONSTELLATION OF REASONS</span>
+          <h2 class="section-title">Why You Are My Universe</h2>
+          <p class="section-subtitle">Out of 8 billion souls on Earth, my heart gravity pulled straight to you.</p>
+        </div>
+
+        <div class="reasons-grid">
+          <div class="reason-card glass-panel" data-tilt>
+            <div class="reason-icon-wrapper">
+              <span class="reason-icon">✨</span>
+            </div>
+            <h3 class="reason-title">Senyuman Paling Terang</h3>
+            <p class="reason-text">Senyummu punya kekuatan aneh yang bisa meredakan badai terhebat di hari-hariku yang melelahkan. It is my favorite star.</p>
+          </div>
+
+          <div class="reason-card glass-panel" data-tilt>
+            <div class="reason-icon-wrapper">
+              <span class="reason-icon">🪐</span>
+            </div>
+            <h3 class="reason-title">Rumah Terhangatku</h3>
+            <p class="reason-text">Bersamamu, aku merasa pulang. Nggak ada pura-pura, hanya ketenangan tanpa batas di sampingmu, Halisa.</p>
+          </div>
+
+          <div class="reason-card glass-panel" data-tilt>
+            <div class="reason-icon-wrapper">
+              <span class="reason-icon">🌙</span>
+            </div>
+            <h3 class="reason-title">Ketulusan Hatimu</h3>
+            <p class="reason-text">Caramu peduli, perhatian-perhatian kecilmu, dan bagaimana caramu memandang dunia dengan kelembutan yang luar biasa.</p>
+          </div>
+
+          <div class="reason-card glass-panel" data-tilt>
+            <div class="reason-icon-wrapper">
+              <span class="reason-icon">💫</span>
+            </div>
+            <h3 class="reason-title">Tawamu yang Menular</h3>
+            <p class="reason-text">Mendengarmu tertawa lepas adalah melodi paling merdu di seluruh galaksi ini. Jangan pernah berhenti bahagia yaa.</p>
+          </div>
+
+          <div class="reason-card glass-panel" data-tilt>
+            <div class="reason-icon-wrapper">
+              <span class="reason-icon">🌸</span>
+            </div>
+            <h3 class="reason-title">Teman Terbaikku</h3>
+            <p class="reason-text">Bukan cuma pacar, kamu adalah sahabat terbaik tempat aku berbagi lelucon receh, rahasia terdalam, dan mimpi-mimpi besar.</p>
+          </div>
+
+          <div class="reason-card glass-panel" data-tilt>
+            <div class="reason-icon-wrapper">
+              <span class="reason-icon">♾️</span>
+            </div>
+            <h3 class="reason-title">Karena Kamu Halisa</h3>
+            <p class="reason-text">Sederhana saja: aku menyayangimu karena kamu adalah dirimu sendiri, seutuhnya, tanpa perlu menjadi siapa pun selain Halisa.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 3: Cosmic Gallery (Our Timeline) -->
+      <section class="section-container reveal-on-scroll" id="gallery">
+        <div class="section-header">
+          <span class="section-tag neon-border">LUMINOUS MOMENTS</span>
+          <h2 class="section-title">Galeri Memori Kita</h2>
+          <p class="section-subtitle">Serpihan momen berharga yang terpatri abadi dalam semesta cinta kita.</p>
+        </div>
+
+        <div class="gallery-grid">
+          <div class="gallery-item glass-panel" data-tilt>
+            <div class="gallery-media-placeholder">
+              <div class="placeholder-art art-first-meet">
+                <span class="art-icon">☕</span>
+                <span class="art-glow"></span>
+              </div>
+              <div class="gallery-overlay">
+                <span class="gallery-tag">ORIGIN POINT</span>
+                <h4 class="gallery-item-title">Pertama Kali Ketemu</h4>
+                <p class="gallery-item-desc">Mata kita saling bertemu untuk pertama kalinya, dan semestaku seketika berhenti berputar.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-item glass-panel" data-tilt>
+            <div class="gallery-media-placeholder">
+              <div class="placeholder-art art-special-date">
+                <span class="art-icon">🎡</span>
+                <span class="art-glow"></span>
+              </div>
+              <div class="gallery-overlay">
+                <span class="gallery-tag">SWEET MEMORY</span>
+                <h4 class="gallery-item-title">Kencan & Tawa Bersama</h4>
+                <p class="gallery-item-desc">Menikmati malam berdua di bawah taburan lampu kota, ditemani canda tawa yang nggak pernah habis.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="gallery-item glass-panel" data-tilt>
+            <div class="gallery-media-placeholder">
+              <div class="placeholder-art art-future">
+                <span class="art-icon">🪐</span>
+                <span class="art-glow"></span>
+              </div>
+              <div class="gallery-overlay">
+                <span class="gallery-tag">TO INFINITY</span>
+                <h4 class="gallery-item-title">Masa Depan Bersamamu</h4>
+                <p class="gallery-item-desc">Melangkah berdua mengarungi waktu, saling menggenggam tangan sampai hari tua nanti.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 4: Interactive Input-Output: Starlight Wish Transmitter -->
+      <section class="section-container reveal-on-scroll" id="transmitter">
+        <div class="section-header">
+          <span class="section-tag neon-border">INPUT // TRANSMISSION</span>
+          <h2 class="section-title">Starlight Wish Transmitter</h2>
+          <p class="section-subtitle">Kirimkan getaran rasa atau harapanmu ke orbit cinta kita. Semesta akan langsung membalasmu.</p>
+        </div>
+
+        <div class="transmitter-card glass-panel">
+          <!-- Mood Selector (Input) -->
+          <div class="transmitter-field">
+            <label class="field-label">
+              <span class="label-dot"></span> 1. Pilih Frekuensi Suasana Hatimu Sekarang:
+            </label>
+            <div class="mood-chips" id="mood-chips">
+              <button class="mood-chip active" data-mood="kangen" data-emoji="🥺">
+                <span>🥺 Kangen Berat</span>
+              </button>
+              <button class="mood-chip" data-mood="bahagia" data-emoji="🥰">
+                <span>🥰 Lagi Senang / Bahagia</span>
+              </button>
+              <button class="mood-chip" data-mood="peluk" data-emoji="🤍">
+                <span>🤍 Butuh Peluk Virtual</span>
+              </button>
+              <button class="mood-chip" data-mood="jajan" data-emoji="😋">
+                <span>😋 Pengen Jajan Bareng</span>
+              </button>
+              <button class="mood-chip" data-mood="curhat" data-emoji="🌙">
+                <span>🌙 Pengen Curhat / Ngobrol</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Message Textarea (Input) -->
+          <div class="transmitter-field">
+            <label class="field-label" for="wish-input">
+              <span class="label-dot"></span> 2. Tulis Pesan untuk Fajar (Duniaku):
+            </label>
+            <div class="input-wrapper">
+              <textarea 
+                id="wish-input" 
+                name="wish-message"
+                aria-label="Tulis Pesan untuk Fajar (Duniaku)"
+                class="neon-textarea" 
+                rows="3" 
+                maxlength="280"
+                placeholder="Contoh: Fajar sayang, temenin aku beli es krim yuk besok... / Jangan lupa istirahat yaa..."></textarea>
+              <span class="char-count" id="char-count">0 / 280</span>
+            </div>
+          </div>
+
+          <!-- Submit Button (Interactive Action) -->
+          <div class="transmitter-action">
+            <button class="neon-btn neon-btn-primary" id="send-wish-btn">
+              <span class="btn-text">Transmisikan Pesan ke Orbit 🚀</span>
+              <span class="btn-glow"></span>
+            </button>
+          </div>
+
+          <!-- Real-Time Output Display -->
+          <div class="transmitter-output hidden" id="transmitter-output">
+            <div class="output-header">
+              <span class="status-indicator live"></span>
+              <span class="output-title">TRANSMISI DITERIMA DI ORBIT FAJAR // RESPONSE READY:</span>
+              <span class="output-time" id="response-timestamp">Just now</span>
+            </div>
+            <div class="output-body">
+              <p class="output-response" id="output-response-text"></p>
+            </div>
+          </div>
+
+          <!-- Local Starlight Vault (History Stream) -->
+          <div class="vault-container">
+            <div class="vault-header">
+              <span class="vault-title">✦ PAPAN TRANSMISI BINTANG KITA (TERSIMPAN DI PERANGKAT INI) ✦</span>
+              <button class="vault-clear-btn" id="clear-vault-btn" title="Hapus Riwayat">Bersihkan</button>
+            </div>
+            <div class="vault-stream" id="vault-stream">
+              <!-- Dynamic saved items will be rendered here -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 5: Interactive Input-Output: Cosmic Love Frequency Scanner -->
+      <section class="section-container reveal-on-scroll" id="scanner">
+        <div class="section-header">
+          <span class="section-tag neon-border">BIOMETRIC // RESONANCE</span>
+          <h2 class="section-title">Cosmic Love Frequency Scanner</h2>
+          <p class="section-subtitle">Sentuh dan tahan pemindai biometrik untuk menyinkronkan frekuensi gelombang cintamu dengan Fajar.</p>
+        </div>
+
+        <div class="scanner-card glass-panel">
+          <div class="scanner-interactive-zone">
             
-            <!-- Touch & Hold Scanner Target -->
-            <button class="scanner-touch-target" id="scanner-btn" aria-label="Touch and hold to scan love frequency">
-              <div class="target-radar"></div>
-              <div class="target-icon">💖</div>
-              <span class="target-percent" id="scanner-percentage">0%</span>
+            <!-- Radial Progress SVG -->
+            <div class="scanner-ring-container">
+              <svg class="scanner-ring-svg" viewBox="0 0 160 160">
+                <circle class="ring-bg" cx="80" cy="80" r="70"></circle>
+                <circle class="ring-progress" id="scanner-progress-bar" cx="80" cy="80" r="70"></circle>
+              </svg>
+              
+              <!-- Touch & Hold Scanner Target -->
+              <button class="scanner-touch-target" id="scanner-btn" aria-label="Touch and hold to scan love frequency">
+                <div class="target-radar"></div>
+                <div class="target-icon">💖</div>
+                <span class="target-percent" id="scanner-percentage">0%</span>
+              </button>
+            </div>
+
+            <p class="scanner-instruction" id="scanner-instruction">Sentuh & tahan pemindai (Hold for 2s)</p>
+          </div>
+
+          <!-- Scanner Real-Time Output Result -->
+          <div class="scanner-result hidden" id="scanner-result">
+            <div class="result-badge">✦ HASIL SINKRONISASI KOSMIK ✦</div>
+            <h3 class="result-title neon-text-pink">1000% INFINITE LOVE MATCH</h3>
+            <p class="result-desc">
+              Gelombang frekuensi jantung Halisa Nurul Zakia terdeteksi beresonansi sempurna 1:1 dengan orbit hati Fajar Syahruddin.
+              Dua jiwa yang ditakdirkan bersama sejak awal terciptanya semesta! 🪐💍✨
+            </p>
+            <div class="result-stats">
+              <div class="stat-pill">
+                <span class="stat-label">Gravitasi Kasih</span>
+                <span class="stat-val">Tanpa Batas</span>
+              </div>
+              <div class="stat-pill">
+                <span class="stat-label">Kecocokan Jiwa</span>
+                <span class="stat-val">100.0% Mutlak</span>
+              </div>
+              <div class="stat-pill">
+                <span class="stat-label">Masa Berlaku</span>
+                <span class="stat-val">Selamanya ♾️</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 6: Interactive Love Capsule (Letter to Halisa) -->
+      <section class="section-container reveal-on-scroll" id="letter">
+        <div class="section-header">
+          <span class="section-tag neon-border">CONFIDENTIAL // FOR HER EYES ONLY</span>
+          <h2 class="section-title">A Message Written In The Stars</h2>
+          <p class="section-subtitle">Sebuah kapsul pesan digital yang terenkripsi khusus untukmu.</p>
+        </div>
+
+        <div class="capsule-wrapper">
+          <div class="capsule-trigger glass-panel" id="open-letter-btn" data-tilt>
+            <div class="capsule-glow"></div>
+            <div class="capsule-icon">💌</div>
+            <div class="capsule-info">
+              <span class="capsule-badge">KLIK UNTUK MEMBUKA</span>
+              <h3 class="capsule-title">Surat Rahasia untuk Halisa Nurul Zakia</h3>
+              <p class="capsule-meta">Status: Tersegel dengan Rasa Sayang • Khusus Dibaca Halisa</p>
+            </div>
+            <div class="capsule-arrow">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14"></path>
+                <path d="m12 5 7 7-7 7"></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 7: The Celestial Question -->
+      <section class="section-container reveal-on-scroll" id="question">
+        <div class="interactive-question-card glass-panel">
+          <span class="question-badge">✦ ONE IMPORTANT QUESTION ✦</span>
+          <h2 class="question-title">Will You Always Stay In My Universe?</h2>
+          <p class="question-subtitle">Tak peduli sejauh apa waktu membawa kita, maukah kamu terus berjalan berdua bersamaku?</p>
+          
+          <div class="question-btn-group">
+            <button class="neon-btn neon-btn-primary btn-large" id="btn-yes">
+              <span class="btn-text">I Wanna Be Yours, Forever! ✨</span>
+              <span class="btn-glow"></span>
+            </button>
+            
+            <button class="neon-btn neon-btn-secondary" id="btn-no">
+              <span class="btn-text">Hmm, mikir dulu... 😜</span>
             </button>
           </div>
 
-          <p class="scanner-instruction" id="scanner-instruction">Sentuh & tahan pemindai (Hold for 2s)</p>
+          <div class="answer-response hidden" id="answer-response">
+            <div class="celebration-badge">✦ JANJI KOSMIK DITERIMA ✦</div>
+            <h3 class="celebration-title neon-text-pink">You just made me the happiest person in the entire universe! 💖</h3>
+            <p class="celebration-text">
+              Terima kasih sudah memilih untuk terus berada di orbitku, Halisa. Aku janji akan selalu menjaga, menyayangi, dan membuatmu tersenyum setiap hari. I love you to the moon, stars, and across all parallel galaxies! 🪐💍
+            </p>
+          </div>
         </div>
+      </section>
 
-        <!-- Scanner Real-Time Output Result -->
-        <div class="scanner-result hidden" id="scanner-result">
-          <div class="result-badge">✦ HASIL SINKRONISASI KOSMIK ✦</div>
-          <h3 class="result-title neon-text-pink">1000% INFINITE LOVE MATCH</h3>
-          <p class="result-desc">
-            Gelombang frekuensi jantung Halisa Nurul Zakia terdeteksi beresonansi sempurna 1:1 dengan orbit hati Fajar Syahruddin.
-            Dua jiwa yang ditakdirkan bersama sejak awal terciptanya semesta! 🪐💍✨
+      <!-- Footer -->
+      <footer class="site-footer">
+        <div class="footer-divider"></div>
+        <div class="footer-content">
+          <p class="footer-copy">
+            Designed with infinite love & care by <strong class="neon-text-pink">Fajar Syahruddin</strong> specially for <strong class="neon-text-cyan">Halisa Nurul Zakia</strong>.
           </p>
-          <div class="result-stats">
-            <div class="stat-pill">
-              <span class="stat-label">Gravitasi Kasih</span>
-              <span class="stat-val">Tanpa Batas</span>
-            </div>
-            <div class="stat-pill">
-              <span class="stat-label">Kecocokan Jiwa</span>
-              <span class="stat-val">100.0% Mutlak</span>
-            </div>
-            <div class="stat-pill">
-              <span class="stat-label">Masa Berlaku</span>
-              <span class="stat-val">Selamanya ♾️</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 6: Interactive Love Capsule (Letter to Halisa) -->
-    <section class="section-container reveal-on-scroll" id="letter">
-      <div class="section-header">
-        <span class="section-tag neon-border">CONFIDENTIAL // FOR HER EYES ONLY</span>
-        <h2 class="section-title">A Message Written In The Stars</h2>
-        <p class="section-subtitle">Sebuah kapsul pesan digital yang terenkripsi khusus untukmu.</p>
-      </div>
-
-      <div class="capsule-wrapper">
-        <div class="capsule-trigger glass-panel" id="open-letter-btn" data-tilt>
-          <div class="capsule-glow"></div>
-          <div class="capsule-icon">💌</div>
-          <div class="capsule-info">
-            <span class="capsule-badge">KLIK UNTUK MEMBUKA</span>
-            <h3 class="capsule-title">Surat Rahasia untuk Halisa Nurul Zakia</h3>
-            <p class="capsule-meta">Status: Tersegel dengan Rasa Sayang • Khusus Dibaca Halisa</p>
-          </div>
-          <div class="capsule-arrow">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12h14"></path>
-              <path d="m12 5 7 7-7 7"></path>
-            </svg>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 7: The Celestial Question -->
-    <section class="section-container reveal-on-scroll" id="question">
-      <div class="interactive-question-card glass-panel">
-        <span class="question-badge">✦ ONE IMPORTANT QUESTION ✦</span>
-        <h2 class="question-title">Will You Always Stay In My Universe?</h2>
-        <p class="question-subtitle">Tak peduli sejauh apa waktu membawa kita, maukah kamu terus berjalan berdua bersamaku?</p>
-        
-        <div class="question-btn-group">
-          <button class="neon-btn neon-btn-primary btn-large" id="btn-yes">
-            <span class="btn-text">I Wanna Be Yours, Forever! ✨</span>
-            <span class="btn-glow"></span>
-          </button>
-          
-          <button class="neon-btn neon-btn-secondary" id="btn-no">
-            <span class="btn-text">Hmm, mikir dulu... 😜</span>
-          </button>
-        </div>
-
-        <div class="answer-response hidden" id="answer-response">
-          <div class="celebration-badge">✦ JANJI KOSMIK DITERIMA ✦</div>
-          <h3 class="celebration-title neon-text-pink">You just made me the happiest person in the entire universe! 💖</h3>
-          <p class="celebration-text">
-            Terima kasih sudah memilih untuk terus berada di orbitku, Halisa. Aku janji akan selalu menjaga, menyayangi, dan membuatmu tersenyum setiap hari. I love you to the moon, stars, and across all parallel galaxies! 🪐💍
+          <p class="footer-sub">
+            Setiap baris kode, animasi, dan partikel bintang di sini diciptakan khusus untukmu.
           </p>
+          <div class="footer-tags">
+            <span class="tag">#UniverseOfLove</span>
+            <span class="tag">#IWannaBeYours</span>
+            <span class="tag">#HalisaNurulZakia</span>
+            <span class="tag">#FajarDanHalisa</span>
+          </div>
         </div>
-      </div>
-    </section>
+      </footer>
 
-    <!-- Footer -->
-    <footer class="site-footer">
-      <div class="footer-divider"></div>
-      <div class="footer-content">
-        <p class="footer-copy">
-          Designed with infinite love & care by <strong class="neon-text-pink">Fajar Syahruddin</strong> specially for <strong class="neon-text-cyan">Halisa Nurul Zakia</strong>.
-        </p>
-        <p class="footer-sub">
-          Setiap baris kode, animasi, dan partikel bintang di sini diciptakan khusus untukmu.
-        </p>
-        <div class="footer-tags">
-          <span class="tag">#UniverseOfLove</span>
-          <span class="tag">#IWannaBeYours</span>
-          <span class="tag">#HalisaNurulZakia</span>
-          <span class="tag">#FajarDanHalisa</span>
-        </div>
-      </div>
-    </footer>
+    </div> <!-- End story-sections-wrapper -->
 
-  </div>
+  </div> <!-- End site-container -->
 
   <!-- Holographic Letter Modal -->
   <div class="letter-modal hidden" id="letter-modal">

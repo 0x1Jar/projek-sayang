@@ -27,13 +27,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Parameter Black Hole Gargantua
     blackHole: {
       eventHorizonRadius: 3.2,
-      photonRingRadius: 3.32,
-      diskInnerRadius: 3.4,
-      diskOuterRadius: 19.5,
-      lensOuterRadius: 8.8,
-      equatorialParticles: window.innerWidth < 768 ? 16000 : 25000,
-      lensingParticles: window.innerWidth < 768 ? 5000 : 9000,
-      backgroundStars: 4000
+      photonRingRadius: 3.34,
+      diskInnerRadius: 3.45,
+      diskOuterRadius: 20.0,
+      lensOuterRadius: 9.2,
+      equatorialParticles: window.innerWidth < 768 ? 14000 : 22000,
+      lensingParticles: window.innerWidth < 768 ? 4000 : 8000,
+      backgroundStars: window.innerWidth < 768 ? 3800 : 5400,
+      diamondStars: window.innerWidth < 768 ? 120 : 220,
+      stardustCount: window.innerWidth < 768 ? 140 : 240
     },
     
     // Warna tema cinta (Warna Cinta)
@@ -157,17 +159,19 @@ document.addEventListener('DOMContentLoaded', () => {
   let scene, camera, renderer;
   let blackHoleGroup, eventHorizonMesh, photonRingMesh, lensingRingMesh, accretionDiskMesh;
   let equatorialParticles, lensingParticles, bgStarPoints;
+  let starShaderMaterial, diamondShaderMaterial, diamondStarsPoints, stardustPoints;
+  let nextMeteorTime = 2.5;
   const heartGroup = [];
   const shootingStars = [];
 
   // Orbit controls variables
   let isDragging = false;
   let previousMousePosition = { x: 0, y: 0 };
-  let targetRotY = 0.15;
-  let targetRotX = 0.22;
-  let rotY = 0.15;
-  let rotX = 0.22;
-  let targetDistance = window.innerWidth < 768 ? 29 : 24;
+  let targetRotY = 0.18;
+  let targetRotX = 0.20;
+  let rotY = 0.18;
+  let rotX = 0.20;
+  let targetDistance = window.innerWidth < 768 ? 28 : 23;
   let currentDistance = targetDistance;
 
   // Raycaster for 3D interactions
@@ -291,16 +295,57 @@ document.addEventListener('DOMContentLoaded', () => {
     return new THREE.CanvasTexture(canvas);
   }
 
+  // Generate brilliant 4-point diamond cross-flare texture for twinkling hero stars
+  function createDiamondSparkleTexture() {
+    const canvas = document.createElement('canvas');
+    canvas.width = 128;
+    canvas.height = 128;
+    const ctx = canvas.getContext('2d');
+    const cx = 64, cy = 64;
+
+    // 1. Central delicate starlight glow
+    const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, 32);
+    grad.addColorStop(0, 'rgba(255, 255, 255, 1)');
+    grad.addColorStop(0.12, 'rgba(255, 240, 252, 0.9)');
+    grad.addColorStop(0.35, 'rgba(255, 42, 133, 0.35)');
+    grad.addColorStop(0.7, 'rgba(0, 240, 255, 0.08)');
+    grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 128, 128);
+
+    // 2. Crisp horizontal flare spike
+    const hGrad = ctx.createLinearGradient(0, cy, 128, cy);
+    hGrad.addColorStop(0, 'rgba(255, 255, 255, 0)');
+    hGrad.addColorStop(0.42, 'rgba(255, 250, 255, 0.35)');
+    hGrad.addColorStop(0.5, 'rgba(255, 255, 255, 1)');
+    hGrad.addColorStop(0.58, 'rgba(255, 250, 255, 0.35)');
+    hGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+    ctx.fillStyle = hGrad;
+    ctx.fillRect(0, cy - 1, 128, 2);
+
+    // 3. Crisp vertical flare spike
+    const vGrad = ctx.createLinearGradient(cx, 0, cx, 128);
+    vGrad.addColorStop(0, 'rgba(255, 255, 255, 0)');
+    vGrad.addColorStop(0.42, 'rgba(255, 250, 255, 0.35)');
+    vGrad.addColorStop(0.5, 'rgba(255, 255, 255, 1)');
+    vGrad.addColorStop(0.58, 'rgba(255, 250, 255, 0.35)');
+    vGrad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+    ctx.fillStyle = vGrad;
+    ctx.fillRect(cx - 1, 0, 2, 128);
+
+    return new THREE.CanvasTexture(canvas);
+  }
+
   function initThreeBlackHole() {
     const container = document.getElementById('webgl-galaxy-container');
-    if (!container || typeof THREE === 'undefined') return;
+    if (!container) return;
 
     // 1. Scene & Camera
     scene = new THREE.Scene();
     scene.fog = new THREE.FogExp2(0x05070d, 0.012);
 
     camera = new THREE.PerspectiveCamera(52, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 4.5, currentDistance);
+    camera.position.set(0, 3.8, currentDistance);
     camera.lookAt(0, 0, 0);
 
     // 2. WebGL Renderer
@@ -332,10 +377,12 @@ document.addEventListener('DOMContentLoaded', () => {
     scene.add(cyanLight);
 
     const starTexture = createStarTexture();
+    const diamondTexture = createDiamondSparkleTexture();
     const accretionTexture = createGargantuaAccretionTexture();
 
     // 4. Black Hole Group (Contains Gargantua Geometry with Cinematic Tilt)
     blackHoleGroup = new THREE.Group();
+    blackHoleGroup.position.y = 1.5;
     // Iconic cinematic tilt as seen in reference image
     blackHoleGroup.rotation.z = -0.22; // ~12.5 degree diagonal tilt
     blackHoleGroup.rotation.x = 0.28;  // ~16 degree pitch angle
@@ -412,8 +459,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // 10. Orbiting 3D Extruded Love Hearts
     buildOrbitingLoveHearts();
 
-    // 11. Deep Cosmic Starfield Background
-    buildCosmicStarfield(starTexture);
+    // 11. Deep Cosmic Starfield Background with Twinkling Shaders & Diamond Stars
+    buildCosmicStarfield(starTexture, diamondTexture);
 
     // 12. Setup Controls
     setupGalaxyControls(container);
@@ -440,21 +487,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     for (let i = 0; i < eqCount; i++) {
       const i3 = i * 3;
-      // Dense near inner edge, spreading outward
       const r = diskInnerRadius + Math.pow(Math.random(), 1.8) * (diskOuterRadius - diskInnerRadius);
       const angle = Math.random() * Math.PI * 2;
-      // Flaring vertical height
       const ySpread = (Math.random() - 0.5) * (0.15 + (r / diskOuterRadius) * 0.65);
 
       eqPositions[i3] = Math.cos(angle) * r;
       eqPositions[i3 + 1] = ySpread;
       eqPositions[i3 + 2] = Math.sin(angle) * r;
 
-      // Keplerian speed: v proportional to 1 / sqrt(r)
       const speed = (0.24 / Math.pow(r, 1.35)) * (0.9 + Math.random() * 0.2);
       eqData.push({ r, angle, speed, y: ySpread });
 
-      // Radial color grading (Warna Cinta)
       const norm = (r - diskInnerRadius) / (diskOuterRadius - diskInnerRadius);
       let c = whiteCol.clone();
       if (norm < 0.15) {
@@ -597,18 +640,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // Build deep cosmic starfield background
-  function buildCosmicStarfield(starTexture) {
+  // Build deep cosmic starfield with organic twinkling shaders, diamond stars, and floating stardust
+  function buildCosmicStarfield(starTexture, diamondTexture) {
     const starCount = CONFIG.blackHole.backgroundStars;
+    const diamondCount = CONFIG.blackHole.diamondStars;
+    const stardustCount = CONFIG.blackHole.stardustCount;
+
+    // A. 5,000+ Twinkling Cosmic Stars with GPU Shader
     const bgGeo = new THREE.BufferGeometry();
     const positions = new Float32Array(starCount * 3);
     const colors = new Float32Array(starCount * 3);
+    const sizes = new Float32Array(starCount);
+    const speeds = new Float32Array(starCount);
+    const phases = new Float32Array(starCount);
+    const twinkleAmps = new Float32Array(starCount);
 
-    const baseCols = [new THREE.Color('#ffffff'), new THREE.Color('#00f0ff'), new THREE.Color('#ff2a85'), new THREE.Color('#a855f7')];
+    const baseCols = [
+      new THREE.Color('#ffffff'), // Pure brilliant white
+      new THREE.Color('#ffffff'), // Extra white weight
+      new THREE.Color('#ffe4e6'), // Soft starlight pink
+      new THREE.Color('#ff6fa5'), // Neon rose
+      new THREE.Color('#00f0ff'), // Starlight cyan
+      new THREE.Color('#bae6fd'), // Ice blue
+      new THREE.Color('#c084fc'), // Starlight lavender
+      new THREE.Color('#fef08a')  // Warm starlight champagne
+    ];
 
     for (let i = 0; i < starCount; i++) {
       const i3 = i * 3;
-      const radius = 60 + Math.random() * 70;
+      // Spherical distribution around cosmos
+      const radius = 24 + Math.random() * 85;
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.acos(2 * Math.random() - 1);
 
@@ -620,59 +681,284 @@ document.addEventListener('DOMContentLoaded', () => {
       colors[i3] = c.r;
       colors[i3 + 1] = c.g;
       colors[i3 + 2] = c.b;
+
+      sizes[i] = 0.8 + Math.random() * 1.1;
+      speeds[i] = 1.8 + Math.random() * 4.4; // Radians per sec
+      phases[i] = Math.random() * Math.PI * 2;
+      twinkleAmps[i] = 0.50 + Math.random() * 0.45;
     }
 
     bgGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    bgGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    bgGeo.setAttribute('aColor', new THREE.BufferAttribute(colors, 3));
+    bgGeo.setAttribute('aSize', new THREE.BufferAttribute(sizes, 1));
+    bgGeo.setAttribute('aSpeed', new THREE.BufferAttribute(speeds, 1));
+    bgGeo.setAttribute('aPhase', new THREE.BufferAttribute(phases, 1));
+    bgGeo.setAttribute('aTwinkleAmp', new THREE.BufferAttribute(twinkleAmps, 1));
 
-    const bgMat = new THREE.PointsMaterial({
+    starShaderMaterial = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+        uTexture: { value: starTexture },
+        uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) }
+      },
+      vertexShader: `
+        uniform float uTime;
+        uniform float uPixelRatio;
+        attribute float aSize;
+        attribute float aSpeed;
+        attribute float aPhase;
+        attribute float aTwinkleAmp;
+        attribute vec3 aColor;
+
+        varying vec3 vColor;
+        varying float vAlpha;
+
+        void main() {
+          vColor = aColor;
+
+          // Organic two-harmonic twinkle curve
+          float s1 = sin(uTime * aSpeed + aPhase);
+          float s2 = sin(uTime * (aSpeed * 1.63) + aPhase * 2.14);
+          float combined = 0.5 + 0.32 * s1 + 0.18 * s2;
+
+          // Crisp diamond peak so stars glitter sharply
+          float peak = pow(clamp(combined, 0.0, 1.0), 2.5);
+          vAlpha = 0.35 + 0.65 * peak;
+
+          vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+          float distScale = 180.0 / -mvPosition.z;
+          gl_PointSize = clamp((aSize * (0.9 + 1.4 * peak)) * distScale * uPixelRatio, 2.2, 11.0);
+          gl_Position = projectionMatrix * mvPosition;
+        }
+      `,
+      fragmentShader: `
+        uniform sampler2D uTexture;
+        varying vec3 vColor;
+        varying float vAlpha;
+
+        void main() {
+          vec4 tex = texture2D(uTexture, gl_PointCoord);
+          gl_FragColor = vec4(vColor, tex.a * vAlpha);
+        }
+      `,
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending
+    });
+
+    bgStarPoints = new THREE.Points(bgGeo, starShaderMaterial);
+    scene.add(bgStarPoints);
+
+    // B. ~220 Hero Diamond Cross-Flare Sparkle Stars (4-pointed stellar glints)
+    const diamondGeo = new THREE.BufferGeometry();
+    const dPositions = new Float32Array(diamondCount * 3);
+    const dColors = new Float32Array(diamondCount * 3);
+    const dSizes = new Float32Array(diamondCount);
+    const dSpeeds = new Float32Array(diamondCount);
+    const dPhases = new Float32Array(diamondCount);
+    const dTwinkleAmps = new Float32Array(diamondCount);
+
+    const diamondPalette = [
+      new THREE.Color('#ffffff'),
+      new THREE.Color('#ffffff'),
+      new THREE.Color('#00f0ff'),
+      new THREE.Color('#ff85b3'),
+      new THREE.Color('#fef08a'),
+      new THREE.Color('#e0aaff')
+    ];
+
+    for (let i = 0; i < diamondCount; i++) {
+      const i3 = i * 3;
+      const radius = 22 + Math.random() * 65;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+
+      dPositions[i3] = radius * Math.sin(phi) * Math.cos(theta);
+      dPositions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+      dPositions[i3 + 2] = radius * Math.cos(phi);
+
+      const c = diamondPalette[Math.floor(Math.random() * diamondPalette.length)];
+      dColors[i3] = c.r;
+      dColors[i3 + 1] = c.g;
+      dColors[i3 + 2] = c.b;
+
+      dSizes[i] = 1.2 + Math.random() * 1.3; // Calibrated cross flare size
+      dSpeeds[i] = 1.0 + Math.random() * 2.5; // Majestic slow breathing glint
+      dPhases[i] = Math.random() * Math.PI * 2;
+      dTwinkleAmps[i] = 0.65 + Math.random() * 0.35;
+    }
+
+    diamondGeo.setAttribute('position', new THREE.BufferAttribute(dPositions, 3));
+    diamondGeo.setAttribute('aColor', new THREE.BufferAttribute(dColors, 3));
+    diamondGeo.setAttribute('aSize', new THREE.BufferAttribute(dSizes, 1));
+    diamondGeo.setAttribute('aSpeed', new THREE.BufferAttribute(dSpeeds, 1));
+    diamondGeo.setAttribute('aPhase', new THREE.BufferAttribute(dPhases, 1));
+    diamondGeo.setAttribute('aTwinkleAmp', new THREE.BufferAttribute(dTwinkleAmps, 1));
+
+    diamondShaderMaterial = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 },
+        uTexture: { value: diamondTexture },
+        uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) }
+      },
+      vertexShader: `
+        uniform float uTime;
+        uniform float uPixelRatio;
+        attribute float aSize;
+        attribute float aSpeed;
+        attribute float aPhase;
+        attribute float aTwinkleAmp;
+        attribute vec3 aColor;
+
+        varying vec3 vColor;
+        varying float vAlpha;
+
+        void main() {
+          vColor = aColor;
+
+          float s1 = sin(uTime * aSpeed + aPhase);
+          float s2 = cos(uTime * (aSpeed * 0.72) + aPhase * 1.41);
+          float combined = 0.5 + 0.35 * s1 + 0.15 * s2;
+          float peak = pow(clamp(combined, 0.0, 1.0), 2.8);
+          vAlpha = 0.40 + 0.60 * peak;
+
+          vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+          float distScale = 200.0 / -mvPosition.z;
+          gl_PointSize = clamp((aSize * (0.9 + 1.5 * peak)) * distScale * uPixelRatio, 8.0, 30.0);
+          gl_Position = projectionMatrix * mvPosition;
+        }
+      `,
+      fragmentShader: `
+        uniform sampler2D uTexture;
+        varying vec3 vColor;
+        varying float vAlpha;
+
+        void main() {
+          vec4 tex = texture2D(uTexture, gl_PointCoord);
+          gl_FragColor = vec4(vColor, tex.a * vAlpha);
+        }
+      `,
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending
+    });
+
+    diamondStarsPoints = new THREE.Points(diamondGeo, diamondShaderMaterial);
+    scene.add(diamondStarsPoints);
+
+    // C. Floating Ambient Stardust (Motes drifting near camera & black hole)
+    const stardustGeo = new THREE.BufferGeometry();
+    const sPositions = new Float32Array(stardustCount * 3);
+    const sColors = new Float32Array(stardustCount * 3);
+    const stardustData = [];
+
+    for (let i = 0; i < stardustCount; i++) {
+      const i3 = i * 3;
+      const radius = 8 + Math.random() * 26;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+
+      const bx = radius * Math.sin(phi) * Math.cos(theta);
+      const by = (radius * Math.sin(phi) * Math.sin(theta)) * 0.6 + 1.2;
+      const bz = radius * Math.cos(phi);
+
+      sPositions[i3] = bx;
+      sPositions[i3 + 1] = by;
+      sPositions[i3 + 2] = bz;
+
+      const c = Math.random() > 0.4 ? new THREE.Color('#ff2a85') : new THREE.Color('#00f0ff');
+      sColors[i3] = c.r;
+      sColors[i3 + 1] = c.g;
+      sColors[i3 + 2] = c.b;
+
+      stardustData.push({
+        baseX: bx,
+        baseY: by,
+        baseZ: bz,
+        driftSpeedX: 0.15 + Math.random() * 0.35,
+        driftSpeedY: 0.12 + Math.random() * 0.28,
+        driftSpeedZ: 0.14 + Math.random() * 0.32,
+        phaseX: Math.random() * Math.PI * 2,
+        phaseY: Math.random() * Math.PI * 2,
+        phaseZ: Math.random() * Math.PI * 2,
+        driftAmpX: 0.6 + Math.random() * 1.4,
+        driftAmpY: 0.5 + Math.random() * 1.2,
+        driftAmpZ: 0.6 + Math.random() * 1.4
+      });
+    }
+
+    stardustGeo.setAttribute('position', new THREE.BufferAttribute(sPositions, 3));
+    stardustGeo.setAttribute('color', new THREE.BufferAttribute(sColors, 3));
+
+    const stardustMat = new THREE.PointsMaterial({
       size: 0.35,
       map: starTexture,
       transparent: true,
       depthWrite: false,
       vertexColors: true,
       blending: THREE.AdditiveBlending,
-      opacity: 0.8
+      opacity: 0.70
     });
 
-    bgStarPoints = new THREE.Points(bgGeo, bgMat);
-    scene.add(bgStarPoints);
+    stardustPoints = new THREE.Points(stardustGeo, stardustMat);
+    stardustPoints.userData = { particles: stardustData };
+    scene.add(stardustPoints);
   }
 
-  // 3D Shooting Star / Celebration Meteor
-  function launch3DCelebrationMeteor() {
+  // 3D Romantic Shooting Star / Meteor Engine
+  function launchAmbientShootingStar(colorOverride = null) {
     if (!scene) return;
     const meteorGeo = new THREE.BufferGeometry();
-    const trailLength = 22;
+    const trailLength = 28;
     const positions = new Float32Array(trailLength * 3);
-    const startX = (Math.random() - 0.5) * 35;
-    const startY = 14 + Math.random() * 8;
-    const startZ = (Math.random() - 0.5) * 35;
+
+    // Spawn high above in sky dome
+    const startX = (Math.random() - 0.5) * 55;
+    const startY = 16 + Math.random() * 14;
+    const startZ = -12 + (Math.random() - 0.5) * 45;
+
+    // Trajectory vector
+    const speed = 0.95 + Math.random() * 0.5;
+    const dirX = (Math.random() > 0.5 ? -1 : 1) * (0.65 + Math.random() * 0.4);
+    const dirY = -(0.55 + Math.random() * 0.35);
+    const dirZ = (Math.random() - 0.5) * 0.45;
 
     for (let i = 0; i < trailLength; i++) {
-      positions[i * 3] = startX - i * 0.45;
-      positions[i * 3 + 1] = startY - i * 0.3;
-      positions[i * 3 + 2] = startZ - i * 0.45;
+      positions[i * 3] = startX - (dirX * i * 0.38);
+      positions[i * 3 + 1] = startY - (dirY * i * 0.38);
+      positions[i * 3 + 2] = startZ - (dirZ * i * 0.38);
     }
     meteorGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
+    const meteorColors = [0x00f0ff, 0xff2a85, 0xffffff, 0xfb7185, 0xa855f7, 0xfef08a];
+    const chosenColor = colorOverride || meteorColors[Math.floor(Math.random() * meteorColors.length)];
+
     const meteorMat = new THREE.LineBasicMaterial({
-      color: 0x00f0ff,
+      color: chosenColor,
       transparent: true,
-      opacity: 0.95,
+      opacity: 0.96,
       blending: THREE.AdditiveBlending,
-      linewidth: 2
+      linewidth: 2.2
     });
 
     const meteorLine = new THREE.Line(meteorGeo, meteorMat);
     meteorLine.userData = {
-      vx: (Math.random() - 0.5) * 0.6 - 0.85,
-      vy: -0.65 - Math.random() * 0.45,
-      vz: (Math.random() - 0.5) * 0.6 - 0.85,
+      vx: dirX * speed,
+      vy: dirY * speed,
+      vz: dirZ * speed,
       life: 1.0
     };
     scene.add(meteorLine);
     shootingStars.push(meteorLine);
+  }
+
+  // 3D Celebration Meteor Burst
+  function launch3DCelebrationMeteor() {
+    for (let i = 0; i < 3; i++) {
+      setTimeout(() => {
+        launchAmbientShootingStar();
+      }, i * 180);
+    }
   }
 
   // Setup 360° Drag & Touch Controls
@@ -696,7 +982,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         targetRotY += deltaX * 0.005;
         targetRotX += deltaY * 0.004;
-        // Clamp vertical viewing angle so black hole always looks breathtaking
         targetRotX = Math.max(-0.4, Math.min(1.1, targetRotX));
 
         previousMousePosition = { x: clientX, y: clientY };
@@ -765,7 +1050,6 @@ document.addEventListener('DOMContentLoaded', () => {
       playHeartbeatSound();
       burstOfLove(clientX, clientY, 22);
 
-      // Bounce scale effect
       const origScale = hit.scale.x;
       hit.scale.set(origScale * 1.3, origScale * 1.3, origScale * 1.3);
       setTimeout(() => {
@@ -787,7 +1071,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 1. Smooth Camera Damping & Rotation
     if (!isDragging) {
-      targetRotY += 0.001; // Continuous gentle orbit
+      targetRotY += 0.001;
     }
 
     rotY += (targetRotY - rotY) * 0.05;
@@ -795,9 +1079,9 @@ document.addEventListener('DOMContentLoaded', () => {
     currentDistance += (targetDistance - currentDistance) * 0.05;
 
     camera.position.x = Math.sin(rotY) * Math.cos(rotX) * currentDistance;
-    camera.position.y = Math.sin(rotX) * currentDistance + 2.0;
+    camera.position.y = Math.sin(rotX) * currentDistance + 3.0;
     camera.position.z = Math.cos(rotY) * Math.cos(rotX) * currentDistance;
-    camera.lookAt(0, 0, 0);
+    camera.lookAt(0, 1.5, 0);
 
     // 2. Rotate Accretion Disk & Lensing Textures
     if (accretionDiskMesh) {
@@ -851,21 +1135,53 @@ document.addEventListener('DOMContentLoaded', () => {
       heart.rotation.y += heart.userData.rotSpeedY;
     });
 
-    // 7. Update Background Stars subtle twinkle
+    // 7. Update Twinkling Cosmic Starfield Shaders & Drift
+    if (starShaderMaterial) {
+      starShaderMaterial.uniforms.uTime.value = elapsedTime;
+    }
+    if (diamondShaderMaterial) {
+      diamondShaderMaterial.uniforms.uTime.value = elapsedTime;
+    }
     if (bgStarPoints) {
-      bgStarPoints.rotation.y = elapsedTime * 0.005;
+      bgStarPoints.rotation.y = elapsedTime * 0.003;
+    }
+    if (diamondStarsPoints) {
+      diamondStarsPoints.rotation.y = elapsedTime * 0.0022;
+      diamondStarsPoints.rotation.x = Math.sin(elapsedTime * 0.04) * 0.04;
     }
 
-    // 8. Update Shooting Stars
+    // 8. Update Floating Cosmic Stardust (Gentle drifting fireflies)
+    if (stardustPoints && stardustPoints.userData.particles) {
+      const pos = stardustPoints.geometry.attributes.position.array;
+      const data = stardustPoints.userData.particles;
+      for (let i = 0; i < data.length; i++) {
+        const p = data[i];
+        const i3 = i * 3;
+        pos[i3] = p.baseX + Math.sin(elapsedTime * p.driftSpeedX + p.phaseX) * p.driftAmpX;
+        pos[i3 + 1] = p.baseY + Math.cos(elapsedTime * p.driftSpeedY + p.phaseY) * p.driftAmpY;
+        pos[i3 + 2] = p.baseZ + Math.sin(elapsedTime * p.driftSpeedZ + p.phaseZ) * p.driftAmpZ;
+      }
+      stardustPoints.geometry.attributes.position.needsUpdate = true;
+    }
+
+    // 9. Automatic Romantic Meteor Shower (Shooting stars every 3-6s)
+    if (elapsedTime > nextMeteorTime) {
+      launchAmbientShootingStar();
+      nextMeteorTime = elapsedTime + 3.0 + Math.random() * 3.5;
+    }
+
+    // 10. Update Active Shooting Stars
     for (let i = shootingStars.length - 1; i >= 0; i--) {
       const star = shootingStars[i];
       star.position.x += star.userData.vx;
       star.position.y += star.userData.vy;
       star.position.z += star.userData.vz;
-      star.userData.life -= 0.02;
-      star.material.opacity = star.userData.life;
+      star.userData.life -= 0.018;
+      star.material.opacity = Math.max(0, star.userData.life);
       if (star.userData.life <= 0) {
         scene.remove(star);
+        star.geometry.dispose();
+        star.material.dispose();
         shootingStars.splice(i, 1);
       }
     }
@@ -873,8 +1189,16 @@ document.addEventListener('DOMContentLoaded', () => {
     renderer.render(scene, camera);
   }
 
-  // Initialize Black Hole
-  initThreeBlackHole();
+  // Safe Three.js initializer
+  function tryInitBlackHole() {
+    if (typeof THREE !== 'undefined') {
+      initThreeBlackHole();
+    } else {
+      setTimeout(tryInitBlackHole, 100);
+    }
+  }
+
+  tryInitBlackHole();
 
   function launchCelebrationMeteor() {
     launch3DCelebrationMeteor();
@@ -1009,7 +1333,7 @@ document.addEventListener('DOMContentLoaded', () => {
       stopProceduralChords();
       setPlaybackState(false);
     } else {
-      if (audioElem) {
+      if (audioElem && audioElem.src && !audioElem.error) {
         const playPromise = audioElem.play();
         if (playPromise !== undefined) {
           playPromise
@@ -1104,29 +1428,40 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
   const btnModeGalaxy = document.getElementById('btn-mode-galaxy');
   const btnModeStory = document.getElementById('btn-mode-story');
+  const storyWrapper = document.getElementById('story-sections-wrapper');
+  const scrollToStoryBtn = document.getElementById('scroll-to-story-btn');
 
-  if (btnModeGalaxy) {
-    btnModeGalaxy.addEventListener('click', () => {
-      btnModeGalaxy.classList.add('active');
-      if (btnModeStory) btnModeStory.classList.remove('active');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      targetDistance = window.innerWidth < 768 ? 26 : 21;
-      targetRotX = 0.25;
-      playCelestialChime();
-    });
+  function enterGalaxyMode() {
+    document.body.classList.add('mode-galaxy-active');
+    document.body.classList.remove('mode-story-active');
+    if (btnModeGalaxy) btnModeGalaxy.classList.add('active');
+    if (btnModeStory) btnModeStory.classList.remove('active');
+    if (storyWrapper) storyWrapper.classList.add('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    targetDistance = window.innerWidth < 768 ? 28 : 23;
+    targetRotX = 0.20;
+    playCelestialChime();
   }
 
-  if (btnModeStory) {
-    btnModeStory.addEventListener('click', () => {
-      btnModeStory.classList.add('active');
-      if (btnModeGalaxy) btnModeGalaxy.classList.remove('active');
-      const counterSection = document.getElementById('counter');
-      if (counterSection) {
-        counterSection.scrollIntoView({ behavior: 'smooth' });
-      }
-      playCelestialChime();
-    });
+  function enterStoryMode(targetSectionId = null) {
+    document.body.classList.add('mode-story-active');
+    document.body.classList.remove('mode-galaxy-active');
+    if (btnModeStory) btnModeStory.classList.add('active');
+    if (btnModeGalaxy) btnModeGalaxy.classList.remove('active');
+    if (storyWrapper) storyWrapper.classList.remove('hidden');
+
+    const targetEl = targetSectionId ? document.getElementById(targetSectionId) : document.getElementById('counter');
+    if (targetEl) {
+      setTimeout(() => {
+        targetEl.scrollIntoView({ behavior: 'smooth' });
+      }, 50);
+    }
+    playCelestialChime();
   }
+
+  if (btnModeGalaxy) btnModeGalaxy.addEventListener('click', enterGalaxyMode);
+  if (btnModeStory) btnModeStory.addEventListener('click', () => enterStoryMode('counter'));
+  if (scrollToStoryBtn) scrollToStoryBtn.addEventListener('click', () => enterStoryMode('counter'));
 
   // Quick Dock Handlers
   const dockLetterBtn = document.getElementById('dock-letter-btn');
@@ -1135,24 +1470,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const dockScannerBtn = document.getElementById('dock-scanner-btn');
 
   if (dockLetterBtn) dockLetterBtn.addEventListener('click', openLetter);
-  if (dockCounterBtn) {
-    dockCounterBtn.addEventListener('click', () => {
-      const el = document.getElementById('counter');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    });
-  }
-  if (dockWishBtn) {
-    dockWishBtn.addEventListener('click', () => {
-      const el = document.getElementById('transmitter');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    });
-  }
-  if (dockScannerBtn) {
-    dockScannerBtn.addEventListener('click', () => {
-      const el = document.getElementById('scanner');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    });
-  }
+  if (dockCounterBtn) dockCounterBtn.addEventListener('click', () => enterStoryMode('counter'));
+  if (dockWishBtn) dockWishBtn.addEventListener('click', () => enterStoryMode('transmitter'));
+  if (dockScannerBtn) dockScannerBtn.addEventListener('click', () => enterStoryMode('scanner'));
 
   // ==========================================
   // 11. INTERACTIVE INPUT-OUTPUT: STARLIGHT TRANSMITTER
