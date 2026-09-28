@@ -15,9 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // 1. CONFIGURATION (Mudah Dikustomisasi)
   // ==========================================
   const CONFIG = {
-    // Tanggal jadian / awal pertemuan (14 Februari 2024)
-    startDate: new Date(2024, 1, 14, 0, 0, 0),
-    startDateFormatted: '14 Februari 2024',
+    // Tanggal jadian / awal pertemuan (23 September 2026)
+    startDate: new Date(2026, 8, 23, 0, 0, 0),
+    startDateFormatted: '23 September 2026',
     
     // Nama Kekasih & Pencipta
     girlfriendName: 'Halisa Nurul Zakia',
@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
     { title: "Relativitas Rasa", quote: "Satu detik bersamamu terasa abadi, dan ribuan tahun tanpamu terasa begitu sepi. I wanna be yours, selamanya. 💍" },
     { title: "Amor De Mi Vida", quote: "Fajar & Halisa: Dua partikel kosmik yang ditarik oleh takdir cinta tanpa batas. 💫" },
     { title: "Singularitas Hati", quote: "Di titik terdalam semestaku, hanya ada satu nama yang terukir abadi: Halisa. 🤍" },
-    { title: "14 Februari 2024", quote: "Hari di mana semestaku menemukan pusat orbitnya. Terima kasih telah hadir dan menjadi duniaku. ⏳" }
+    { title: "23 September 2026", quote: "Hari di mana semestaku menemukan pusat orbitnya. Terima kasih telah hadir dan menjadi duniaku. ⏳" }
   ];
 
   function getRandomQuote() {
