@@ -1,10 +1,12 @@
 /**
- * Universe Of Love — Modern Neon Minimalism & 3D Interactive Galaxy
+ * Universe Of Love — Gargantua Black Hole Edition
  * Dedicated to: Halisa Nurul Zakia
  * Creator: Fajar Syahruddin
  * 
- * Powered by Three.js 3D Engine, Cosmic Accretion Vortex, Orbiting 3D Hearts & Text Sprites,
- * Dual-Mode Audio Synthesizer, Starlight Wish Transmitter, and Biometric Scanner.
+ * Powered by Three.js 3D Engine: Relativistic Gravitational Lensing,
+ * Accretion Disk in "Warna Cinta" (Colors of Love), Keplerian Particle Flow,
+ * Orbiting 3D Hearts, Dual-Mode Audio Synthesizer, Starlight Wish Transmitter,
+ * and Biometric Love Frequency Scanner.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -13,8 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 1. CONFIGURATION (Mudah Dikustomisasi)
   // ==========================================
   const CONFIG = {
-    // Tanggal jadian / awal pertemuan (Format: YYYY, MM - 1, DD)
-    // 14 Februari 2024
+    // Tanggal jadian / awal pertemuan (14 Februari 2024)
     startDate: new Date(2024, 1, 14, 0, 0, 0),
     startDateFormatted: '14 Februari 2024',
     
@@ -23,19 +24,20 @@ document.addEventListener('DOMContentLoaded', () => {
     nickname: 'Halisa',
     author: 'Fajar Syahruddin',
 
-    // Parameter Galaksi 3D
-    galaxy: {
-      starCount: window.innerWidth < 768 ? 16000 : 26000,
-      arms: 4,
-      radius: 22,
-      spin: 0.85,
-      randomness: 0.45,
-      power: 3,
-      topHeartParticles: window.innerWidth < 768 ? 2200 : 3600
+    // Parameter Black Hole Gargantua
+    blackHole: {
+      eventHorizonRadius: 3.2,
+      photonRingRadius: 3.32,
+      diskInnerRadius: 3.4,
+      diskOuterRadius: 19.5,
+      lensOuterRadius: 8.8,
+      equatorialParticles: window.innerWidth < 768 ? 16000 : 25000,
+      lensingParticles: window.innerWidth < 768 ? 5000 : 9000,
+      backgroundStars: 4000
     },
     
-    // Warna tema neon
-    colors: ['#00f0ff', '#ff2a85', '#a855f7', '#ffffff', '#ffd1dc']
+    // Warna tema cinta (Warna Cinta)
+    colors: ['#ffffff', '#ff2a85', '#f43f5e', '#fb7185', '#be185d', '#a855f7', '#00f0ff']
   };
 
   const startDateTextElem = document.getElementById('start-date-text');
@@ -139,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
         osc.type = 'triangle';
         osc.frequency.setValueAtTime(60, now + offset);
         osc.frequency.exponentialRampToValueAtTime(35, now + offset + 0.15);
-        gain.gain.setValueAtTime(0.12, now + offset);
+        gain.gain.setValueAtTime(0.14, now + offset);
         gain.gain.exponentialRampToValueAtTime(0.001, now + offset + 0.18);
         osc.connect(gain);
         gain.connect(ctx.destination);
@@ -150,48 +152,129 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // 5. THREE.JS 3D ROTATING GALAXY ENGINE
+  // 5. THREE.JS 3D GARGANTUA BLACK HOLE ENGINE
   // ==========================================
   let scene, camera, renderer;
-  let galaxyPoints, topHeartGroup, coreMesh, accretionRing;
+  let blackHoleGroup, eventHorizonMesh, photonRingMesh, lensingRingMesh, accretionDiskMesh;
+  let equatorialParticles, lensingParticles, bgStarPoints;
   const heartGroup = [];
-  const textSprites = [];
-  const stickerSprites = [];
   const shootingStars = [];
 
   // Orbit controls variables
   let isDragging = false;
   let previousMousePosition = { x: 0, y: 0 };
-  let targetRotY = 0;
-  let targetRotX = 0.35;
-  let rotY = 0;
-  let rotX = 0.35;
-  let targetDistance = window.innerWidth < 768 ? 28 : 22;
+  let targetRotY = 0.15;
+  let targetRotX = 0.22;
+  let rotY = 0.15;
+  let rotX = 0.22;
+  let targetDistance = window.innerWidth < 768 ? 29 : 24;
   let currentDistance = targetDistance;
-  let isGalaxyInteractive = true;
 
   // Raycaster for 3D interactions
   const raycaster = new THREE.Raycaster();
   const mousePointer = new THREE.Vector2();
   let dragDistance = 0;
 
-  // Romantic quotes pool for 3D objects
+  // Romantic quotes pool for Black Hole objects
   const romanticGalaxyQuotes = [
-    { title: "Pusat Semestaku", quote: "Di antara triliunan bintang di jagat raya, gravitasi hatiku cuma tertuju padamu, Halisa Nurul Zakia. ✨💖" },
-    { title: "I Wanna Be Yours", quote: "Aku ingin selalu jadi tempatmu bersandar, di setiap detik, menit, dan tahun perjalanan kita. 🪐" },
-    { title: "Bintang Kejora", quote: "Senyum manismu adalah cahaya terindah yang selalu menerangi malam-malamku. Tetaplah bersinar cantikku! 🌸" },
-    { title: "Orbit Abadi", quote: "Fajar & Halisa: Dua jiwa yang disatukan semesta dalam satu frekuensi cinta yang tak pernah padam. 💫" },
-    { title: "Amor De Mi Vida", quote: "Mencintaimu adalah hal paling mudah, paling indah, dan paling membahagiakan dalam hidupku. 💕" },
-    { title: "Takdir Terindah", quote: "Pertemuan kita bukanlah suatu kebetulan, melainkan takdir terindah yang dituliskan bintang-bintang. 🕊️" },
-    { title: "Selamanya Bersamamu", quote: "Jika aku harus memilih lagi di ribuan kehidupan yang lain, aku akan tetap memilihmu, Halisa. 💍" },
-    { title: "Detak Jantung Kosmik", quote: "Setiap detak jantungku berbisik lembut menyebut namamu: Halisa, Halisa, Halisa. 💖" }
+    { title: "Inti Gravitasi Cinta", quote: "Gravitasi terkuat di seluruh semesta adalah cintamu, Halisa. Begitu masuk ke orbitmu, hatiku tak pernah ingin pergi. 🪐💖" },
+    { title: "Piringan Akresi Abadi", quote: "Di antara triliunan bintang yang tersedot waktu, perasaanku kepadamu adalah satu-satunya cahaya yang tak pernah padam. ✨" },
+    { title: "Cincin Foton // Einstein Ring", quote: "Cahaya terindah di jagat raya bukanlah bintang kejora, melainkan senyuman tulus dari Halisa Nurul Zakia. 🌸" },
+    { title: "Relativitas Rasa", quote: "Satu detik bersamamu terasa abadi, dan ribuan tahun tanpamu terasa begitu sepi. I wanna be yours, selamanya. 💍" },
+    { title: "Amor De Mi Vida", quote: "Fajar & Halisa: Dua partikel kosmik yang ditarik oleh takdir cinta tanpa batas. 💫" },
+    { title: "Singularitas Hati", quote: "Di titik terdalam semestaku, hanya ada satu nama yang terukir abadi: Halisa. 🤍" },
+    { title: "14 Februari 2024", quote: "Hari di mana semestaku menemukan pusat orbitnya. Terima kasih telah hadir dan menjadi duniaku. ⏳" }
   ];
 
   function getRandomQuote() {
     return romanticGalaxyQuotes[Math.floor(Math.random() * romanticGalaxyQuotes.length)];
   }
 
-  // Generate a sharp circular star texture with radial glow
+  // Generate ultra-high resolution procedural accretion disk texture ("Warna Cinta")
+  function createGargantuaAccretionTexture() {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1024;
+    canvas.height = 1024;
+    const ctx = canvas.getContext('2d');
+    const cx = 512, cy = 512;
+
+    ctx.clearRect(0, 0, 1024, 1024);
+
+    const innerR = 175;
+    const outerR = 505;
+
+    // 1. Concentric striated bands (Keplerian plasma density waves)
+    for (let r = innerR; r < outerR; r += 1) {
+      const norm = (r - innerR) / (outerR - innerR);
+      let rCol, gCol, bCol, alpha;
+
+      if (norm < 0.08) {
+        // Innermost photon rim: Incandescent Blazing White & Pale Rose
+        rCol = 255; gCol = 248; bCol = 252;
+        alpha = 0.96;
+      } else if (norm < 0.35) {
+        // Inner hot flow: Electric Neon Pink
+        const t = (norm - 0.08) / 0.27;
+        rCol = 255;
+        gCol = Math.floor(42 + (1 - t) * 140);
+        bCol = Math.floor(133 + (1 - t) * 70);
+        alpha = 0.88 - t * 0.16;
+      } else if (norm < 0.72) {
+        // Mid stream: Fiery Magenta & Rose Gold
+        const t = (norm - 0.35) / 0.37;
+        rCol = Math.floor(255 - t * 50);
+        gCol = Math.floor(40 + t * 45);
+        bCol = Math.floor(140 + t * 60);
+        alpha = 0.72 - t * 0.35;
+      } else {
+        // Outer filaments: Deep Cosmic Violet fading softly to space
+        const t = (norm - 0.72) / 0.28;
+        rCol = Math.floor(190 * (1 - t));
+        gCol = Math.floor(40 * (1 - t));
+        bCol = Math.floor(230 * (1 - t));
+        alpha = 0.37 * (1 - t);
+      }
+
+      // Add filament striated density noise
+      const bandNoise = 0.72 + 0.28 * Math.sin(r * 0.45) * Math.cos(r * 0.18);
+      ctx.strokeStyle = `rgba(${rCol}, ${gCol}, ${bCol}, ${(alpha * bandNoise).toFixed(3)})`;
+      ctx.lineWidth = 1.6;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    // 2. Add turbulent fibrous spiral streaks (as seen in Interstellar Gargantua)
+    const streakCount = 260;
+    for (let s = 0; s < streakCount; s++) {
+      const angleStart = Math.random() * Math.PI * 2;
+      const rStart = innerR + Math.random() * (outerR - innerR) * 0.88;
+      const arcAngle = (0.25 + Math.random() * 0.45) * (Math.random() > 0.5 ? 1 : -1);
+
+      ctx.strokeStyle = `rgba(255, ${Math.floor(60 + Math.random() * 120)}, ${Math.floor(140 + Math.random() * 95)}, ${0.16 + Math.random() * 0.26})`;
+      ctx.lineWidth = 1.4 + Math.random() * 2.2;
+      ctx.beginPath();
+      ctx.arc(cx, cy, rStart, angleStart, angleStart + arcAngle);
+      ctx.stroke();
+    }
+
+    // 3. Relativistic Doppler beaming gradient (left side brighter)
+    const dopplerGrad = ctx.createLinearGradient(0, 512, 1024, 512);
+    dopplerGrad.addColorStop(0, 'rgba(255, 255, 255, 0.22)');
+    dopplerGrad.addColorStop(0.45, 'rgba(255, 42, 133, 0.08)');
+    dopplerGrad.addColorStop(1, 'rgba(0, 0, 0, 0.25)');
+    ctx.fillStyle = dopplerGrad;
+    ctx.beginPath();
+    ctx.arc(cx, cy, outerR, 0, Math.PI * 2);
+    ctx.fill();
+
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.wrapS = THREE.RepeatWrapping;
+    texture.wrapT = THREE.ClampToEdgeWrapping;
+    return texture;
+  }
+
+  // Generate glowing star particle texture
   function createStarTexture() {
     const canvas = document.createElement('canvas');
     canvas.width = 64;
@@ -208,102 +291,17 @@ document.addEventListener('DOMContentLoaded', () => {
     return new THREE.CanvasTexture(canvas);
   }
 
-  // Generate floating 3D canvas text sprite
-  function createFloatingTextSprite(text, color = '#ff2a85', subtitle = '✦ FAJAR & HALISA ✦') {
-    const canvas = document.createElement('canvas');
-    canvas.width = 512;
-    canvas.height = 128;
-    const ctx = canvas.getContext('2d');
-
-    // Glass pill background
-    ctx.fillStyle = 'rgba(12, 18, 36, 0.75)';
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 4;
-    
-    // Draw rounded rect
-    const r = 36;
-    ctx.beginPath();
-    ctx.moveTo(r, 8);
-    ctx.lineTo(512 - r, 8);
-    ctx.quadraticCurveTo(512, 8, 512, 8 + r);
-    ctx.lineTo(512, 128 - 8 - r);
-    ctx.quadraticCurveTo(512, 128 - 8, 512 - r, 128 - 8);
-    ctx.lineTo(r, 128 - 8);
-    ctx.quadraticCurveTo(0, 128 - 8, 0, 128 - 8 - r);
-    ctx.lineTo(0, 8 + r);
-    ctx.quadraticCurveTo(0, 8, r, 8);
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke();
-
-    // Text Subtitle
-    ctx.font = 'bold 18px "Outfit", sans-serif';
-    ctx.fillStyle = '#00f0ff';
-    ctx.textAlign = 'center';
-    ctx.fillText(subtitle, 256, 42);
-
-    // Main Text
-    ctx.font = 'bold 36px "Outfit", sans-serif';
-    ctx.fillStyle = '#ffffff';
-    ctx.shadowColor = color;
-    ctx.shadowBlur = 12;
-    ctx.fillText(text, 256, 88);
-
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.minFilter = THREE.LinearFilter;
-    const spriteMat = new THREE.SpriteMaterial({
-      map: texture,
-      transparent: true,
-      depthWrite: false
-    });
-    const sprite = new THREE.Sprite(spriteMat);
-    sprite.scale.set(4.2, 1.05, 1);
-    return sprite;
-  }
-
-  // Generate emoji/sticker sprite
-  function createEmojiSprite(emoji, size = 1.4) {
-    const canvas = document.createElement('canvas');
-    canvas.width = 128;
-    canvas.height = 128;
-    const ctx = canvas.getContext('2d');
-    
-    // Radial soft glow behind sticker
-    const grad = ctx.createRadialGradient(64, 64, 0, 64, 64, 60);
-    grad.addColorStop(0, 'rgba(255, 42, 133, 0.4)');
-    grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-    ctx.fillStyle = grad;
-    ctx.beginPath();
-    ctx.arc(64, 64, 60, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.font = '72px sans-serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(emoji, 64, 68);
-
-    const texture = new THREE.CanvasTexture(canvas);
-    const spriteMat = new THREE.SpriteMaterial({
-      map: texture,
-      transparent: true,
-      depthWrite: false
-    });
-    const sprite = new THREE.Sprite(spriteMat);
-    sprite.scale.set(size, size, 1);
-    return sprite;
-  }
-
-  function initThreeGalaxy() {
+  function initThreeBlackHole() {
     const container = document.getElementById('webgl-galaxy-container');
     if (!container || typeof THREE === 'undefined') return;
 
     // 1. Scene & Camera
     scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x05070d, 0.015);
+    scene.fog = new THREE.FogExp2(0x05070d, 0.012);
 
-    camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 14, currentDistance);
-    camera.lookAt(0, 2, 0);
+    camera = new THREE.PerspectiveCamera(52, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.set(0, 4.5, currentDistance);
+    camera.lookAt(0, 0, 0);
 
     // 2. WebGL Renderer
     renderer = new THREE.WebGLRenderer({
@@ -314,175 +312,170 @@ document.addEventListener('DOMContentLoaded', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.25;
+    renderer.toneMappingExposure = 1.35;
     container.appendChild(renderer.domElement);
 
     // 3. Scene Illumination
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
     scene.add(ambientLight);
 
-    const coreLight = new THREE.PointLight(0xff2a85, 3.5, 45);
-    coreLight.position.set(0, 2, 0);
-    scene.add(coreLight);
+    const accretionLight = new THREE.PointLight(0xff2a85, 4.2, 55);
+    accretionLight.position.set(0, 0, 0);
+    scene.add(accretionLight);
 
-    const cyanLight = new THREE.PointLight(0x00f0ff, 2.5, 50);
-    cyanLight.position.set(12, 6, 12);
+    const photonLight = new THREE.PointLight(0xffffff, 3.2, 35);
+    photonLight.position.set(0, 0, 2);
+    scene.add(photonLight);
+
+    const cyanLight = new THREE.PointLight(0x00f0ff, 2.0, 50);
+    cyanLight.position.set(16, 8, 14);
     scene.add(cyanLight);
 
-    const purpleLight = new THREE.PointLight(0xa855f7, 2.5, 50);
-    purpleLight.position.set(-12, -4, -12);
-    scene.add(purpleLight);
-
     const starTexture = createStarTexture();
+    const accretionTexture = createGargantuaAccretionTexture();
 
-    // 4. Spiral Galaxy Accretion Disk (26,000+ points)
-    const { starCount, arms, radius, spin, randomness, power } = CONFIG.galaxy;
-    const geometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(starCount * 3);
-    const colors = new Float32Array(starCount * 3);
+    // 4. Black Hole Group (Contains Gargantua Geometry with Cinematic Tilt)
+    blackHoleGroup = new THREE.Group();
+    // Iconic cinematic tilt as seen in reference image
+    blackHoleGroup.rotation.z = -0.22; // ~12.5 degree diagonal tilt
+    blackHoleGroup.rotation.x = 0.28;  // ~16 degree pitch angle
+    scene.add(blackHoleGroup);
 
-    const colorInside = new THREE.Color('#ffffff');
-    const colorMid = new THREE.Color('#ff2a85');
-    const colorOuter = new THREE.Color('#a855f7');
-    const colorEdge = new THREE.Color('#00f0ff');
-
-    for (let i = 0; i < starCount; i++) {
-      const i3 = i * 3;
-      // Distance from center with higher density near core
-      const r = Math.pow(Math.random(), 1.6) * radius + 1.2;
-      const spinAngle = r * spin * 0.28;
-      const branchAngle = ((i % arms) / arms) * Math.PI * 2;
-
-      // Exponential random scattering
-      const randomX = Math.pow(Math.random(), power) * (Math.random() < 0.5 ? 1 : -1) * randomness * r;
-      const randomY = Math.pow(Math.random(), power) * (Math.random() < 0.5 ? 1 : -1) * randomness * (r * 0.35);
-      const randomZ = Math.pow(Math.random(), power) * (Math.random() < 0.5 ? 1 : -1) * randomness * r;
-
-      positions[i3] = Math.cos(branchAngle + spinAngle) * r + randomX;
-      positions[i3 + 1] = randomY;
-      positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * r + randomZ;
-
-      // Radial color blending
-      const normR = r / radius;
-      let mixedColor = colorInside.clone();
-      if (normR < 0.25) {
-        mixedColor.lerp(colorMid, normR / 0.25);
-      } else if (normR < 0.65) {
-        mixedColor = colorMid.clone().lerp(colorOuter, (normR - 0.25) / 0.4);
-      } else {
-        mixedColor = colorOuter.clone().lerp(colorEdge, (normR - 0.65) / 0.35);
-      }
-
-      colors[i3] = mixedColor.r;
-      colors[i3 + 1] = mixedColor.g;
-      colors[i3 + 2] = mixedColor.b;
-    }
-
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-    const material = new THREE.PointsMaterial({
-      size: window.innerWidth < 768 ? 0.18 : 0.16,
-      sizeAttenuation: true,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
-      vertexColors: true,
-      map: starTexture,
-      transparent: true,
-      opacity: 0.95
-    });
-
-    galaxyPoints = new THREE.Points(geometry, material);
-    scene.add(galaxyPoints);
-
-    // 5. Black Hole Event Horizon Core & Glowing Accretion Ring
-    const blackHoleGeo = new THREE.SphereGeometry(1.2, 32, 32);
-    const blackHoleMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
-    coreMesh = new THREE.Mesh(blackHoleGeo, blackHoleMat);
-    coreMesh.userData = {
-      type: 'core',
-      title: 'Pusat Gravitasi Cinta',
-      quote: 'Di pusat galaksi ini, gravitasimu menarik seluruh rasa cintaku tanpa ada jalan keluar.'
+    // 5. Central Event Horizon (Pitch Black Sphere)
+    const { eventHorizonRadius, photonRingRadius, diskInnerRadius, diskOuterRadius, lensOuterRadius } = CONFIG.blackHole;
+    const eventHorizonGeo = new THREE.SphereGeometry(eventHorizonRadius, 64, 64);
+    const eventHorizonMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
+    eventHorizonMesh = new THREE.Mesh(eventHorizonGeo, eventHorizonMat);
+    eventHorizonMesh.userData = {
+      type: 'eventHorizon',
+      title: 'Singularitas Cinta // Halisa',
+      quote: 'Gravitasi terkuat di seluruh semesta adalah cintamu, Halisa. Begitu masuk ke orbitmu, hatiku tak pernah ingin pergi.'
     };
-    scene.add(coreMesh);
+    blackHoleGroup.add(eventHorizonMesh);
 
-    // Glowing core ring
-    const ringGeo = new THREE.RingGeometry(1.3, 2.5, 64);
-    const ringMat = new THREE.MeshBasicMaterial({
+    // 6. Razor-Thin Photon Ring (Einstein Ring Hugging Event Horizon)
+    const photonRingGeo = new THREE.RingGeometry(eventHorizonRadius + 0.01, photonRingRadius, 128);
+    const photonRingMat = new THREE.MeshBasicMaterial({
       color: 0xffffff,
       side: THREE.DoubleSide,
       transparent: true,
-      opacity: 0.85,
+      opacity: 0.98,
       blending: THREE.AdditiveBlending
     });
-    accretionRing = new THREE.Mesh(ringGeo, ringMat);
-    accretionRing.rotation.x = Math.PI / 2.2;
-    scene.add(accretionRing);
+    photonRingMesh = new THREE.Mesh(photonRingGeo, photonRingMat);
+    blackHoleGroup.add(photonRingMesh);
 
-    // 6. TOP GIANT PARTICLE HEART (Matching the user screenshot!)
-    buildTopParticleHeart(starTexture);
+    // Outer soft pink corona halo around the shadow
+    const coronaGeo = new THREE.RingGeometry(photonRingRadius, photonRingRadius + 0.45, 128);
+    const coronaMat = new THREE.MeshBasicMaterial({
+      color: 0xff2a85,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.55,
+      blending: THREE.AdditiveBlending
+    });
+    const coronaMesh = new THREE.Mesh(coronaGeo, coronaMat);
+    blackHoleGroup.add(coronaMesh);
 
-    // 7. ORBITING 3D HEARTS (Matching the exact code snippet in screenshot)
-    buildOrbiting3DHearts();
+    // 7. Gravitational Lensing Ring (The Vertical Loop Arch over and under)
+    // The sphere at (0, 0, 0) naturally occludes the center of this ring!
+    const lensGeo = new THREE.RingGeometry(eventHorizonRadius + 0.05, lensOuterRadius, 160);
+    const lensMat = new THREE.MeshBasicMaterial({
+      map: accretionTexture,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.94,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+    lensingRingMesh = new THREE.Mesh(lensGeo, lensMat);
+    lensingRingMesh.position.z = -0.06; // Just slightly behind sphere center
+    blackHoleGroup.add(lensingRingMesh);
 
-    // 8. ORBITING 3D TEXT SPRITES & STICKERS
-    buildOrbitingTextAndStickers();
+    // 8. Equatorial Accretion Disk (Horizontal Plane cutting across front)
+    const diskGeo = new THREE.RingGeometry(diskInnerRadius, diskOuterRadius, 180);
+    const diskMat = new THREE.MeshBasicMaterial({
+      map: accretionTexture,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.96,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false
+    });
+    accretionDiskMesh = new THREE.Mesh(diskGeo, diskMat);
+    accretionDiskMesh.rotation.x = Math.PI / 2;
+    blackHoleGroup.add(accretionDiskMesh);
 
-    // 9. Input & Orbit Control Event Listeners
+    // 9. Volumetric Keplerian Particle Swarm (Accretion & Lensing Stardust)
+    buildKeplerianParticles(starTexture);
+
+    // 10. Orbiting 3D Extruded Love Hearts
+    buildOrbitingLoveHearts();
+
+    // 11. Deep Cosmic Starfield Background
+    buildCosmicStarfield(starTexture);
+
+    // 12. Setup Controls
     setupGalaxyControls(container);
 
-    // 10. Start Animation Loop
+    // 13. Start Animation Loop
     animate();
   }
 
-  // Construct the magnificent glowing pink particle heart floating atop the accretion vortex
-  function buildTopParticleHeart(starTexture) {
-    topHeartGroup = new THREE.Group();
-    topHeartGroup.position.set(0, 7.8, 0);
+  // Build Keplerian particle flow in accretion disk and lensing arch
+  function buildKeplerianParticles(starTexture) {
+    const { equatorialParticles: eqCount, lensingParticles: lensCount, diskInnerRadius, diskOuterRadius, eventHorizonRadius, lensOuterRadius } = CONFIG.blackHole;
 
-    const count = CONFIG.galaxy.topHeartParticles;
-    const heartGeo = new THREE.BufferGeometry();
-    const positions = new Float32Array(count * 3);
-    const colors = new Float32Array(count * 3);
+    // A. Equatorial Disk Particles
+    const eqGeo = new THREE.BufferGeometry();
+    const eqPositions = new Float32Array(eqCount * 3);
+    const eqColors = new Float32Array(eqCount * 3);
+    const eqData = [];
 
-    const pinkColor = new THREE.Color('#ff2a85');
-    const whiteColor = new THREE.Color('#ffffff');
-    const roseColor = new THREE.Color('#ffd1dc');
+    const whiteCol = new THREE.Color('#ffffff');
+    const pinkCol = new THREE.Color('#ff2a85');
+    const roseCol = new THREE.Color('#fb7185');
+    const purpleCol = new THREE.Color('#a855f7');
+    const cyanCol = new THREE.Color('#00f0ff');
 
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < eqCount; i++) {
       const i3 = i * 3;
-      // Parametric 3D Heart Distribution
-      const t = Math.PI * 2 * Math.random();
-      const u = Math.PI * (Math.random() - 0.5);
+      // Dense near inner edge, spreading outward
+      const r = diskInnerRadius + Math.pow(Math.random(), 1.8) * (diskOuterRadius - diskInnerRadius);
+      const angle = Math.random() * Math.PI * 2;
+      // Flaring vertical height
+      const ySpread = (Math.random() - 0.5) * (0.15 + (r / diskOuterRadius) * 0.65);
 
-      // Heart parametric equation
-      const hx = 16 * Math.pow(Math.sin(t), 3);
-      const hy = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
-      const hz = (Math.random() - 0.5) * 6 * Math.cos(u);
+      eqPositions[i3] = Math.cos(angle) * r;
+      eqPositions[i3 + 1] = ySpread;
+      eqPositions[i3 + 2] = Math.sin(angle) * r;
 
-      const scaleFactor = 0.17;
-      const jitter = (Math.random() - 0.5) * 0.15;
+      // Keplerian speed: v proportional to 1 / sqrt(r)
+      const speed = (0.24 / Math.pow(r, 1.35)) * (0.9 + Math.random() * 0.2);
+      eqData.push({ r, angle, speed, y: ySpread });
 
-      positions[i3] = hx * scaleFactor + jitter;
-      positions[i3 + 1] = hy * scaleFactor + jitter;
-      positions[i3 + 2] = hz * scaleFactor + jitter;
+      // Radial color grading (Warna Cinta)
+      const norm = (r - diskInnerRadius) / (diskOuterRadius - diskInnerRadius);
+      let c = whiteCol.clone();
+      if (norm < 0.15) {
+        c.lerp(pinkCol, norm / 0.15);
+      } else if (norm < 0.55) {
+        c = pinkCol.clone().lerp(roseCol, (norm - 0.15) / 0.4);
+      } else {
+        c = roseCol.clone().lerp(purpleCol, (norm - 0.55) / 0.45);
+        if (Math.random() < 0.12) c.lerp(cyanCol, 0.6);
+      }
 
-      // Color variation
-      const colRand = Math.random();
-      let c = pinkColor;
-      if (colRand > 0.8) c = whiteColor;
-      else if (colRand > 0.5) c = roseColor;
-
-      colors[i3] = c.r;
-      colors[i3 + 1] = c.g;
-      colors[i3 + 2] = c.b;
+      eqColors[i3] = c.r;
+      eqColors[i3 + 1] = c.g;
+      eqColors[i3 + 2] = c.b;
     }
 
-    heartGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    heartGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    eqGeo.setAttribute('position', new THREE.BufferAttribute(eqPositions, 3));
+    eqGeo.setAttribute('color', new THREE.BufferAttribute(eqColors, 3));
 
-    const heartMat = new THREE.PointsMaterial({
-      size: 0.22,
+    const eqMat = new THREE.PointsMaterial({
+      size: window.innerWidth < 768 ? 0.22 : 0.18,
       map: starTexture,
       transparent: true,
       blending: THREE.AdditiveBlending,
@@ -491,34 +484,62 @@ document.addEventListener('DOMContentLoaded', () => {
       opacity: 0.95
     });
 
-    const heartParticles = new THREE.Points(heartGeo, heartMat);
-    topHeartGroup.add(heartParticles);
+    equatorialParticles = new THREE.Points(eqGeo, eqMat);
+    equatorialParticles.userData = { particles: eqData };
+    blackHoleGroup.add(equatorialParticles);
 
-    // Ethereal vertical light stream connecting core to heart
-    const beamGeo = new THREE.CylinderGeometry(0.08, 0.4, 7.5, 16, 1, true);
-    const beamMat = new THREE.MeshBasicMaterial({
-      color: 0xff2a85,
+    // B. Gravitational Lensing Particles (Vertical Arch Flow)
+    const lensGeo = new THREE.BufferGeometry();
+    const lensPositions = new Float32Array(lensCount * 3);
+    const lensColors = new Float32Array(lensCount * 3);
+    const lensData = [];
+
+    for (let i = 0; i < lensCount; i++) {
+      const i3 = i * 3;
+      const r = (eventHorizonRadius + 0.1) + Math.pow(Math.random(), 1.5) * (lensOuterRadius - eventHorizonRadius);
+      const angle = Math.random() * Math.PI * 2;
+      const zSpread = -0.06 + (Math.random() - 0.5) * 0.25;
+
+      lensPositions[i3] = Math.cos(angle) * r;
+      lensPositions[i3 + 1] = Math.sin(angle) * r;
+      lensPositions[i3 + 2] = zSpread;
+
+      const speed = (0.20 / Math.pow(r, 1.35)) * (0.85 + Math.random() * 0.3);
+      lensData.push({ r, angle, speed, z: zSpread });
+
+      const norm = (r - eventHorizonRadius) / (lensOuterRadius - eventHorizonRadius);
+      let c = whiteCol.clone();
+      if (norm < 0.2) {
+        c.lerp(pinkCol, norm / 0.2);
+      } else {
+        c = pinkCol.clone().lerp(purpleCol, (norm - 0.2) / 0.8);
+      }
+
+      lensColors[i3] = c.r;
+      lensColors[i3 + 1] = c.g;
+      lensColors[i3 + 2] = c.b;
+    }
+
+    lensGeo.setAttribute('position', new THREE.BufferAttribute(lensPositions, 3));
+    lensGeo.setAttribute('color', new THREE.BufferAttribute(lensColors, 3));
+
+    const lensPartMat = new THREE.PointsMaterial({
+      size: window.innerWidth < 768 ? 0.20 : 0.16,
+      map: starTexture,
       transparent: true,
-      opacity: 0.25,
       blending: THREE.AdditiveBlending,
-      side: THREE.DoubleSide
+      vertexColors: true,
+      depthWrite: false,
+      opacity: 0.9
     });
-    const beam = new THREE.Mesh(beamGeo, beamMat);
-    beam.position.y = -3.75;
-    topHeartGroup.add(beam);
 
-    topHeartGroup.userData = {
-      type: 'topHeart',
-      title: 'Detak Jantung Galaksi // Halisa',
-      quote: 'Di puncak semesta ini berdenyut satu nama yang selalu kupuja: Halisa Nurul Zakia.'
-    };
-
-    scene.add(topHeartGroup);
+    lensingParticles = new THREE.Points(lensGeo, lensPartMat);
+    lensingParticles.userData = { particles: lensData };
+    blackHoleGroup.add(lensingParticles);
   }
 
-  // Build orbiting 3D extruded hearts matching the screenshot code
-  function buildOrbiting3DHearts() {
-    // 3D Heart Shape
+  // Build orbiting 3D love hearts inside the accretion disk
+  function buildOrbitingLoveHearts() {
     const heartShape = new THREE.Shape();
     const x = 0, y = 0;
     heartShape.moveTo(x + 0.25, y + 0.25);
@@ -530,7 +551,7 @@ document.addEventListener('DOMContentLoaded', () => {
     heartShape.bezierCurveTo(x + 0.35, y, x + 0.25, y + 0.25, x + 0.25, y + 0.25);
 
     const extrudeSettings = {
-      depth: 0.14,
+      depth: 0.16,
       bevelEnabled: true,
       bevelSegments: 3,
       steps: 1,
@@ -542,28 +563,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const heartColors = [0xff2a85, 0xff0066, 0x00f0ff, 0xa855f7, 0xff66b2, 0xffffff];
 
-    // Create 36 Orbiting Hearts
-    for (let i = 0; i < 36; i++) {
+    for (let i = 0; i < 30; i++) {
       const col = heartColors[i % heartColors.length];
       const heartMat = new THREE.MeshStandardMaterial({
         color: col,
         emissive: col,
-        emissiveIntensity: 0.6,
-        roughness: 0.25,
-        metalness: 0.75
+        emissiveIntensity: 0.65,
+        roughness: 0.2,
+        metalness: 0.8
       });
 
       const heartMesh = new THREE.Mesh(heartGeo, heartMat);
-      const scale = 0.45 + Math.random() * 0.55;
+      const scale = 0.45 + Math.random() * 0.5;
       heartMesh.scale.set(scale, scale, scale);
 
-      // Exact userData logic from the screenshot
       heartMesh.userData = {
         type: 'heart',
-        radius: 4.5 + Math.random() * 16.5,
+        radius: 4.8 + Math.random() * 14.0,
         angle: Math.random() * Math.PI * 2,
-        ySpeed: 0.005 + Math.random() * 0.012,
-        yOffset: (Math.random() - 0.5) * 5.5,
+        ySpeed: 0.005 + Math.random() * 0.014,
+        yOffset: (Math.random() - 0.5) * 1.8,
         rotSpeedX: (Math.random() - 0.5) * 0.03,
         rotSpeedY: (Math.random() - 0.5) * 0.04,
         quoteObj: getRandomQuote()
@@ -573,77 +592,67 @@ document.addEventListener('DOMContentLoaded', () => {
       heartMesh.position.z = Math.sin(heartMesh.userData.angle) * heartMesh.userData.radius;
       heartMesh.position.y = heartMesh.userData.yOffset;
 
-      scene.add(heartMesh);
+      blackHoleGroup.add(heartMesh);
       heartGroup.push(heartMesh);
     }
   }
 
-  // Build concentric orbiting 3D text sprites & cute couple stickers
-  function buildOrbitingTextAndStickers() {
-    const textBadgesData = [
-      { text: "HALISA NURUL ZAKIA 💖", color: "#ff2a85", radius: 7.5, speed: 0.007, y: 1.2 },
-      { text: "FAJAR & HALISA ✨", color: "#00f0ff", radius: 10.5, speed: 0.006, y: -0.8 },
-      { text: "I WANNA BE YOURS 🪐", color: "#a855f7", radius: 13.5, speed: 0.005, y: 1.8 },
-      { text: "SEMESTA TERINDAHKU 💫", color: "#ff2a85", radius: 16.5, speed: 0.004, y: -1.2 },
-      { text: "AMOR DE MI VIDA 🌸", color: "#ffd1dc", radius: 19.5, speed: 0.0035, y: 1.5 },
-      { text: "CINTA SEJATIKU 💕", color: "#00f0ff", radius: 22.5, speed: 0.003, y: -1.6 },
-      { text: "14 FEBRUARI 2024 ⏳", color: "#ffffff", radius: 12.0, speed: -0.0055, y: 2.5 },
-      { text: "MY INFINITE LOVE 🌌", color: "#ff2a85", radius: 15.0, speed: -0.0045, y: -2.2 }
-    ];
+  // Build deep cosmic starfield background
+  function buildCosmicStarfield(starTexture) {
+    const starCount = CONFIG.blackHole.backgroundStars;
+    const bgGeo = new THREE.BufferGeometry();
+    const positions = new Float32Array(starCount * 3);
+    const colors = new Float32Array(starCount * 3);
 
-    textBadgesData.forEach((data, idx) => {
-      const sprite = createFloatingTextSprite(data.text, data.color);
-      sprite.userData = {
-        type: 'textBadge',
-        radius: data.radius,
-        angle: (idx / textBadgesData.length) * Math.PI * 2,
-        ySpeed: data.speed,
-        yOffset: data.y,
-        title: data.text,
-        quoteObj: getRandomQuote()
-      };
-      sprite.position.x = Math.cos(sprite.userData.angle) * sprite.userData.radius;
-      sprite.position.z = Math.sin(sprite.userData.angle) * sprite.userData.radius;
-      sprite.position.y = sprite.userData.yOffset;
-      scene.add(sprite);
-      textSprites.push(sprite);
+    const baseCols = [new THREE.Color('#ffffff'), new THREE.Color('#00f0ff'), new THREE.Color('#ff2a85'), new THREE.Color('#a855f7')];
+
+    for (let i = 0; i < starCount; i++) {
+      const i3 = i * 3;
+      const radius = 60 + Math.random() * 70;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos(2 * Math.random() - 1);
+
+      positions[i3] = radius * Math.sin(phi) * Math.cos(theta);
+      positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+      positions[i3 + 2] = radius * Math.cos(phi);
+
+      const c = baseCols[Math.floor(Math.random() * baseCols.length)];
+      colors[i3] = c.r;
+      colors[i3 + 1] = c.g;
+      colors[i3 + 2] = c.b;
+    }
+
+    bgGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    bgGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+    const bgMat = new THREE.PointsMaterial({
+      size: 0.35,
+      map: starTexture,
+      transparent: true,
+      depthWrite: false,
+      vertexColors: true,
+      blending: THREE.AdditiveBlending,
+      opacity: 0.8
     });
 
-    // Orbiting cute emojis/stickers
-    const stickerList = ['👩‍❤️‍👨', '🪐', '💌', '✨', '🎀', '💖', '🌙', '🐱', '🧸'];
-    stickerList.forEach((emoji, idx) => {
-      const sticker = createEmojiSprite(emoji, 1.35);
-      sticker.userData = {
-        type: 'sticker',
-        radius: 6 + Math.random() * 15,
-        angle: (idx / stickerList.length) * Math.PI * 2 + Math.random(),
-        ySpeed: 0.008 + Math.random() * 0.01,
-        yOffset: (Math.random() - 0.5) * 4.5,
-        title: `Stiker Manis: ${emoji}`,
-        quoteObj: getRandomQuote()
-      };
-      sticker.position.x = Math.cos(sticker.userData.angle) * sticker.userData.radius;
-      sticker.position.z = Math.sin(sticker.userData.angle) * sticker.userData.radius;
-      sticker.position.y = sticker.userData.yOffset;
-      scene.add(sticker);
-      stickerSprites.push(sticker);
-    });
+    bgStarPoints = new THREE.Points(bgGeo, bgMat);
+    scene.add(bgStarPoints);
   }
 
-  // 3D Shooting Star / Celebration Meteor in Three.js
+  // 3D Shooting Star / Celebration Meteor
   function launch3DCelebrationMeteor() {
     if (!scene) return;
     const meteorGeo = new THREE.BufferGeometry();
-    const trailLength = 20;
+    const trailLength = 22;
     const positions = new Float32Array(trailLength * 3);
     const startX = (Math.random() - 0.5) * 35;
-    const startY = 16 + Math.random() * 8;
+    const startY = 14 + Math.random() * 8;
     const startZ = (Math.random() - 0.5) * 35;
 
     for (let i = 0; i < trailLength; i++) {
-      positions[i * 3] = startX - i * 0.4;
-      positions[i * 3 + 1] = startY - i * 0.25;
-      positions[i * 3 + 2] = startZ - i * 0.4;
+      positions[i * 3] = startX - i * 0.45;
+      positions[i * 3 + 1] = startY - i * 0.3;
+      positions[i * 3 + 2] = startZ - i * 0.45;
     }
     meteorGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
@@ -657,9 +666,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const meteorLine = new THREE.Line(meteorGeo, meteorMat);
     meteorLine.userData = {
-      vx: (Math.random() - 0.5) * 0.6 - 0.8,
-      vy: -0.6 - Math.random() * 0.4,
-      vz: (Math.random() - 0.5) * 0.6 - 0.8,
+      vx: (Math.random() - 0.5) * 0.6 - 0.85,
+      vy: -0.65 - Math.random() * 0.45,
+      vz: (Math.random() - 0.5) * 0.6 - 0.85,
       life: 1.0
     };
     scene.add(meteorLine);
@@ -668,14 +677,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Setup 360° Drag & Touch Controls
   function setupGalaxyControls(container) {
-    let startPointer = { x: 0, y: 0 };
-
     function onPointerDown(e) {
       isDragging = true;
       dragDistance = 0;
       const clientX = e.clientX || (e.touches && e.touches[0].clientX);
       const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-      startPointer = { x: clientX, y: clientY };
       previousMousePosition = { x: clientX, y: clientY };
     }
 
@@ -690,8 +696,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         targetRotY += deltaX * 0.005;
         targetRotX += deltaY * 0.004;
-        // Clamp vertical viewing angle to keep orientation beautiful
-        targetRotX = Math.max(-0.4, Math.min(1.2, targetRotX));
+        // Clamp vertical viewing angle so black hole always looks breathtaking
+        targetRotX = Math.max(-0.4, Math.min(1.1, targetRotX));
 
         previousMousePosition = { x: clientX, y: clientY };
       }
@@ -699,7 +705,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function onPointerUp(e) {
       if (dragDistance < 10) {
-        // Registered as a click! Check Raycaster intersection
         const clientX = e.clientX || (e.changedTouches && e.changedTouches[0].clientX);
         const clientY = e.clientY || (e.changedTouches && e.changedTouches[0].clientY);
         if (clientX !== undefined && clientY !== undefined) {
@@ -709,7 +714,6 @@ document.addEventListener('DOMContentLoaded', () => {
       isDragging = false;
     }
 
-    // Window-level events ensure dragging remains smooth across cards
     window.addEventListener('mousedown', onPointerDown);
     window.addEventListener('mousemove', onPointerMove);
     window.addEventListener('mouseup', onPointerUp);
@@ -722,7 +726,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('wheel', (e) => {
       if (Math.abs(e.deltaY) > 5) {
         targetDistance += e.deltaY * 0.015;
-        targetDistance = Math.max(12, Math.min(42, targetDistance));
+        targetDistance = Math.max(14, Math.min(42, targetDistance));
       }
     }, { passive: true });
 
@@ -746,37 +750,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const interactiveTargets = [
       ...heartGroup,
-      ...textSprites,
-      ...stickerSprites,
-      coreMesh
+      eventHorizonMesh,
+      accretionDiskMesh,
+      lensingRingMesh
     ];
 
-    if (topHeartGroup) {
-      interactiveTargets.push(...topHeartGroup.children);
-    }
-
-    const intersects = raycaster.intersectObjects(interactiveTargets, true);
+    const intersects = raycaster.intersectObjects(interactiveTargets, false);
 
     if (intersects.length > 0) {
       const hit = intersects[0].object;
-      let targetObj = hit;
-      if (hit.parent && hit.parent.userData && hit.parent.userData.type) {
-        targetObj = hit.parent;
-      }
+      const data = hit.userData || {};
 
-      const data = targetObj.userData;
       playCelestialChime();
       playHeartbeatSound();
-      burstOfLove(clientX, clientY, 20);
+      burstOfLove(clientX, clientY, 22);
 
       // Bounce scale effect
-      const origScale = targetObj.scale.x;
-      targetObj.scale.set(origScale * 1.35, origScale * 1.35, origScale * 1.35);
+      const origScale = hit.scale.x;
+      hit.scale.set(origScale * 1.3, origScale * 1.3, origScale * 1.3);
       setTimeout(() => {
-        targetObj.scale.set(origScale, origScale, origScale);
+        hit.scale.set(origScale, origScale, origScale);
       }, 400);
 
-      // Show Galaxy Toast Modal with personal romantic quote
       const quoteObj = data.quoteObj || (data.title ? { title: data.title, quote: data.quote } : getRandomQuote());
       showGalaxyToast(quoteObj.title, quoteObj.quote);
     }
@@ -792,7 +787,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 1. Smooth Camera Damping & Rotation
     if (!isDragging) {
-      targetRotY += 0.0012; // Continuous gentle orbit
+      targetRotY += 0.001; // Continuous gentle orbit
     }
 
     rotY += (targetRotY - rotY) * 0.05;
@@ -800,54 +795,68 @@ document.addEventListener('DOMContentLoaded', () => {
     currentDistance += (targetDistance - currentDistance) * 0.05;
 
     camera.position.x = Math.sin(rotY) * Math.cos(rotX) * currentDistance;
-    camera.position.y = Math.sin(rotX) * currentDistance + 2.5;
+    camera.position.y = Math.sin(rotX) * currentDistance + 2.0;
     camera.position.z = Math.cos(rotY) * Math.cos(rotX) * currentDistance;
-    camera.lookAt(0, 2, 0);
+    camera.lookAt(0, 0, 0);
 
-    // 2. Rotate Spiral Galaxy Particles
-    if (galaxyPoints) {
-      galaxyPoints.rotation.y = elapsedTime * 0.035;
+    // 2. Rotate Accretion Disk & Lensing Textures
+    if (accretionDiskMesh) {
+      accretionDiskMesh.rotation.z += 0.003;
+    }
+    if (lensingRingMesh) {
+      lensingRingMesh.rotation.z += 0.003;
     }
 
-    // 3. Pulse Top Heart (Rhythmic Heartbeat Formula)
-    if (topHeartGroup) {
-      const beat = 1 + 0.07 * Math.pow(Math.sin(elapsedTime * 3.2), 4) + 0.03 * Math.sin(elapsedTime * 6.4);
-      topHeartGroup.scale.set(beat, beat, beat);
-      topHeartGroup.rotation.y = elapsedTime * 0.05;
+    // 3. Pulse Photon Ring
+    if (photonRingMesh) {
+      const pulse = 0.94 + 0.06 * Math.sin(elapsedTime * 4.5);
+      photonRingMesh.material.opacity = pulse;
     }
 
-    // 4. Accretion Ring shimmer
-    if (accretionRing) {
-      accretionRing.rotation.z = -elapsedTime * 0.12;
-      accretionRing.material.opacity = 0.75 + 0.2 * Math.sin(elapsedTime * 4);
+    // 4. Update Keplerian Equatorial Particles
+    if (equatorialParticles) {
+      const pos = equatorialParticles.geometry.attributes.position.array;
+      const pData = equatorialParticles.userData.particles;
+      for (let i = 0; i < pData.length; i++) {
+        const p = pData[i];
+        p.angle += p.speed;
+        const i3 = i * 3;
+        pos[i3] = Math.cos(p.angle) * p.r;
+        pos[i3 + 2] = Math.sin(p.angle) * p.r;
+      }
+      equatorialParticles.geometry.attributes.position.needsUpdate = true;
     }
 
-    // 5. Orbit 3D Hearts (Exact code logic from user screenshot)
+    // 5. Update Keplerian Lensing Particles
+    if (lensingParticles) {
+      const pos = lensingParticles.geometry.attributes.position.array;
+      const pData = lensingParticles.userData.particles;
+      for (let i = 0; i < pData.length; i++) {
+        const p = pData[i];
+        p.angle += p.speed;
+        const i3 = i * 3;
+        pos[i3] = Math.cos(p.angle) * p.r;
+        pos[i3 + 1] = Math.sin(p.angle) * p.r;
+      }
+      lensingParticles.geometry.attributes.position.needsUpdate = true;
+    }
+
+    // 6. Orbit 3D Hearts in Accretion Disk
     heartGroup.forEach(heart => {
       heart.userData.angle += heart.userData.ySpeed;
       heart.position.x = Math.cos(heart.userData.angle) * heart.userData.radius;
       heart.position.z = Math.sin(heart.userData.angle) * heart.userData.radius;
-      heart.position.y = heart.userData.yOffset + Math.sin(elapsedTime * 2.2 + heart.userData.angle) * 0.4;
+      heart.position.y = heart.userData.yOffset + Math.sin(elapsedTime * 2.2 + heart.userData.angle) * 0.35;
       heart.rotation.x += heart.userData.rotSpeedX;
       heart.rotation.y += heart.userData.rotSpeedY;
     });
 
-    // 6. Orbit Text Badges & Stickers
-    textSprites.forEach(sprite => {
-      sprite.userData.angle += sprite.userData.ySpeed;
-      sprite.position.x = Math.cos(sprite.userData.angle) * sprite.userData.radius;
-      sprite.position.z = Math.sin(sprite.userData.angle) * sprite.userData.radius;
-      sprite.position.y = sprite.userData.yOffset + Math.sin(elapsedTime * 1.5 + sprite.userData.angle) * 0.3;
-    });
+    // 7. Update Background Stars subtle twinkle
+    if (bgStarPoints) {
+      bgStarPoints.rotation.y = elapsedTime * 0.005;
+    }
 
-    stickerSprites.forEach(sticker => {
-      sticker.userData.angle += sticker.userData.ySpeed;
-      sticker.position.x = Math.cos(sticker.userData.angle) * sticker.userData.radius;
-      sticker.position.z = Math.sin(sticker.userData.angle) * sticker.userData.radius;
-      sticker.position.y = sticker.userData.yOffset + Math.sin(elapsedTime * 2 + sticker.userData.angle) * 0.35;
-    });
-
-    // 7. Update Shooting Stars
+    // 8. Update Shooting Stars
     for (let i = shootingStars.length - 1; i >= 0; i--) {
       const star = shootingStars[i];
       star.position.x += star.userData.vx;
@@ -864,10 +873,9 @@ document.addEventListener('DOMContentLoaded', () => {
     renderer.render(scene, camera);
   }
 
-  // Initialize 3D Three.js Galaxy
-  initThreeGalaxy();
+  // Initialize Black Hole
+  initThreeBlackHole();
 
-  // Export shooting meteor trigger for celebration actions
   function launchCelebrationMeteor() {
     launch3DCelebrationMeteor();
     launch3DCelebrationMeteor();
@@ -1102,8 +1110,8 @@ document.addEventListener('DOMContentLoaded', () => {
       btnModeGalaxy.classList.add('active');
       if (btnModeStory) btnModeStory.classList.remove('active');
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      targetDistance = window.innerWidth < 768 ? 24 : 18;
-      targetRotX = 0.45;
+      targetDistance = window.innerWidth < 768 ? 26 : 21;
+      targetRotX = 0.25;
       playCelestialChime();
     });
   }
@@ -1182,12 +1190,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const romanticResponses = {
     kangen: [
-      "Sinyal rindumu langsung tembus ke orbit hatiku, Halisa sayang! Setiap detik tanpamu rasanya sepi, tapi yakinlah hatiku selalu memelukmu erat dari sini. I miss you more! 🥺💖",
+      "Sinyal rindumu langsung ditarik gravitasi hatiku, Halisa sayang! Setiap detik tanpamu rasanya sepi, tapi hatiku selalu memelukmu erat dari sini. I miss you more! 🥺💖",
       "Rasa kangenmu adalah gravitasi terkuat yang selalu menarikku kembali kepadamu. Jangan sedih yaa cantik, sebentar lagi kita ketemu! 💕🪐"
     ],
     bahagia: [
-      "Melihatmu bahagia adalah pemandangan terindah di seluruh galaksi ini! Semoga senyum manismu selalu bersinar seperti bintang paling terang yaa cintaku! 🥰✨",
-      "Kebahagiaanmu adalah tujuan utamaku. Tetaplah tertawa ceria seperti ini, karena tawamu adalah duniaku! 💖🌸"
+      "Melihatmu bahagia adalah pemandangan terindah di seluruh semesta ini! Semoga senyum manismu selalu bersinar seperti cincin foton paling terang yaa cintaku! 🥰✨",
+      "Kebahagiaanmu adalah tujuan utamaku. Tetaplah tertawa ceria seperti ini, karena tawamu adalah pusat duniaku! 💖🌸"
     ],
     peluk: [
       "Mengirimkan pelukan kosmik paling hangat ke pelukan Halisa sekarang juga! Tarik napas dalam-dalam, pejamkan mata sejenak, dan rasakan kehadiranku di sampingmu 🤍🪐",
@@ -1501,7 +1509,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   console.log(
-    '%c✨ 3D GALAXY UNIVERSE OF LOVE ✨\n%cDedicated specially for Halisa Nurul Zakia by Fajar Syahruddin.\nMay our love orbit together for all eternity!',
+    '%c✨ GARGANTUA OF LOVE // BLACK HOLE ✨\n%cDedicated specially for Halisa Nurul Zakia by Fajar Syahruddin.\nGravitasi terkuat di semesta ini adalah cintamu!',
     'color: #ff2a85; font-size: 16px; font-weight: bold;',
     'color: #00f0ff; font-size: 12px;'
   );
